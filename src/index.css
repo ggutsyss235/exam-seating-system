@@ -440,7 +440,6 @@ textarea.form-input {
   letter-spacing: 0.02em;
   caret-color: #a5b4fc;
   color-scheme: dark;
-  -webkit-text-fill-color: #ffffff !important;
 }
 
 .form-input:focus,
@@ -449,10 +448,9 @@ textarea.form-input:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 0 3px var(--primary-light), 0 0 30px rgba(139, 92, 246, 0.25);
-  background-color: rgba(20, 15, 40, 0.85);
+  background-color: rgba(20, 15, 40, 0.9);
   transform: translateY(-2px);
   color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
 }
 
 .form-input::placeholder,

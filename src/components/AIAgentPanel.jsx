@@ -230,7 +230,7 @@ const AIAgentPanel = () => {
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 disabled={isGenerating}
-                                style={{ flex: 1, background: 'var(--surface)', borderColor: 'var(--border)' }}
+                                style={{ flex: 1, color: '#ffffff' }}
                                 autoFocus
                             />
                             <button type="submit" className="btn btn-primary" disabled={isGenerating || !input.trim()} style={{ width: '48px', height: '48px', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%' }}>
