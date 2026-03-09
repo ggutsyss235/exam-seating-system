@@ -136,19 +136,19 @@ function App() {
 
           </nav>
 
-          <div style={{ marginTop: 'auto', paddingTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+          <div className="nav-profile-block" style={{ marginTop: window.innerWidth <= 900 ? '0' : 'auto', paddingTop: window.innerWidth <= 900 ? '0' : '2rem', display: 'flex', flexDirection: window.innerWidth <= 900 ? 'row' : 'column', gap: '1rem', borderTop: window.innerWidth <= 900 ? 'none' : '1px solid rgba(255,255,255,0.05)', alignItems: 'center' }}>
+            <div style={{ fontSize: '0.75rem', color: '#94a3b8', textAlign: window.innerWidth <= 900 ? 'left' : 'center', lineHeight: '1.4', background: 'rgba(0,0,0,0.2)', padding: '0.5rem 1rem', borderRadius: '8px', display: 'flex', flexDirection: window.innerWidth <= 900 ? 'row' : 'column', gap: window.innerWidth <= 900 ? '0.5rem' : '0', alignItems: 'center' }}>
+              <span>Identified as <b>{user?.name?.split(' ')[0]}</b></span>
+              <span style={{ color: 'var(--primary)', fontFamily: 'monospace', letterSpacing: '0.5px' }}>[{user?.role.toUpperCase()}]</span>
+            </div>
             <button
               onClick={logout}
               className="btn btn-ghost"
-              style={{ justifyContent: 'flex-start', color: '#ef4444', padding: '0.75rem', width: '100%', background: 'rgba(239, 68, 68, 0.05)' }}
+              style={{ justifyContent: 'center', color: '#ef4444', padding: '0.5rem 1rem', background: 'rgba(239, 68, 68, 0.05)' }}
             >
               <LogOut size={18} />
-              Terminate Session
+              <span className="hide-mobile">Terminate Session</span>
             </button>
-            <div style={{ fontSize: '0.75rem', color: '#94a3b8', textAlign: 'center', lineHeight: '1.4', background: 'rgba(0,0,0,0.2)', padding: '0.5rem', borderRadius: '8px' }}>
-              Identified as <b>{user?.name?.split(' ')[0]}</b><br />
-              <span style={{ color: 'var(--primary)', fontFamily: 'monospace', letterSpacing: '0.5px' }}>[{user?.role.toUpperCase()}]</span>
-            </div>
           </div>
         </aside>
 

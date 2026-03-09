@@ -198,7 +198,7 @@ const StudentManager = () => {
                         </div>
                     )}
 
-                    <div style={{ overflowY: 'auto', flex: 1, paddingRight: '0.5rem' }}>
+                    <div className="table-responsive" style={{ flex: 1, paddingRight: '0.5rem' }}>
                         {students.length === 0 ? (
                             <div style={{ color: 'var(--text-muted)', textAlign: 'center', padding: '4rem 1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
                                 <div style={{ background: 'var(--surface-hover)', padding: '1.5rem', borderRadius: '50%' }}>

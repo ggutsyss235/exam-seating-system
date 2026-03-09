@@ -84,7 +84,7 @@ const LearnInfrastructure = () => {
 
             {/* Component Showcase 1: Student Database */}
             <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', padding: '6rem 4rem', position: 'relative', zIndex: 10 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', width: '100%', maxWidth: '1400px', margin: '0 auto', alignItems: 'center' }}>
+                <div className="split-section-grid">
 
                     {/* Left: Text */}
                     <div style={{ transform: scrollProgress > 0.1 ? 'translateX(0) scale(1)' : 'translateX(-200px) scale(0.5) rotateY(30deg)', opacity: scrollProgress > 0.1 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' }}>
@@ -137,7 +137,7 @@ const LearnInfrastructure = () => {
 
             {/* Component Showcase 2: Room Architect */}
             <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', padding: '6rem 4rem', position: 'relative', zIndex: 10 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', width: '100%', maxWidth: '1400px', margin: '0 auto', alignItems: 'center' }}>
+                <div className="split-section-grid">
 
                     {/* Left: 3D Room Grid Builder */}
                     <div style={{
@@ -179,7 +179,7 @@ const LearnInfrastructure = () => {
 
             {/* Split Screen Explanation 1: The Problem */}
             <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', padding: '6rem 4rem', position: 'relative', zIndex: 10 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', width: '100%', maxWidth: '1400px', margin: '0 auto', alignItems: 'center' }}>
+                <div className="split-section-grid">
 
                     {/* Left: Text */}
                     <div style={{ transform: scrollProgress > 0.1 ? 'translateX(0) scale(1)' : 'translateX(-200px) scale(0.5) rotateY(30deg)', opacity: scrollProgress > 0.1 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' }}>
@@ -224,7 +224,7 @@ const LearnInfrastructure = () => {
 
             {/* Split Screen Explanation 2: The AI Solution */}
             <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', padding: '6rem 4rem', position: 'relative', zIndex: 10 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', width: '100%', maxWidth: '1400px', margin: '0 auto', alignItems: 'center' }}>
+                <div className="split-section-grid">
 
                     {/* Left: Interactive Good Grid Demo */}
                     <div style={{
@@ -270,7 +270,7 @@ const LearnInfrastructure = () => {
 
             {/* Split Screen Explanation 3: The Interface Demo */}
             <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', padding: '6rem 4rem', position: 'relative', zIndex: 10 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', width: '100%', maxWidth: '1400px', margin: '0 auto', alignItems: 'center' }}>
+                <div className="split-section-grid">
 
                     {/* Left: Chat AI Interface Mockup */}
                     <div style={{ transform: scrollProgress > 0.8 ? 'translateX(0) scale(1)' : 'translateX(-200px) scale(0.5) rotateY(30deg)', opacity: scrollProgress > 0.8 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)', position: 'relative' }}>

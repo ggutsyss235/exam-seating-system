@@ -143,26 +143,26 @@ const AuthCard = ({ isLogin }) => {
                 style={{
                     width: '100%',
                     maxWidth: isLogin ? '440px' : '580px',
-                    padding: '3rem 2.5rem',
-                    transition: isHovering ? 'transform 0.1s ease-out, max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1)' : 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+                    padding: window.innerWidth <= 480 ? '2rem 1.5rem' : '3rem 2.5rem',
+                    transition: isHovering && window.innerWidth > 768 ? 'transform 0.1s ease-out, max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1)' : 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
                     zIndex: 1,
                     backdropFilter: 'blur(20px)',
                     WebkitBackdropFilter: 'blur(20px)',
                     border: '1px solid rgba(255,255,255,0.08)',
                     backgroundColor: 'rgba(15, 23, 42, 0.65)',
                     borderRadius: '24px',
-                    transformStyle: 'preserve-3d',
-                    transform: `
+                    transformStyle: window.innerWidth > 768 ? 'preserve-3d' : 'flat',
+                    transform: window.innerWidth > 768 ? `
                         ${mounted ? 'translateY(0)' : 'translateY(40px)'}
                         rotateX(${mousePos.x}deg) 
                         rotateY(${mousePos.y}deg)
-                    `,
+                    ` : (mounted ? 'translateY(0)' : 'translateY(40px)'),
                     opacity: mounted ? 1 : 0,
-                    boxShadow: `
+                    boxShadow: window.innerWidth > 768 ? `
                         0 30px 60px -15px rgba(0,0,0,0.8), 
                         inset 0 1px 1px rgba(255,255,255,0.1),
                         ${mousePos.y * -0.5}px ${mousePos.x * 0.5}px 30px rgba(124, 58, 237, 0.2)
-                    `
+                    ` : '0 10px 30px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1)'
                 }}
             >
                 {/* 3D Elevated Content Wrapper */}

@@ -18,6 +18,8 @@ const WelcomeSplash = () => {
     // Calculate dynamic rotation based on mouse position relative to center of screen
     const handleMouseMove = (e) => {
         if (!isHovering) return;
+        // Disable intense 3D tracking on mobile devices to prevent jittering
+        if (window.innerWidth <= 768) return;
         const { clientX, clientY } = e;
         const centerX = window.innerWidth / 2;
         const centerY = window.innerHeight / 2;

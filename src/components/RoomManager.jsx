@@ -128,7 +128,7 @@ const RoomManager = () => {
                             </p>
                         </div>
                     ) : (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <div className="table-responsive" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', paddingBottom: '0.5rem' }}>
                             {rooms.map((room) => (
                                 <div key={room.id} style={{
                                     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
