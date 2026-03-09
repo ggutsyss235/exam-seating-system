@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Shield, BrainCircuit, Boxes, ArrowLeft, Terminal, CheckCircle2 } from 'lucide-react';
+import { Shield, BrainCircuit, Boxes, ArrowLeft, Terminal, CheckCircle2, MessageSquare, Sparkles } from 'lucide-react';
 import AnimatedLogo from '../components/AnimatedLogo';
 
 const LearnInfrastructure = () => {
@@ -173,6 +173,96 @@ const LearnInfrastructure = () => {
                 </div>
             </section>
 
+            {/* Split Screen Explanation 3: The Interface Demo */}
+            <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', padding: '6rem 4rem', position: 'relative', zIndex: 10 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', width: '100%', maxWidth: '1400px', margin: '0 auto', alignItems: 'center' }}>
+
+                    {/* Left: Chat AI Interface Mockup */}
+                    <div style={{ transform: scrollProgress > 0.6 ? 'translateX(0) scale(1)' : 'translateX(-200px) scale(0.5) rotateY(30deg)', opacity: scrollProgress > 0.6 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)', position: 'relative' }}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', color: '#0ea5e9', marginBottom: '1.5rem', fontWeight: '600' }}>
+                            <div style={{ width: '40px', height: '1px', background: '#0ea5e9' }}></div>
+                            The Agent Experience
+                        </div>
+                        <h2 style={{ fontSize: '3rem', fontWeight: '700', marginBottom: '1.5rem', lineHeight: '1.2' }}>Conversational generation.</h2>
+                        <p style={{ fontSize: '1.15rem', color: '#94a3b8', lineHeight: '1.7', marginBottom: '3rem' }}>
+                            Administrators simply talk to the Seating Master AI. The interface abstracts away complex math. You provide the room dimensions and subjects; the AI negotiates the spatial isolation logic instantly in the background.
+                        </p>
+
+                        {/* Simulated Chat Interface */}
+                        <div style={{
+                            background: 'rgba(15,23,42,0.6)', border: '1px solid rgba(14, 165, 233, 0.4)', borderRadius: '24px', padding: '1.5rem',
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.5), inset 0 2px 20px rgba(14, 165, 233, 0.1)',
+                            display: 'flex', flexDirection: 'column', gap: '1rem',
+                            transform: `translateZ(${scrollProgress > 0.6 ? 80 : 0}px)`, transition: 'all 1s ease-out'
+                        }}>
+                            {/* Chat Header */}
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1rem' }}>
+                                <div style={{ background: '#0ea5e9', padding: '0.5rem', borderRadius: '50%' }}><Sparkles size={20} color="#fff" /></div>
+                                <div>
+                                    <h4 style={{ margin: 0, color: '#fff' }}>Seating Master AI</h4>
+                                    <span style={{ color: '#10b981', fontSize: '0.8rem' }}>● Online and ready</span>
+                                </div>
+                            </div>
+
+                            {/* Chat Bubbles */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+                                {/* AI Message */}
+                                <div className="chat-reveal-1" style={{ alignSelf: 'flex-start', background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '16px', borderTopLeftRadius: '0', maxWidth: '80%', border: '1px solid rgba(255,255,255,0.1)' }}>
+                                    How many rows and seats per row does Room 101 have?
+                                </div>
+                                {/* Admin Message */}
+                                <div className="chat-reveal-2" style={{ alignSelf: 'flex-end', background: 'rgba(14, 165, 233, 0.2)', padding: '1rem', borderRadius: '16px', borderTopRightRadius: '0', maxWidth: '80%', border: '1px solid rgba(14, 165, 233, 0.4)', color: '#bae6fd' }}>
+                                    It has 6 rows. Each row has 4 seats. We need to seat Math and Physics students.
+                                </div>
+                                {/* AI Generating Message */}
+                                <div className="chat-reveal-3" style={{ alignSelf: 'flex-start', background: 'rgba(168, 85, 247, 0.1)', padding: '1rem', borderRadius: '16px', borderTopLeftRadius: '0', maxWidth: '80%', border: '1px solid rgba(168, 85, 247, 0.4)' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#d8b4fe' }}>
+                                        <div className="typing-dot"></div><div className="typing-dot"></div><div className="typing-dot"></div>
+                                        <span style={{ fontSize: '0.9rem', marginLeft: '0.5rem' }}>Processing spatial matrix...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right: Live Interface Generative Simulation */}
+                    <div style={{
+                        transform: `perspective(1200px) rotateY(${scrollProgress > 0.6 ? -30 : -70}deg) translateZ(${scrollProgress > 0.6 ? 100 : -600}px) rotateX(${scrollProgress > 0.6 ? 10 : 30}deg)`,
+                        transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)',
+                        background: 'rgba(15,23,42,0.4)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '24px', padding: '2rem',
+                        boxShadow: '-20px 20px 60px rgba(0,0,0,0.5)'
+                    }}>
+                        <h3 style={{ textAlign: 'center', color: '#94a3b8', marginBottom: '2rem', letterSpacing: '4px', textTransform: 'uppercase', fontSize: '0.9rem' }}>Live Generation Visualizer</h3>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+                            {[...Array(24)].map((_, i) => {
+                                const isMath = (i % 2 === 0 && Math.floor(i / 4) % 2 === 0) || (i % 2 !== 0 && Math.floor(i / 4) % 2 !== 0);
+                                const subj = isMath ? 'Math' : 'Physics';
+                                const colorPrimary = isMath ? '#a855f7' : '#0ea5e9';
+                                const colorBg = isMath ? 'rgba(168, 85, 247, 0.2)' : 'rgba(14, 165, 233, 0.2)';
+                                const colorBorder = isMath ? 'rgba(168, 85, 247, 0.5)' : 'rgba(14, 165, 233, 0.5)';
+
+                                return (
+                                    <div key={i} className="sequence-reveal" style={{
+                                        height: '50px', borderRadius: '8px',
+                                        background: colorBg,
+                                        border: `1px solid ${colorBorder}`,
+                                        display: 'flex', justifyContent: 'center', alignItems: 'center',
+                                        animationDelay: `${scrollProgress > 0.6 ? 2 + (i * 0.1) : 0}s`
+                                    }}>
+                                        <span style={{ color: colorPrimary, fontSize: '0.7rem', fontWeight: 'bold' }}>{subj}</span>
+                                    </div>
+                                )
+                            })}
+                        </div>
+
+                        {/* Fake UI Overlay elements */}
+                        <div className="ui-scanline" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'rgba(255,255,255,0.5)', filter: 'blur(2px)', opacity: 0.5 }}></div>
+                    </div>
+
+                </div>
+            </section>
+
             {/* Outro CTA */}
             <section style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '0 2rem', position: 'relative', zIndex: 10, borderTop: '1px solid rgba(255,255,255,0.05)', backgroundColor: 'rgba(0,0,0,0.5)' }}>
                 <div style={{ textAlign: 'center', transform: scrollProgress > 0.7 ? 'translateZ(100px) scale(1.1)' : 'translateZ(-400px) scale(0.5) rotateX(45deg)', opacity: scrollProgress > 0.7 ? 1 : 0, transition: 'all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}>
@@ -209,6 +299,43 @@ const LearnInfrastructure = () => {
                 }
                 .bounce-in {
                     animation: bounce-in-fwd 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+                }
+
+                @keyframes chat-pop {
+                    0% { transform: translateY(20px) scale(0.9); opacity: 0; }
+                    100% { transform: translateY(0) scale(1); opacity: 1; }
+                }
+                .chat-reveal-1 { animation: chat-pop 0.5s ease-out 0.5s both; }
+                .chat-reveal-2 { animation: chat-pop 0.5s ease-out 2s both; }
+                .chat-reveal-3 { animation: chat-pop 0.5s ease-out 4s both; }
+
+                @keyframes dot-blink {
+                    0%, 100% { opacity: 0.2; transform: scale(0.8); }
+                    50% { opacity: 1; transform: scale(1.2); }
+                }
+                .typing-dot {
+                    width: 6px; height: 6px; background-color: #d8b4fe; border-radius: 50%; display: inline-block;
+                    animation: dot-blink 1.4s infinite ease-in-out both;
+                }
+                .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+                .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+                
+                @keyframes seq-reveal {
+                    0% { transform: scale(0) rotateX(-90deg); opacity: 0; }
+                    100% { transform: scale(1) rotateX(0deg); opacity: 1; }
+                }
+                .sequence-reveal {
+                    animation: seq-reveal 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+                }
+
+                @keyframes scanline {
+                    0% { top: 0%; opacity: 0; }
+                    10% { opacity: 1; }
+                    90% { opacity: 1; }
+                    100% { top: 100%; opacity: 0; }
+                }
+                .ui-scanline {
+                    animation: scanline 3s linear infinite;
                 }
             `}</style>
         </div>
