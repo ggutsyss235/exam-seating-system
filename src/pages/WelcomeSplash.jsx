@@ -138,39 +138,34 @@ const WelcomeSplash = () => {
                         }} />
 
                         <h1 style={{ position: 'relative', zIndex: 1, margin: 0 }}>
-                            {/* SEATPRO part */}
-                            <span style={{
+                            {/* SEATPRO — shimmering gradient sweep */}
+                            <span className="shimmer-title" style={{
                                 display: 'block',
                                 fontSize: 'clamp(5rem, 14vw, 10rem)',
                                 fontWeight: '950',
                                 lineHeight: '0.85',
                                 letterSpacing: '-8px',
                                 textTransform: 'uppercase',
-                                background: 'linear-gradient(160deg, #ffffff 0%, #e2e8f0 30%, #a5b4fc 65%, #7c3aed 100%)',
+                                background: 'linear-gradient(110deg, #94a3b8 0%, #ffffff 20%, #a5b4fc 40%, #7c3aed 55%, #ffffff 70%, #94a3b8 100%)',
+                                backgroundSize: '300% 100%',
                                 WebkitBackgroundClip: 'text',
                                 backgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
-                                filter: 'drop-shadow(0 4px 30px rgba(139,92,246,0.4)) drop-shadow(0 0 80px rgba(139,92,246,0.15))'
+                                animation: 'shimmer-sweep 4s linear infinite',
+                                filter: 'drop-shadow(0 4px 30px rgba(139,92,246,0.5))'
                             }}>
                                 SeatPro
                             </span>
-                            {/* X — extreme neon accent */}
-                            <span style={{
+                            {/* X — neon pulse */}
+                            <span className="neon-x" style={{
                                 display: 'block',
                                 fontSize: 'clamp(6rem, 18vw, 13rem)',
                                 fontWeight: '950',
                                 lineHeight: '0.75',
                                 letterSpacing: '-8px',
-                                textTransform: 'uppercase',
                                 color: '#0ea5e9',
                                 WebkitTextFillColor: '#0ea5e9',
-                                textShadow: [
-                                    '0 0 20px rgba(14,165,233,0.9)',
-                                    '0 0 40px rgba(14,165,233,0.7)',
-                                    '0 0 80px rgba(14,165,233,0.5)',
-                                    '0 0 120px rgba(14,165,233,0.3)',
-                                    '0 0 5px rgba(255,255,255,0.8)'
-                                ].join(', ')
+                                animation: 'neon-x-pulse 2.5s ease-in-out infinite',
                             }}>
                                 X
                             </span>
@@ -187,7 +182,7 @@ const WelcomeSplash = () => {
                             color: 'rgba(255,255,255,0.85)',
                             textShadow: '0 2px 20px rgba(0,0,0,0.8)'
                         }}>
-                            Advanced <span style={{ color: '#a5b4fc', textShadow: '0 0 20px rgba(165,180,252,0.6)' }}>Matrix</span> Engine.
+                            Advanced <span className="matrix-word" style={{ color: '#a5b4fc', fontWeight: '800' }}>Matrix</span> Engine.
                         </p>
                     </div>
 
@@ -203,8 +198,8 @@ const WelcomeSplash = () => {
                         textShadow: '0 1px 12px rgba(0,0,0,0.9)'
                     }}>
                         The intelligent infrastructure for examination management.{' '}
-                        <span style={{ color: '#c4b5fd', fontWeight: '600' }}>Cryptographically secure</span> matrices,{' '}
-                        <span style={{ color: '#7dd3fc', fontWeight: '600' }}>algorithmic anti-cheating</span>, and precise spatial distribution.
+                        <span className="kw-violet" style={{ fontWeight: '600' }}>Cryptographically secure</span> matrices,{' '}
+                        <span className="kw-cyan" style={{ fontWeight: '600' }}>algorithmic anti-cheating</span>, and precise spatial distribution.
                     </p>
 
                     {/* Action Buttons (Elevated further) */}
@@ -255,33 +250,79 @@ const WelcomeSplash = () => {
             </div>
 
             <style>{`
+                /* Shimmer sweep across title text */
+                @keyframes shimmer-sweep {
+                    0%   { background-position: 200% center; }
+                    100% { background-position: -200% center; }
+                }
+
+                /* Neon X – breathes in and out */
+                @keyframes neon-x-pulse {
+                    0%, 100% {
+                        text-shadow:
+                            0 0 10px rgba(14,165,233,0.8),
+                            0 0 30px rgba(14,165,233,0.6),
+                            0 0 60px rgba(14,165,233,0.4),
+                            0 0 5px rgba(255,255,255,0.7);
+                    }
+                    50% {
+                        text-shadow:
+                            0 0 25px rgba(14,165,233,1),
+                            0 0 60px rgba(14,165,233,0.9),
+                            0 0 100px rgba(14,165,233,0.7),
+                            0 0 140px rgba(14,165,233,0.4),
+                            0 0 8px rgba(255,255,255,1);
+                    }
+                }
+
+                /* Badge dot pulse */
+                @keyframes pulse-glow {
+                    0%, 100% { opacity: 1; box-shadow: 0 0 8px #a855f7; }
+                    50% { opacity: 0.5; box-shadow: 0 0 20px #a855f7; }
+                }
+
+                /* Tagline "Matrix" word shimmer */
+                @keyframes word-glow {
+                    0%, 100% { text-shadow: 0 0 15px rgba(165,180,252,0.4); }
+                    50% { text-shadow: 0 0 30px rgba(165,180,252,0.9), 0 0 60px rgba(165,180,252,0.4); }
+                }
+                .matrix-word { animation: word-glow 3s ease-in-out infinite; }
+
+                /* Subtitle keyword shimmer */
+                @keyframes keyword-glow-violet {
+                    0%, 100% { color: #c4b5fd; text-shadow: 0 0 8px rgba(196,181,253,0.3); }
+                    50% { color: #ddd6fe; text-shadow: 0 0 20px rgba(196,181,253,0.8); }
+                }
+                @keyframes keyword-glow-cyan {
+                    0%, 100% { color: #7dd3fc; text-shadow: 0 0 8px rgba(125,211,252,0.3); }
+                    50% { color: #bae6fd; text-shadow: 0 0 20px rgba(125,211,252,0.8); }
+                }
+                .kw-violet { animation: keyword-glow-violet 3s ease-in-out infinite; }
+                .kw-cyan { animation: keyword-glow-cyan 3s ease-in-out infinite 1.5s; }
+
+                /* Floating orbs */
                 @keyframes float-slow {
-                    0% { transform: translateY(0) translateX(0) scale(1); }
-                    33% { transform: translateY(-30px) translateX(20px) scale(1.05); }
-                    66% { transform: translateY(20px) translateX(-20px) scale(0.95); }
-                    100% { transform: translateY(0) translateX(0) scale(1); }
+                    0%   { transform: translateY(0)   translateX(0)   scale(1); }
+                    33%  { transform: translateY(-30px) translateX(20px)  scale(1.05); }
+                    66%  { transform: translateY(20px)  translateX(-20px) scale(0.95); }
+                    100% { transform: translateY(0)   translateX(0)   scale(1); }
                 }
                 @keyframes pulse-intense {
-                    0% { opacity: 1; transform: scale(1); }
-                    50% { opacity: 0.5; transform: scale(0.8); }
-                    100% { opacity: 1; transform: scale(1); }
+                    0%, 100% { opacity: 1; transform: scale(1); }
+                    50%       { opacity: 0.5; transform: scale(0.8); }
                 }
                 .orb { animation: float-slow 15s infinite ease-in-out; }
                 .orb-2 { animation-delay: -5s; animation-duration: 20s; }
                 .orb-3 { animation-delay: -10s; animation-duration: 12s; }
                 .pulse-dot { animation: pulse-intense 2s infinite ease-in-out; }
-                
                 .ambient-glow { animation: float-slow 20s infinite alternate linear; }
                 .ambient-glow-alt { animation: float-slow 25s infinite alternate-reverse linear; }
-                
+
                 .feature-reveal {
                     animation: reveal-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-                    opacity: 0;
-                    transform: translateY(20px);
+                    opacity: 0; transform: translateY(20px);
                 }
-                @keyframes reveal-up {
-                    to { opacity: 1; transform: translateY(0); }
-                }
+                @keyframes reveal-up { to { opacity: 1; transform: translateY(0); } }
             `}</style>
         </div>
     );
