@@ -125,47 +125,47 @@ const WelcomeSplash = () => {
                         <span style={{ color: '#c4b5fd', fontSize: '0.78rem', fontWeight: '800', letterSpacing: '3px', textTransform: 'uppercase', textShadow: '0 0 12px rgba(196,181,253,0.5)' }}>Seating Intelligence Engine v2.0</span>
                     </div>
 
-                    {/* ===== CINEMATIC HERO TITLE ===== */}
-                    <div style={{ marginBottom: '1.5rem', position: 'relative', lineHeight: 1 }}>
+                    {/* ===== UNIFIED CINEMATIC HERO TITLE ===== */}
+                    <div style={{ marginBottom: '2rem', position: 'relative' }}>
 
-                        {/* Atmospheric glow bloom behind title */}
+                        {/* Multi-layer ambient bloom */}
                         <div style={{
                             position: 'absolute', top: '50%', left: '50%',
                             transform: 'translate(-50%, -50%)',
-                            width: '120%', height: '200%',
-                            background: 'radial-gradient(ellipse at center, rgba(139,92,246,0.18) 0%, transparent 70%)',
-                            filter: 'blur(40px)', zIndex: 0, pointerEvents: 'none'
+                            width: '140%', height: '300%',
+                            background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(139,92,246,0.22) 0%, rgba(14,165,233,0.08) 50%, transparent 80%)',
+                            filter: 'blur(50px)', zIndex: 0, pointerEvents: 'none',
+                            animation: 'bloom-breathe 4s ease-in-out infinite'
                         }} />
 
-                        <h1 style={{ position: 'relative', zIndex: 1, margin: 0 }}>
-                            {/* SEATPRO — shimmering gradient sweep */}
-                            <span className="shimmer-title" style={{
-                                display: 'block',
-                                fontSize: 'clamp(5rem, 14vw, 10rem)',
-                                fontWeight: '950',
-                                lineHeight: '0.85',
-                                letterSpacing: '-8px',
-                                textTransform: 'uppercase',
-                                background: 'linear-gradient(110deg, #94a3b8 0%, #ffffff 20%, #a5b4fc 40%, #7c3aed 55%, #ffffff 70%, #94a3b8 100%)',
-                                backgroundSize: '300% 100%',
+                        <h1 className="hero-wordmark" style={{
+                            position: 'relative', zIndex: 1, margin: 0,
+                            fontSize: 'clamp(4.5rem, 13vw, 11rem)',
+                            fontWeight: '950',
+                            lineHeight: '1',
+                            letterSpacing: '-6px',
+                            textTransform: 'uppercase',
+                            whiteSpace: 'nowrap',
+                        }}>
+                            {/* SeatPro — holographic shimmer sweep */}
+                            <span className="hero-shimmer" style={{
+                                background: 'linear-gradient(105deg, #64748b 0%, #e2e8f0 15%, #ffffff 25%, #c4b5fd 40%, #8b5cf6 50%, #ffffff 62%, #a5b4fc 75%, #64748b 100%)',
+                                backgroundSize: '400% 100%',
                                 WebkitBackgroundClip: 'text',
                                 backgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
-                                animation: 'shimmer-sweep 4s linear infinite',
-                                filter: 'drop-shadow(0 4px 30px rgba(139,92,246,0.5))'
+                                animation: 'holographic-sweep 3.5s linear infinite',
+                                display: 'inline',
                             }}>
                                 SeatPro
                             </span>
-                            {/* X — neon pulse */}
-                            <span className="neon-x" style={{
-                                display: 'block',
-                                fontSize: 'clamp(6rem, 18vw, 13rem)',
-                                fontWeight: '950',
-                                lineHeight: '0.75',
-                                letterSpacing: '-8px',
+                            {/* X — prismatic neon, same scale, inline */}
+                            <span className="hero-x" style={{
+                                display: 'inline',
                                 color: '#0ea5e9',
                                 WebkitTextFillColor: '#0ea5e9',
                                 animation: 'neon-x-pulse 2.5s ease-in-out infinite',
+                                marginLeft: '2px',
                             }}>
                                 X
                             </span>
@@ -250,10 +250,16 @@ const WelcomeSplash = () => {
             </div>
 
             <style>{`
-                /* Shimmer sweep across title text */
-                @keyframes shimmer-sweep {
-                    0%   { background-position: 200% center; }
-                    100% { background-position: -200% center; }
+                /* Holographic shimmer sweep across SeatPro */
+                @keyframes holographic-sweep {
+                    0%   { background-position: 300% center; }
+                    100% { background-position: -300% center; }
+                }
+
+                /* Bloom behind title breathes */
+                @keyframes bloom-breathe {
+                    0%, 100% { opacity: 0.6; transform: translate(-50%,-50%) scale(1); }
+                    50%       { opacity: 1;   transform: translate(-50%,-50%) scale(1.15); }
                 }
 
                 /* Neon X – breathes in and out */
