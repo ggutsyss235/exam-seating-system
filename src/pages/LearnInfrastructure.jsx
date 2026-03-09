@@ -70,12 +70,12 @@ const LearnInfrastructure = () => {
                 </div>
 
                 {/* 3D Floating Elements attached to Hero */}
-                <div style={{ position: 'absolute', top: '50%', left: '10%', transform: `translateY(-50%) translateZ(${scrollProgress * 200}px) rotateY(${scrollProgress * 45}deg)`, transition: 'transform 0.1s ease-out', zIndex: 5 }}>
+                <div style={{ position: 'absolute', top: '50%', left: '10%', transform: `translateY(-50%) translateZ(${scrollProgress * 600}px) rotateY(${scrollProgress * 180}deg) scale(${1 + scrollProgress})`, transition: 'transform 0.1s ease-out', zIndex: 5 }}>
                     <div className="float-obj" style={{ padding: '1.5rem', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(14, 165, 233, 0.3)', borderRadius: '16px', backdropFilter: 'blur(10px)', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
                         <Terminal color="#0ea5e9" size={32} />
                     </div>
                 </div>
-                <div style={{ position: 'absolute', top: '30%', right: '12%', transform: `translateY(-50%) translateZ(${scrollProgress * 100}px) rotateX(${scrollProgress * -30}deg)`, transition: 'transform 0.1s ease-out', zIndex: 5 }}>
+                <div style={{ position: 'absolute', top: '30%', right: '12%', transform: `translateY(-50%) translateZ(${scrollProgress * 400}px) rotateX(${scrollProgress * -120}deg) scale(${1 + scrollProgress * 1.5})`, transition: 'transform 0.1s ease-out', zIndex: 5 }}>
                     <div className="float-obj-alt" style={{ padding: '1.5rem', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(168, 85, 247, 0.3)', borderRadius: '16px', backdropFilter: 'blur(10px)', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
                         <BrainCircuit color="#a855f7" size={32} />
                     </div>
@@ -87,7 +87,7 @@ const LearnInfrastructure = () => {
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', width: '100%', maxWidth: '1400px', margin: '0 auto', alignItems: 'center' }}>
 
                     {/* Left: Text */}
-                    <div style={{ transform: scrollProgress > 0.1 ? 'translateX(0)' : 'translateX(-50px)', opacity: scrollProgress > 0.1 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+                    <div style={{ transform: scrollProgress > 0.1 ? 'translateX(0) scale(1)' : 'translateX(-200px) scale(0.5) rotateY(30deg)', opacity: scrollProgress > 0.1 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' }}>
                         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', color: '#ef4444', marginBottom: '1.5rem', fontWeight: '600' }}>
                             <div style={{ width: '40px', height: '1px', background: '#ef4444' }}></div>
                             The Legacy Problem
@@ -105,7 +105,7 @@ const LearnInfrastructure = () => {
 
                     {/* Right: Visual Bad Grid Demo */}
                     <div style={{
-                        transform: `perspective(1000px) rotateY(-20deg) translateZ(${scrollProgress > 0.1 ? 50 : 0}px)`,
+                        transform: `perspective(1200px) rotateY(${scrollProgress > 0.1 ? -35 : -70}deg) translateZ(${scrollProgress > 0.1 ? 150 : -600}px) rotateX(${scrollProgress > 0.1 ? 5 : 30}deg)`,
                         transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)',
                         background: 'rgba(15,23,42,0.4)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '24px', padding: '2rem',
                         boxShadow: '-20px 20px 60px rgba(0,0,0,0.5)'
@@ -133,7 +133,7 @@ const LearnInfrastructure = () => {
 
                     {/* Left: Interactive Good Grid Demo */}
                     <div style={{
-                        transform: `perspective(1000px) rotateY(20deg) translateZ(${scrollProgress > 0.4 ? 50 : 0}px)`,
+                        transform: `perspective(1200px) rotateY(${scrollProgress > 0.4 ? 35 : 70}deg) translateZ(${scrollProgress > 0.4 ? 150 : -600}px) rotateX(${scrollProgress > 0.4 ? -5 : -30}deg)`,
                         transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)',
                         background: 'rgba(15,23,42,0.4)', border: '1px solid rgba(168, 85, 247, 0.3)', borderRadius: '24px', padding: '2rem',
                         boxShadow: '20px 20px 60px rgba(124, 58, 237, 0.1)'
@@ -154,7 +154,7 @@ const LearnInfrastructure = () => {
                     </div>
 
                     {/* Right: Text */}
-                    <div style={{ transform: scrollProgress > 0.4 ? 'translateX(0)' : 'translateX(50px)', opacity: scrollProgress > 0.4 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+                    <div style={{ transform: scrollProgress > 0.4 ? 'translateX(0) scale(1)' : 'translateX(200px) scale(0.5) rotateY(-30deg)', opacity: scrollProgress > 0.4 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' }}>
                         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', color: '#a855f7', marginBottom: '1.5rem', fontWeight: '600' }}>
                             <div style={{ width: '40px', height: '1px', background: '#a855f7' }}></div>
                             The Deterministic Solution
@@ -175,7 +175,7 @@ const LearnInfrastructure = () => {
 
             {/* Outro CTA */}
             <section style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '0 2rem', position: 'relative', zIndex: 10, borderTop: '1px solid rgba(255,255,255,0.05)', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                <div style={{ textAlign: 'center', transform: scrollProgress > 0.7 ? 'scale(1)' : 'scale(0.9)', opacity: scrollProgress > 0.7 ? 1 : 0, transition: 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}>
+                <div style={{ textAlign: 'center', transform: scrollProgress > 0.7 ? 'translateZ(100px) scale(1.1)' : 'translateZ(-400px) scale(0.5) rotateX(45deg)', opacity: scrollProgress > 0.7 ? 1 : 0, transition: 'all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}>
                     <h2 style={{ fontSize: '3.5rem', fontWeight: '800', marginBottom: '2rem' }}>Ready to secure your exams?</h2>
                     <button
                         onClick={() => navigate('/login')}
