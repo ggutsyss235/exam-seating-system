@@ -3,65 +3,101 @@ import { useNavigate } from 'react-router-dom';
 import { Network, Shield, Cpu, ArrowRight } from 'lucide-react';
 import HeroCanvas3D from '../components/HeroCanvas3D';
 
+// Shared mouse ref — read by HeroCanvas3D via prop each frame
+export const sharedMouse = { x: 0, y: 0 };
+
 const WelcomeSplash = () => {
     const navigate = useNavigate();
     const [mounted, setMounted] = useState(false);
-    const [mouse, setMouse] = useState({ x: 0, y: 0 });
-    // Smooth CSS 3D rotation values (separate from Three.js)
-    const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+    // DOM refs for direct style manipulation (no re-renders)
+    const cardRef = useRef(null);
+    const sheenRef = useRef(null);
+    const layer1Ref = useRef(null);
+    const layer2Ref = useRef(null);
+    const layer3Ref = useRef(null);
+    const vignRef = useRef(null);
     const rafRef = useRef(null);
-    const targetRef = useRef({ x: 0, y: 0 });
-    const currentRef = useRef({ x: 0, y: 0 });
+
+    // Raw + smoothed mouse targets — never touches React state
+    const raw = useRef({ x: 0, y: 0 });
+    const smooth = useRef({ x: 0, y: 0 });
+    // Separate ref for passing to Three.js (updated each frame)
+    const mouseForCanvas = useRef({ x: 0, y: 0 });
+    const [canvasMouse, setCanvasMouse] = useState({ x: 0, y: 0 });
+    const canvasUpdateTimer = useRef(null);
 
     useEffect(() => {
         const t = setTimeout(() => setMounted(true), 100);
         return () => clearTimeout(t);
     }, []);
 
-    // Smooth animation loop for CSS tilt
+    // Animation loop — runs independently of React
     useEffect(() => {
-        const animate = () => {
-            const cx = currentRef.current.x + (targetRef.current.x - currentRef.current.x) * 0.07;
-            const cy = currentRef.current.y + (targetRef.current.y - currentRef.current.y) * 0.07;
-            currentRef.current = { x: cx, y: cy };
-            setTilt({ x: cx, y: cy });
-            rafRef.current = requestAnimationFrame(animate);
+        const tick = () => {
+            // Lerp smooth toward raw
+            smooth.current.x += (raw.current.x - smooth.current.x) * 0.07;
+            smooth.current.y += (raw.current.y - smooth.current.y) * 0.07;
+
+            const sx = smooth.current.x;
+            const sy = smooth.current.y;
+
+            // Card 3D tilt
+            if (cardRef.current) {
+                cardRef.current.style.transform = `
+                    perspective(1000px)
+                    rotateX(${-sy * 10}deg)
+                    rotateY(${sx * 10}deg)
+                `;
+            }
+
+            // Moving sheen inside card
+            if (sheenRef.current) {
+                const spotX = 50 + sx * 30;
+                const spotY = 50 + sy * 30;
+                sheenRef.current.style.background = `radial-gradient(circle at ${spotX}% ${spotY}%, rgba(255,255,255,0.055) 0%, transparent 60%)`;
+            }
+
+            // Vignette spotlight
+            if (vignRef.current) {
+                const spotX = 50 + sx * 25;
+                const spotY = 50 + sy * 25;
+                vignRef.current.style.background = `
+                    radial-gradient(circle at ${spotX}% ${spotY}%, rgba(139,92,246,0.14) 0%, transparent 50%),
+                    radial-gradient(ellipse 70% 80% at 50% 50%, transparent 30%, rgba(5,5,10,0.6) 75%, rgba(5,5,10,0.92) 100%)
+                `;
+            }
+
+            // Parallax layers (different speeds = depth illusion)
+            if (layer1Ref.current)
+                layer1Ref.current.style.transform = `translate(${-sx * 18}px, ${-sy * 12}px)`;
+            if (layer2Ref.current)
+                layer2Ref.current.style.transform = `translate(${-sx * 10}px, ${-sy * 7}px)`;
+            if (layer3Ref.current)
+                layer3Ref.current.style.transform = `translate(${-sx * 5}px, ${-sy * 3}px)`;
+
+            rafRef.current = requestAnimationFrame(tick);
         };
-        rafRef.current = requestAnimationFrame(animate);
+        rafRef.current = requestAnimationFrame(tick);
         return () => cancelAnimationFrame(rafRef.current);
     }, []);
 
+    // Update canvas mouse at low frequency (30fps) to avoid Three.js flooding
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCanvasMouse({ x: smooth.current.x, y: smooth.current.y });
+        }, 33);
+        return () => clearInterval(interval);
+    }, []);
+
     const handleMouseMove = useCallback((e) => {
-        const cx = window.innerWidth / 2;
-        const cy = window.innerHeight / 2;
-        const nx = (e.clientX - cx) / cx;   // -1 → 1
-        const ny = (e.clientY - cy) / cy;   // -1 → 1
-        targetRef.current = { x: nx, y: ny };
-        setMouse({ x: nx, y: ny });
+        raw.current.x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+        raw.current.y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
     }, []);
 
     const handleMouseLeave = useCallback(() => {
-        targetRef.current = { x: 0, y: 0 };
-        setMouse({ x: 0, y: 0 });
+        raw.current = { x: 0, y: 0 };
     }, []);
-
-    // CSS card tilt: rotateX/Y driven by smooth interpolated mouse
-    const cardTransform = `
-        perspective(1000px)
-        rotateX(${-tilt.y * 10}deg)
-        rotateY(${tilt.x * 10}deg)
-        translateZ(0px)
-    `;
-
-    // Depth layers for parallax: elements further back shift less
-    const layer1 = `translate(${-tilt.x * 18}px, ${-tilt.y * 12}px)`; // badge — fast
-    const layer2 = `translate(${-tilt.x * 10}px, ${-tilt.y * 7}px)`; // title
-    const layer3 = `translate(${-tilt.x * 5}px, ${-tilt.y * 3}px)`; // description — slow
-
-    // Dynamic highlight spot that follows cursor
-    const spotX = 50 + tilt.x * 30;
-    const spotY = 50 + tilt.y * 30;
-    const spotGradient = `radial-gradient(circle at ${spotX}% ${spotY}%, rgba(139,92,246,0.18) 0%, transparent 55%)`;
 
     return (
         <div
@@ -79,22 +115,20 @@ const WelcomeSplash = () => {
                 fontFamily: "'Outfit', 'Inter', sans-serif",
             }}
         >
-            {/* Three.js scene */}
+            {/* Three.js scene — updated at 30fps, no excessive re-renders */}
             <Suspense fallback={null}>
-                <HeroCanvas3D mouse={mouse} />
+                <HeroCanvas3D mouse={canvasMouse} />
             </Suspense>
 
-            {/* Vignette + moving spot light */}
-            <div style={{
+            {/* Vignette + moving spot */}
+            <div ref={vignRef} style={{
                 position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
-                background: `
-                    ${spotGradient},
-                    radial-gradient(ellipse 70% 80% at 50% 50%, transparent 30%, rgba(5,5,10,0.6) 75%, rgba(5,5,10,0.92) 100%)
-                `,
+                background: 'radial-gradient(ellipse 70% 80% at 50% 50%, transparent 30%, rgba(5,5,10,0.6) 75%, rgba(5,5,10,0.92) 100%)',
             }} />
 
-            {/* ── Hero Content with CSS 3D card tilt ─────────────── */}
+            {/* ── Hero Content ─────────────────────────────────── */}
             <div
+                ref={cardRef}
                 style={{
                     position: 'relative', zIndex: 10,
                     textAlign: 'center',
@@ -103,23 +137,18 @@ const WelcomeSplash = () => {
                     opacity: mounted ? 1 : 0,
                     transition: 'opacity 1.2s cubic-bezier(0.16,1,0.3,1)',
                     transformStyle: 'preserve-3d',
-                    transform: cardTransform,
-                    // Glassmorphism card — fully transparent
                     background: 'transparent',
                     border: 'none',
                     borderRadius: '28px',
-                    boxShadow: 'none',
                 }}
             >
-                {/* Sheen: inner highlight that moves with mouse */}
-                <div style={{
+                {/* Moving sheen */}
+                <div ref={sheenRef} style={{
                     position: 'absolute', inset: 0, borderRadius: '28px', pointerEvents: 'none',
-                    background: `radial-gradient(circle at ${spotX}% ${spotY}%, rgba(255,255,255,0.06) 0%, transparent 60%)`,
-                    transition: 'background 0.1s',
                 }} />
 
                 {/* Layer 1 — badge (shifts fastest) */}
-                <div style={{ transform: layer1, transition: 'transform 0.05s', marginBottom: '2rem' }}>
+                <div ref={layer1Ref} style={{ marginBottom: '2rem' }}>
                     <div style={{
                         display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
                         padding: '0.45rem 1.2rem', borderRadius: '999px',
@@ -142,8 +171,8 @@ const WelcomeSplash = () => {
                     </div>
                 </div>
 
-                {/* Layer 2 — title (shifts at medium speed) */}
-                <div style={{ transform: layer2, transition: 'transform 0.05s' }}>
+                {/* Layer 2 — title */}
+                <div ref={layer2Ref}>
                     <h1 style={{
                         margin: '0 0 1rem',
                         fontSize: 'clamp(3.5rem, 10vw, 8rem)',
@@ -179,8 +208,8 @@ const WelcomeSplash = () => {
                     </p>
                 </div>
 
-                {/* Layer 3 — description (slowest, feels deepest) */}
-                <div style={{ transform: layer3, transition: 'transform 0.05s' }}>
+                {/* Layer 3 — description + buttons (slowest) */}
+                <div ref={layer3Ref}>
                     <p style={{
                         fontSize: 'clamp(0.88rem, 1.5vw, 1.05rem)',
                         color: 'rgba(203,213,225,0.65)',
@@ -194,7 +223,6 @@ const WelcomeSplash = () => {
                         <span className="kw-cyan" style={{ fontWeight: '600' }}>algorithmic anti-cheating</span>, and precise spatial distribution.
                     </p>
 
-                    {/* Buttons */}
                     <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '3rem', flexWrap: 'wrap' }}>
                         <button
                             onClick={() => navigate('/login')}
@@ -229,7 +257,6 @@ const WelcomeSplash = () => {
                         </button>
                     </div>
 
-                    {/* Feature chips */}
                     <div style={{
                         display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap',
                         borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: '2rem',
