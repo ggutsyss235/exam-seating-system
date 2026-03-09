@@ -79,19 +79,6 @@ const WelcomeSplash = () => {
                 fontFamily: "'Outfit', 'Inter', sans-serif",
             }}
         >
-            {/* Custom spotlight cursor */}
-            <div style={{
-                position: 'fixed',
-                left: `calc(50% + ${mouse.x * window.innerWidth / 2}px)`,
-                top: `calc(50% + ${mouse.y * window.innerHeight / 2}px)`,
-                transform: 'translate(-50%, -50%)',
-                width: '400px', height: '400px',
-                background: 'radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 60%)',
-                pointerEvents: 'none',
-                zIndex: 2,
-                transition: 'left 0.05s, top 0.05s',
-            }} />
-
             {/* Three.js scene */}
             <Suspense fallback={null}>
                 <HeroCanvas3D mouse={mouse} />
