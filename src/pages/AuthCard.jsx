@@ -142,26 +142,27 @@ const AuthCard = ({ isLogin }) => {
                 className="main-3d-platform"
                 style={{
                     width: '100%',
-                    maxWidth: isLogin ? '440px' : '580px',
-                    padding: window.innerWidth <= 480 ? '2rem 1.5rem' : '3rem 2.5rem',
-                    transition: isHovering && window.innerWidth > 768 ? 'transform 0.1s ease-out, max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1)' : 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+                    maxWidth: isLogin ? '440px' : '620px',
+                    padding: window.innerWidth <= 480 ? '2rem 1.5rem' : '3.5rem 3rem',
+                    transition: isHovering && window.innerWidth > 768 ? 'transform 0.15s ease-out, max-width 0.6s cubic-bezier(0.16, 1, 0.3, 1)' : 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
                     zIndex: 1,
-                    backdropFilter: 'blur(20px)',
-                    WebkitBackdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    backgroundColor: 'rgba(15, 23, 42, 0.65)',
-                    borderRadius: '24px',
+                    backdropFilter: 'blur(30px)',
+                    WebkitBackdropFilter: 'blur(30px)',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    backgroundColor: 'rgba(15, 23, 42, 0.75)',
+                    borderRadius: '32px',
                     transformStyle: window.innerWidth > 768 ? 'preserve-3d' : 'flat',
                     transform: window.innerWidth > 768 ? `
-                        ${mounted ? 'translateY(0)' : 'translateY(40px)'}
-                        rotateX(${mousePos.x}deg) 
-                        rotateY(${mousePos.y}deg)
+                        ${mounted ? 'translateY(0)' : 'translateY(60px)'}
+                        rotateX(${mousePos.x * 1.2}deg) 
+                        rotateY(${mousePos.y * 1.2}deg)
+                        translateZ(0)
                     ` : (mounted ? 'translateY(0)' : 'translateY(40px)'),
                     opacity: mounted ? 1 : 0,
                     boxShadow: window.innerWidth > 768 ? `
-                        0 30px 60px -15px rgba(0,0,0,0.8), 
-                        inset 0 1px 1px rgba(255,255,255,0.1),
-                        ${mousePos.y * -0.5}px ${mousePos.x * 0.5}px 30px rgba(124, 58, 237, 0.2)
+                        0 45px 100px -20px rgba(0,0,0,0.9), 
+                        inset 0 1px 1px rgba(255,255,255,0.15),
+                        ${mousePos.y * -1.2}px ${mousePos.x * 1.2}px 60px rgba(139, 92, 246, 0.25)
                     ` : '0 10px 30px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1)'
                 }}
             >
@@ -224,19 +225,26 @@ const AuthCard = ({ isLogin }) => {
                             </div>
 
                             <div className="form-group" style={{ marginBottom: 0 }}>
-                                <label className="form-label" style={{ fontSize: '0.8rem', display: 'flex', justifyContent: 'space-between', color: '#ffffff', fontWeight: '700' }}>
-                                    Password
+                                <label className="form-label" style={{ fontSize: '0.8rem', display: 'flex', justifyContent: 'space-between', color: '#ffffff', fontWeight: '800', textShadow: 'none' }}>
+                                    Security Cipher Key
                                     {isLogin && <a href="#" style={{ textTransform: 'none', color: 'var(--primary)', letterSpacing: '0', fontWeight: '800' }}>Forgot?</a>}
                                 </label>
                                 <div style={{ position: 'relative' }}>
-                                    <Lock size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                                    <Lock size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--primary)', opacity: 0.8 }} />
                                     <input
                                         type={showPassword ? "text" : "password"}
                                         className="form-input"
                                         placeholder="••••••••"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        style={{ paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
+                                        style={{
+                                            paddingLeft: '2.5rem',
+                                            paddingRight: '2.5rem',
+                                            color: '#ffffff',
+                                            fontWeight: '600',
+                                            backgroundColor: 'rgba(0,0,0,0.4)',
+                                            textShadow: 'none'
+                                        }}
                                         required
                                     />
                                     <button
@@ -255,17 +263,17 @@ const AuthCard = ({ isLogin }) => {
                                 <div style={{ height: '1px', background: 'var(--border)', margin: '0.5rem 0' }}></div>
                                 <div className="form-group" style={{ marginBottom: 0 }}>
                                     <label className="form-label" style={{ fontSize: '0.85rem' }}>Primary Institutional Role</label>
-                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem', marginTop: '0.5rem' }}>
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginTop: '1rem', perspective: '1000px' }}>
                                         <RoleSelector
-                                            icon={<Briefcase size={20} />} title="Teacher"
+                                            icon={<Briefcase size={22} />} title="Teacher"
                                             isActive={role === 'Teacher'} onClick={() => setRole('Teacher')}
                                         />
                                         <RoleSelector
-                                            icon={<GraduationCap size={20} />} title="Class Teacher"
+                                            icon={<GraduationCap size={22} />} title="Class Teacher"
                                             isActive={role === 'Class Teacher'} onClick={() => setRole('Class Teacher')}
                                         />
                                         <RoleSelector
-                                            icon={<ShieldCheck size={20} />} title="Exam Board"
+                                            icon={<ShieldCheck size={22} />} title="Exam Board"
                                             isActive={role === 'Exam Board Official'} onClick={() => setRole('Exam Board Official')}
                                         />
                                     </div>
@@ -410,19 +418,37 @@ const RoleSelector = ({ icon, title, isActive, onClick }) => (
     <div
         onClick={onClick}
         style={{
-            padding: '1.25rem 0.5rem',
-            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem',
-            border: `2px solid ${isActive ? 'var(--primary)' : 'var(--border)'}`,
+            padding: '1.5rem 0.5rem',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem',
+            border: `1.5px solid ${isActive ? 'var(--primary)' : 'rgba(255,255,255,0.08)'}`,
             borderRadius: 'var(--radius-md)',
-            background: isActive ? 'var(--primary-light)' : 'var(--background)',
-            color: isActive ? 'var(--primary)' : 'var(--text-muted)',
+            background: isActive ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.05))' : 'rgba(0,0,0,0.3)',
+            color: isActive ? '#fff' : 'var(--text-muted)',
             cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            textAlign: 'center'
+            transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+            textAlign: 'center',
+            transformStyle: 'preserve-3d',
+            transform: isActive ? 'translateZ(20px) scale(1.05)' : 'translateZ(0) scale(1)',
+            boxShadow: isActive ? '0 15px 35px rgba(139, 92, 246, 0.3), inset 0 1px 1px rgba(255,255,255,0.2)' : '0 4px 15px rgba(0,0,0,0.2)',
+            outline: isActive ? '2px solid var(--primary)' : 'none',
+            outlineOffset: '4px'
         }}
     >
-        {icon}
-        <span style={{ fontSize: '0.8rem', fontWeight: isActive ? '700' : '500', lineHeight: 1.2 }}>{title}</span>
+        <div style={{
+            transform: isActive ? 'translateZ(10px)' : 'none',
+            transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+            color: isActive ? 'var(--primary)' : 'inherit'
+        }}>
+            {icon}
+        </div>
+        <span style={{
+            fontSize: '0.8rem',
+            fontWeight: isActive ? '900' : '600',
+            lineHeight: 1.2,
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+            textShadow: isActive ? 'var(--text-shadow-glow)' : 'none'
+        }}>{title}</span>
     </div>
 );
 
