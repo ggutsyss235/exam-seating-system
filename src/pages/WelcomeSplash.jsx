@@ -112,44 +112,99 @@ const WelcomeSplash = () => {
                 {/* 3D Elevated Content Wrapper */}
                 <div style={{ transform: 'translateZ(40px)', transition: 'transform 0.3s ease-out' }}>
 
+                    {/* Version Badge */}
                     <div style={{
                         display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
-                        padding: '0.6rem 1.5rem', borderRadius: '999px',
-                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                        border: '1px solid rgba(139, 92, 246, 0.3)',
-                        marginBottom: '2.5rem', backdropFilter: 'blur(10px)',
-                        boxShadow: '0 0 20px rgba(139, 92, 246, 0.2)',
-                        textShadow: 'var(--text-shadow-neon)'
+                        padding: '0.5rem 1.25rem', borderRadius: '999px',
+                        background: 'linear-gradient(90deg, rgba(139,92,246,0.15), rgba(14,165,233,0.1))',
+                        border: '1px solid rgba(139, 92, 246, 0.35)',
+                        marginBottom: '3rem', backdropFilter: 'blur(10px)',
+                        boxShadow: '0 0 25px rgba(139, 92, 246, 0.2), inset 0 1px 0 rgba(255,255,255,0.1)'
                     }}>
-                        <span className="pulse-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--primary)', boxShadow: '0 0 12px var(--primary)' }}></span>
-                        <span style={{ color: 'var(--primary)', fontSize: '0.85rem', fontWeight: '800', letterSpacing: '2px', textTransform: 'uppercase' }}>Seating Intelligence Engine v2.0</span>
+                        <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#a855f7', boxShadow: '0 0 12px #a855f7', display: 'inline-block', animation: 'pulse-glow 2s ease-in-out infinite' }}></span>
+                        <span style={{ color: '#c4b5fd', fontSize: '0.78rem', fontWeight: '800', letterSpacing: '3px', textTransform: 'uppercase', textShadow: '0 0 12px rgba(196,181,253,0.5)' }}>Seating Intelligence Engine v2.0</span>
                     </div>
 
-                    <div style={{ marginBottom: '2.5rem', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6))' }}>
-                        <h1 style={{
-                            fontSize: 'clamp(4rem, 12vw, 8rem)', fontWeight: '950', lineHeight: '0.85',
-                            margin: '0 auto 1rem', textTransform: 'uppercase', letterSpacing: '-6px',
-                            background: 'var(--gradient-text)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-                            textShadow: 'none'
-                        }}>
-                            SeatPro<span style={{ color: 'var(--secondary)', WebkitTextFillColor: 'var(--secondary)', textShadow: 'var(--text-shadow-neon)' }}>X</span>
+                    {/* ===== CINEMATIC HERO TITLE ===== */}
+                    <div style={{ marginBottom: '1.5rem', position: 'relative', lineHeight: 1 }}>
+
+                        {/* Atmospheric glow bloom behind title */}
+                        <div style={{
+                            position: 'absolute', top: '50%', left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: '120%', height: '200%',
+                            background: 'radial-gradient(ellipse at center, rgba(139,92,246,0.18) 0%, transparent 70%)',
+                            filter: 'blur(40px)', zIndex: 0, pointerEvents: 'none'
+                        }} />
+
+                        <h1 style={{ position: 'relative', zIndex: 1, margin: 0 }}>
+                            {/* SEATPRO part */}
+                            <span style={{
+                                display: 'block',
+                                fontSize: 'clamp(5rem, 14vw, 10rem)',
+                                fontWeight: '950',
+                                lineHeight: '0.85',
+                                letterSpacing: '-8px',
+                                textTransform: 'uppercase',
+                                background: 'linear-gradient(160deg, #ffffff 0%, #e2e8f0 30%, #a5b4fc 65%, #7c3aed 100%)',
+                                WebkitBackgroundClip: 'text',
+                                backgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                                filter: 'drop-shadow(0 4px 30px rgba(139,92,246,0.4)) drop-shadow(0 0 80px rgba(139,92,246,0.15))'
+                            }}>
+                                SeatPro
+                            </span>
+                            {/* X — extreme neon accent */}
+                            <span style={{
+                                display: 'block',
+                                fontSize: 'clamp(6rem, 18vw, 13rem)',
+                                fontWeight: '950',
+                                lineHeight: '0.75',
+                                letterSpacing: '-8px',
+                                textTransform: 'uppercase',
+                                color: '#0ea5e9',
+                                WebkitTextFillColor: '#0ea5e9',
+                                textShadow: [
+                                    '0 0 20px rgba(14,165,233,0.9)',
+                                    '0 0 40px rgba(14,165,233,0.7)',
+                                    '0 0 80px rgba(14,165,233,0.5)',
+                                    '0 0 120px rgba(14,165,233,0.3)',
+                                    '0 0 5px rgba(255,255,255,0.8)'
+                                ].join(', ')
+                            }}>
+                                X
+                            </span>
                         </h1>
-                        <h2 style={{
-                            fontSize: 'clamp(1.5rem, 4vw, 2.8rem)', fontWeight: '800', letterSpacing: '-1.5px',
-                            marginBottom: '2rem', color: '#ffffff', opacity: 0.95, textShadow: 'var(--text-shadow-premium)'
-                        }}>
-                            Advanced Matrix Engine.
-                        </h2>
                     </div>
 
-                    {/* Subtitle */}
+                    {/* Tagline */}
+                    <div style={{ marginBottom: '1.5rem' }}>
+                        <p style={{
+                            fontSize: 'clamp(1.2rem, 3vw, 1.9rem)',
+                            fontWeight: '700',
+                            letterSpacing: '-0.5px',
+                            lineHeight: '1.3',
+                            color: 'rgba(255,255,255,0.85)',
+                            textShadow: '0 2px 20px rgba(0,0,0,0.8)'
+                        }}>
+                            Advanced <span style={{ color: '#a5b4fc', textShadow: '0 0 20px rgba(165,180,252,0.6)' }}>Matrix</span> Engine.
+                        </p>
+                    </div>
+
+                    {/* Subtitle / Description */}
                     <p style={{
-                        fontSize: 'clamp(1.1rem, 2vw, 1.4rem)', color: 'var(--text-muted)',
-                        maxWidth: '700px', margin: '0 auto 4rem', lineHeight: '1.7', fontWeight: '500',
-                        textShadow: 'var(--text-shadow-premium)', letterSpacing: '0.01em'
+                        fontSize: 'clamp(1rem, 1.8vw, 1.25rem)',
+                        color: 'rgba(226,232,240,0.75)',
+                        maxWidth: '600px',
+                        margin: '0 auto 4rem',
+                        lineHeight: '1.8',
+                        fontWeight: '400',
+                        letterSpacing: '0.02em',
+                        textShadow: '0 1px 12px rgba(0,0,0,0.9)'
                     }}>
-                        The intelligent infrastructure for examination management.
-                        Cryptographically secure matrices, algorithmic anti-cheating, and precise spatial distribution.
+                        The intelligent infrastructure for examination management.{' '}
+                        <span style={{ color: '#c4b5fd', fontWeight: '600' }}>Cryptographically secure</span> matrices,{' '}
+                        <span style={{ color: '#7dd3fc', fontWeight: '600' }}>algorithmic anti-cheating</span>, and precise spatial distribution.
                     </p>
 
                     {/* Action Buttons (Elevated further) */}
