@@ -52,13 +52,25 @@ const LearnInfrastructure = () => {
             {/* Hero Section */}
             <section style={{ position: 'relative', zIndex: 10, minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '0 2rem', paddingTop: '5rem' }}>
                 <div style={{ textAlign: 'center', maxWidth: '800px', transform: mounted ? 'translateY(0)' : 'translateY(40px)', opacity: mounted ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' }}>
-                    <div style={{ display: 'inline-flex', padding: '0.4rem 1rem', background: 'rgba(124, 58, 237, 0.1)', border: '1px solid rgba(124, 58, 237, 0.3)', borderRadius: '999px', color: '#a855f7', fontSize: '0.85rem', fontWeight: '600', letterSpacing: '1px', marginBottom: '2rem', textTransform: 'uppercase' }}>
+                    <div style={{
+                        display: 'inline-flex', padding: '0.6rem 1.5rem',
+                        background: 'rgba(139, 92, 246, 0.1)', border: '1px solid rgba(139, 92, 246, 0.3)',
+                        borderRadius: '999px', color: 'var(--primary)', fontSize: '0.85rem',
+                        fontWeight: '800', letterSpacing: '2px', marginBottom: '2.5rem',
+                        textTransform: 'uppercase', boxShadow: '0 0 20px rgba(139, 92, 246, 0.2)',
+                        textShadow: 'var(--text-shadow-neon)'
+                    }}>
                         System Architecture
                     </div>
-                    <h1 style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: '800', lineHeight: '1.1', marginBottom: '1.5rem', background: 'linear-gradient(135deg, #ffffff 0%, #a855f7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-1px' }}>
-                        How SeatPro<span style={{ color: '#0ea5e9', WebkitTextFillColor: '#0ea5e9' }}>X</span> Thinks.
+                    <h1 style={{
+                        fontSize: 'clamp(3.5rem, 8vw, 6rem)', fontWeight: '950', lineHeight: '0.95',
+                        marginBottom: '2rem', background: 'var(--gradient-text)',
+                        WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+                        letterSpacing: '-4px', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6))'
+                    }}>
+                        How SeatPro<span style={{ color: 'var(--secondary)', WebkitTextFillColor: 'var(--secondary)', textShadow: 'var(--text-shadow-neon)' }}>X</span> Thinks.
                     </h1>
-                    <p style={{ fontSize: '1.25rem', color: 'var(--text-main)', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto 3.5rem', fontWeight: '500', textShadow: 'var(--text-shadow-glow)' }}>
+                    <p style={{ fontSize: '1.3rem', color: 'var(--text-muted)', lineHeight: '1.7', maxWidth: '700px', margin: '0 auto 4rem', fontWeight: '500', textShadow: 'var(--text-shadow-premium)', letterSpacing: '0.01em' }}>
                         Discover the deterministic AI engine that physically guarantees exam integrity through algorithmic spatial isolation.
                     </p>
 
@@ -88,11 +100,11 @@ const LearnInfrastructure = () => {
 
                     {/* Left: Text */}
                     <div style={{ transform: scrollProgress > 0.1 ? 'translateX(0) scale(1)' : 'translateX(-200px) scale(0.5) rotateY(30deg)', opacity: scrollProgress > 0.1 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' }}>
-                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', color: '#3b82f6', marginBottom: '1.5rem', fontWeight: '600' }}>
-                            <div style={{ width: '40px', height: '1px', background: '#3b82f6' }}></div>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', color: 'var(--secondary)', marginBottom: '1.5rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', textShadow: 'var(--text-shadow-glow)' }}>
+                            <div style={{ width: '40px', height: '2px', background: 'var(--secondary)' }}></div>
                             Node 1: Student Manager
                         </div>
-                        <h2 style={{ fontSize: '3rem', fontWeight: '700', marginBottom: '1.5rem', lineHeight: '1.2' }}>Mass scale data ingestion.</h2>
+                        <h2 style={{ fontSize: '3.5rem', fontWeight: '900', marginBottom: '1.5rem', lineHeight: '1.1', letterSpacing: '-2px', background: 'var(--gradient-text)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Mass scale data ingestion.</h2>
                         <p style={{ fontSize: '1.15rem', color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '2rem', fontWeight: '500' }}>
                             Before AI can generate seating, it needs data. The Student Manager handles massive CSV uploads instantly, verifying and organizing thousands of student profiles, classes, and subjects into an encrypted database node.
                         </p>

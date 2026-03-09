@@ -112,28 +112,41 @@ const WelcomeSplash = () => {
                 {/* 3D Elevated Content Wrapper */}
                 <div style={{ transform: 'translateZ(40px)', transition: 'transform 0.3s ease-out' }}>
 
-                    {/* Top Badge */}
                     <div style={{
                         display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
-                        padding: '0.5rem 1.2rem', borderRadius: '999px',
-                        backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                        border: '1px solid rgba(124, 58, 237, 0.3)',
-                        marginBottom: '2rem', backdropFilter: 'blur(10px)',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)'
+                        padding: '0.6rem 1.5rem', borderRadius: '999px',
+                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                        border: '1px solid rgba(139, 92, 246, 0.3)',
+                        marginBottom: '2.5rem', backdropFilter: 'blur(10px)',
+                        boxShadow: '0 0 20px rgba(139, 92, 246, 0.2)',
+                        textShadow: 'var(--text-shadow-neon)'
                     }}>
-                        <span className="pulse-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#a855f7', boxShadow: '0 0 12px #a855f7' }}></span>
-                        <span style={{ color: '#e2e8f0', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase' }}>Seating Intelligence Engine v2.0</span>
+                        <span className="pulse-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--primary)', boxShadow: '0 0 12px var(--primary)' }}></span>
+                        <span style={{ color: 'var(--primary)', fontSize: '0.85rem', fontWeight: '800', letterSpacing: '2px', textTransform: 'uppercase' }}>Seating Intelligence Engine v2.0</span>
                     </div>
 
-                    <div style={{ marginBottom: '2.5rem', filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.5))' }}>
-                        <AnimatedLogo scale={1} layout="column" />
+                    <div style={{ marginBottom: '2.5rem', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6))' }}>
+                        <h1 style={{
+                            fontSize: 'clamp(4rem, 12vw, 8rem)', fontWeight: '950', lineHeight: '0.85',
+                            margin: '0 auto 1rem', textTransform: 'uppercase', letterSpacing: '-6px',
+                            background: 'var(--gradient-text)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+                            textShadow: 'none'
+                        }}>
+                            SeatPro<span style={{ color: 'var(--secondary)', WebkitTextFillColor: 'var(--secondary)', textShadow: 'var(--text-shadow-neon)' }}>X</span>
+                        </h1>
+                        <h2 style={{
+                            fontSize: 'clamp(1.5rem, 4vw, 2.8rem)', fontWeight: '800', letterSpacing: '-1.5px',
+                            marginBottom: '2rem', color: '#ffffff', opacity: 0.95, textShadow: 'var(--text-shadow-premium)'
+                        }}>
+                            Advanced Matrix Engine.
+                        </h2>
                     </div>
 
                     {/* Subtitle */}
                     <p style={{
-                        fontSize: 'clamp(1.1rem, 2vw, 1.35rem)', color: 'var(--text-main)',
-                        maxWidth: '600px', margin: '0 auto 3.5rem', lineHeight: '1.6', fontWeight: '600',
-                        textShadow: 'var(--text-shadow-glow)'
+                        fontSize: 'clamp(1.1rem, 2vw, 1.4rem)', color: 'var(--text-muted)',
+                        maxWidth: '700px', margin: '0 auto 4rem', lineHeight: '1.7', fontWeight: '500',
+                        textShadow: 'var(--text-shadow-premium)', letterSpacing: '0.01em'
                     }}>
                         The intelligent infrastructure for examination management.
                         Cryptographically secure matrices, algorithmic anti-cheating, and precise spatial distribution.

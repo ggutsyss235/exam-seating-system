@@ -91,8 +91,15 @@ function App() {
       >
         {/* Sidebar Navigation */}
         <aside className="sidebar" style={{ transform: 'translateZ(10px)', background: 'linear-gradient(180deg, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.95))', borderRight: '1px solid rgba(255,255,255,0.05)', boxShadow: '5px 0 25px rgba(0,0,0,0.5)' }}>
-          <div className="sidebar-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '2.5rem' }}>
-            <AnimatedLogo scale={0.7} layout="row" />
+          <div className="sidebar-title" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '3rem' }}>
+            <h1 style={{
+              fontSize: '2rem', fontWeight: '950', letterSpacing: '-2.5px',
+              margin: 0, background: 'var(--gradient-text)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              textShadow: 'none'
+            }}>
+              SeatPro<span style={{ color: 'var(--secondary)', WebkitTextFillColor: 'var(--secondary)', textShadow: 'var(--text-shadow-neon)' }}>X</span>
+            </h1>
           </div>
 
           <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -136,9 +143,9 @@ function App() {
           </nav>
 
           <div className="nav-profile-block" style={{ marginTop: 'auto', paddingTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)', alignItems: 'center' }}>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center', lineHeight: '1.4', background: 'rgba(0,0,0,0.3)', padding: '0.6rem 1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', gap: '0', alignItems: 'center', textShadow: 'var(--text-shadow-glow)' }}>
-              <span>Identified as <b>{user?.name?.split(' ')[0]}</b></span>
-              <span style={{ color: 'var(--primary)', fontFamily: 'monospace', fontWeight: 'bold', letterSpacing: '0.5px' }}>[{user?.role.toUpperCase()}]</span>
+            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'center', lineHeight: '1.5', background: 'rgba(0,0,0,0.4)', padding: '0.8rem 1.25rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column', gap: '0.2rem', alignItems: 'center', textShadow: 'var(--text-shadow-glow)', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
+              <span style={{ fontWeight: '500' }}>Identified as <b style={{ color: '#fff', fontWeight: '800' }}>{user?.name?.split(' ')[0]}</b></span>
+              <span style={{ color: 'var(--primary)', fontFamily: 'Outfit', fontWeight: '900', letterSpacing: '1px', textTransform: 'uppercase', fontSize: '0.7rem' }}>{user?.role}</span>
             </div>
             <button
               onClick={logout}
