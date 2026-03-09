@@ -118,17 +118,11 @@ const WelcomeSplash = () => {
                     transition: 'opacity 1.2s cubic-bezier(0.16,1,0.3,1)',
                     transformStyle: 'preserve-3d',
                     transform: cardTransform,
-                    // Glassmorphism card
-                    background: 'rgba(10, 8, 24, 0.55)',
-                    backdropFilter: 'blur(24px)',
-                    WebkitBackdropFilter: 'blur(24px)',
-                    border: '1px solid rgba(255,255,255,0.07)',
+                    // Glassmorphism card — fully transparent
+                    background: 'transparent',
+                    border: 'none',
                     borderRadius: '28px',
-                    boxShadow: `
-                        0 30px 70px rgba(0,0,0,0.6),
-                        inset 0 1px 0 rgba(255,255,255,0.1),
-                        0 0 80px rgba(139,92,246,0.08)
-                    `,
+                    boxShadow: 'none',
                 }}
             >
                 {/* Sheen: inner highlight that moves with mouse */}
