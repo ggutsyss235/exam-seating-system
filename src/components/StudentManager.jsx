@@ -86,7 +86,10 @@ const StudentManager = () => {
         <div className="grid-2">
             <div className="card animate-fade-in stagger-2">
                 <div className="card-header">
-                    <h3>Register Student</h3>
+                    <div>
+                        <p className="dash-label" style={{ marginBottom: '0.35rem' }}>Enrollment</p>
+                        <h3 className="dash-subtitle">Register Student</h3>
+                    </div>
                 </div>
                 <div className="card-body">
                     <form onSubmit={handleSubmit}>
@@ -146,9 +149,15 @@ const StudentManager = () => {
 
             <div className="card animate-fade-in stagger-3">
                 <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-                    <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        Database <span style={{ background: 'var(--primary-light)', color: 'var(--primary)', padding: '0.2rem 0.6rem', borderRadius: '12px', fontSize: '0.8rem' }}>{students.length}</span>
-                    </h3>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <div>
+                            <p className="dash-label" style={{ marginBottom: '0.35rem' }}>Registry</p>
+                            <h3 className="dash-subtitle" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                                Student Database
+                            </h3>
+                        </div>
+                        <span className="badge badge-violet" style={{ fontSize: '0.8rem', padding: '0.3rem 0.75rem' }}>{students.length}</span>
+                    </div>
                     <div>
                         <input
                             type="file"
@@ -201,11 +210,11 @@ const StudentManager = () => {
                     <div className="table-responsive" style={{ flex: 1, paddingRight: '0.5rem' }}>
                         {students.length === 0 ? (
                             <div style={{ color: 'var(--text-muted)', textAlign: 'center', padding: '4rem 1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-                                <div style={{ background: 'var(--surface-hover)', padding: '1.5rem', borderRadius: '50%' }}>
-                                    <FileType size={48} color="var(--primary)" opacity={0.5} />
+                                <div style={{ background: 'rgba(139,92,246,0.1)', padding: '1.5rem', borderRadius: '50%', border: '1px solid rgba(139,92,246,0.2)' }}>
+                                    <FileType size={48} color="#8b5cf6" opacity={0.6} />
                                 </div>
-                                <h4>No Records Found</h4>
-                                <p style={{ fontSize: '0.9rem', maxWidth: '300px', opacity: 0.7 }}>
+                                <p className="dash-subtitle">No Records Found</p>
+                                <p className="dash-body" style={{ maxWidth: '300px', textAlign: 'center' }}>
                                     Initialize the database by adding records manually or importing a systemic CSV file format.
                                 </p>
                             </div>
@@ -227,9 +236,13 @@ const StudentManager = () => {
                                         className="student-row"
                                     >
                                         <div>
-                                            <div style={{ fontWeight: '800', color: 'var(--text-main)', textShadow: 'var(--text-shadow-glow)' }}>{student.name} <span style={{ color: 'var(--text-muted)', fontWeight: '400', marginLeft: '0.5rem' }}>#{student.rollNumber}</span></div>
-                                            <div style={{ fontSize: '0.85rem', color: 'var(--secondary)', fontWeight: '700', marginTop: '0.25rem', textShadow: 'var(--text-shadow-glow)' }}>
-                                                {student.subject} <span style={{ color: 'var(--text-dim)', fontWeight: '500' }}>• {student.department}</span>
+                                            <div style={{ fontWeight: '700', color: '#f1f5f9', fontSize: '0.95rem' }}>
+                                                {student.name}
+                                                <span className="dash-mono" style={{ marginLeft: '0.6rem', fontSize: '0.75rem' }}>#{student.rollNumber}</span>
+                                            </div>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.4rem', flexWrap: 'wrap' }}>
+                                                <span className="badge badge-cyan" style={{ fontSize: '0.67rem' }}>{student.subject}</span>
+                                                {student.department && <span className="dash-muted">{student.department}</span>}
                                             </div>
                                         </div>
                                         <button onClick={() => removeStudent(student.id)} className="btn btn-ghost" style={{ padding: '0.6rem', color: 'var(--danger)' }}>

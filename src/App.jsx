@@ -143,9 +143,10 @@ function App() {
           </nav>
 
           <div className="nav-profile-block" style={{ marginTop: 'auto', paddingTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)', alignItems: 'center' }}>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'center', lineHeight: '1.5', background: 'rgba(0,0,0,0.4)', padding: '0.8rem 1.25rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column', gap: '0.2rem', alignItems: 'center', textShadow: 'var(--text-shadow-glow)', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
-              <span style={{ fontWeight: '500' }}>Identified as <b style={{ color: '#fff', fontWeight: '800' }}>{user?.name?.split(' ')[0]}</b></span>
-              <span style={{ color: 'var(--primary)', fontFamily: 'Outfit', fontWeight: '900', letterSpacing: '1px', textTransform: 'uppercase', fontSize: '0.7rem' }}>{user?.role}</span>
+            <div style={{ textAlign: 'center', background: 'rgba(139,92,246,0.06)', padding: '1rem 1.25rem', borderRadius: '14px', border: '1px solid rgba(139,92,246,0.15)', display: 'flex', flexDirection: 'column', gap: '0.3rem', alignItems: 'center', width: '100%' }}>
+              <span style={{ fontSize: '0.78rem', color: 'rgba(203,213,225,0.6)', fontWeight: '500', letterSpacing: '0.01em' }}>Identified as</span>
+              <span style={{ fontWeight: '800', color: '#f1f5f9', fontSize: '1rem', letterSpacing: '-0.02em' }}>{user?.name?.split(' ')[0]}</span>
+              <span className="badge badge-violet" style={{ marginTop: '0.2rem' }}>{user?.role}</span>
             </div>
             <button
               onClick={logout}
