@@ -35,17 +35,16 @@ const WelcomeSplash = () => {
                 background: 'radial-gradient(ellipse 70% 80% at 50% 50%, transparent 30%, rgba(5,5,10,0.65) 80%, rgba(5,5,10,0.92) 100%)',
             }} />
 
-            {/* ── Hero Content — sits in the BOTTOM portion so 3D text dominates center ── */}
+            {/* ── Hero Content ────────────────────────────────────── */}
             <div
                 style={{
                     position: 'relative', zIndex: 10,
                     textAlign: 'center',
-                    maxWidth: '720px',
+                    maxWidth: '800px',
                     width: '90%',
                     padding: '0 1.5rem',
-                    marginTop: '55vh', // push below the 3D text
                     opacity: mounted ? 1 : 0,
-                    transform: mounted ? 'translateY(0)' : 'translateY(30px)',
+                    transform: mounted ? 'translateY(0)' : 'translateY(40px)',
                     transition: 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
             >
@@ -55,7 +54,7 @@ const WelcomeSplash = () => {
                     padding: '0.45rem 1.2rem', borderRadius: '999px',
                     background: 'rgba(139,92,246,0.12)',
                     border: '1px solid rgba(139,92,246,0.3)',
-                    marginBottom: '1.5rem',
+                    marginBottom: '2.5rem',
                     backdropFilter: 'blur(12px)',
                 }}>
                     <span style={{
@@ -72,12 +71,44 @@ const WelcomeSplash = () => {
                     </span>
                 </div>
 
+                {/* ── SeatProX Wordmark ───────────────────────────── */}
+                <h1 style={{
+                    margin: '0 0 1.25rem',
+                    fontSize: 'clamp(4rem, 12vw, 9rem)',
+                    fontWeight: '950',
+                    lineHeight: '1',
+                    letterSpacing: '-4px',
+                    textTransform: 'uppercase',
+                }}>
+                    {/* SeatPro — holographic shimmer */}
+                    <span className="hero-shimmer" style={{
+                        background: 'linear-gradient(105deg, #94a3b8 0%, #ffffff 18%, #c4b5fd 38%, #8b5cf6 52%, #ffffff 66%, #a5b4fc 80%, #94a3b8 100%)',
+                        backgroundSize: '300% 100%',
+                        WebkitBackgroundClip: 'text',
+                        backgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        animation: 'holographic-sweep 3.5s linear infinite',
+                        display: 'inline',
+                        filter: 'drop-shadow(0 0 40px rgba(139,92,246,0.4))',
+                    }}>SeatPro</span>
+                    {/* X — neon cyan pulse */}
+                    <span style={{
+                        display: 'inline',
+                        color: '#38bdf8',
+                        WebkitTextFillColor: '#38bdf8',
+                        animation: 'neon-x-pulse 2.5s ease-in-out infinite',
+                        marginLeft: '2px',
+                    }}>X</span>
+                </h1>
+
                 {/* Tagline */}
                 <p style={{
-                    fontSize: 'clamp(1rem, 2.5vw, 1.4rem)',
+                    fontSize: 'clamp(1rem, 2.5vw, 1.5rem)',
                     fontWeight: '600',
-                    color: 'rgba(255,255,255,0.8)',
-                    marginBottom: '0.75rem',
+                    letterSpacing: '-0.3px',
+                    lineHeight: '1.4',
+                    color: 'rgba(255,255,255,0.75)',
+                    marginBottom: '1.25rem',
                     textShadow: '0 2px 16px rgba(0,0,0,0.9)',
                 }}>
                     Advanced <span className="matrix-word" style={{ color: '#a5b4fc', fontWeight: '800' }}>Matrix</span> Engine.
@@ -85,12 +116,13 @@ const WelcomeSplash = () => {
 
                 {/* Description */}
                 <p style={{
-                    fontSize: 'clamp(0.85rem, 1.5vw, 1rem)',
-                    color: 'rgba(203,213,225,0.65)',
-                    maxWidth: '500px',
-                    margin: '0 auto 2.5rem',
+                    fontSize: 'clamp(0.9rem, 1.6vw, 1.1rem)',
+                    color: 'rgba(203,213,225,0.7)',
+                    maxWidth: '540px',
+                    margin: '0 auto 3rem',
                     lineHeight: '1.8',
                     fontWeight: '400',
+                    letterSpacing: '0.01em',
                 }}>
                     The intelligent infrastructure for examination management.{' '}
                     <span className="kw-violet" style={{ fontWeight: '600' }}>Cryptographically secure</span> matrices,{' '}
