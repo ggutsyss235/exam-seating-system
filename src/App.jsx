@@ -83,9 +83,8 @@ function App() {
 
       {/* Global Dashboard 3D Shell */}
       <div
+        className="dashboard-shell"
         style={{
-          display: 'flex', width: '100%', height: '100vh', zIndex: 1,
-          transformStyle: 'preserve-3d',
           transform: `rotateX(${mousePos.x}deg) rotateY(${mousePos.y}deg)`,
           transition: isHovering ? 'transform 0.1s ease-out' : 'transform 1.5s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
@@ -136,8 +135,8 @@ function App() {
 
           </nav>
 
-          <div className="nav-profile-block" style={{ marginTop: window.innerWidth <= 900 ? '0' : 'auto', paddingTop: window.innerWidth <= 900 ? '0' : '2rem', display: 'flex', flexDirection: window.innerWidth <= 900 ? 'row' : 'column', gap: '1rem', borderTop: window.innerWidth <= 900 ? 'none' : '1px solid rgba(255,255,255,0.05)', alignItems: 'center' }}>
-            <div style={{ fontSize: '0.75rem', color: '#94a3b8', textAlign: window.innerWidth <= 900 ? 'left' : 'center', lineHeight: '1.4', background: 'rgba(0,0,0,0.2)', padding: '0.5rem 1rem', borderRadius: '8px', display: 'flex', flexDirection: window.innerWidth <= 900 ? 'row' : 'column', gap: window.innerWidth <= 900 ? '0.5rem' : '0', alignItems: 'center' }}>
+          <div className="nav-profile-block" style={{ marginTop: 'auto', paddingTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)', alignItems: 'center' }}>
+            <div style={{ fontSize: '0.75rem', color: '#94a3b8', textAlign: 'center', lineHeight: '1.4', background: 'rgba(0,0,0,0.2)', padding: '0.5rem 1rem', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: '0', alignItems: 'center' }}>
               <span>Identified as <b>{user?.name?.split(' ')[0]}</b></span>
               <span style={{ color: 'var(--primary)', fontFamily: 'monospace', letterSpacing: '0.5px' }}>[{user?.role.toUpperCase()}]</span>
             </div>
@@ -153,8 +152,8 @@ function App() {
         </aside>
 
         {/* Main Content Area */}
-        <main className="main-content" style={{ position: 'relative', zIndex: 2, transform: 'translateZ(20px)', background: 'transparent', boxShadow: '-10px 0 30px rgba(0,0,0,0.5)' }}>
-          <div style={{ background: 'rgba(15, 23, 42, 0.4)', backdropFilter: 'blur(30px)', WebkitBackdropFilter: 'blur(30px)', height: '100%', borderRadius: '24px 0 0 0', borderTop: '1px solid rgba(255,255,255,0.05)', borderLeft: '1px solid rgba(255,255,255,0.05)', padding: '2rem', overflowY: 'auto' }}>
+        <main className="dashboard-main-content">
+          <div className="dashboard-content-wrapper">
             {renderDashboard()}
           </div>
         </main>

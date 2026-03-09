@@ -11,11 +11,11 @@ const ExamBoardDashboard = ({ activeTab, setActiveTab }) => {
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <header className="animate-fade-in" style={{ marginBottom: '2rem', position: 'relative' }}>
                 <div style={{ position: 'absolute', top: -40, left: -40, width: '200px', height: '200px', background: 'radial-gradient(circle, rgba(168, 85, 247, 0.15), transparent 70%)', filter: 'blur(40px)', zIndex: 0, pointerEvents: 'none' }}></div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem', position: 'relative', zIndex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem', position: 'relative', zIndex: 1, flexWrap: 'wrap' }}>
                     <div style={{ padding: '0.75rem', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(168, 85, 247, 0.3)', borderRadius: '12px', boxShadow: '0 0 20px rgba(168, 85, 247, 0.2), inset 0 0 10px rgba(168, 85, 247, 0.1)' }}>
                         <ShieldCheck size={28} color="#a855f7" />
                     </div>
-                    <h2 style={{ fontSize: '2.5rem', background: 'linear-gradient(135deg, #fff, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1, letterSpacing: '-0.5px' }}>
+                    <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', background: 'linear-gradient(135deg, #fff, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.1, letterSpacing: '-0.5px' }}>
                         Exam Infrastructure Control
                     </h2>
                 </div>
@@ -29,7 +29,7 @@ const ExamBoardDashboard = ({ activeTab, setActiveTab }) => {
                 display: 'flex', gap: '0.75rem', marginBottom: '2rem',
                 background: 'rgba(0, 0, 0, 0.2)', padding: '0.5rem', borderRadius: '16px',
                 border: '1px solid rgba(255,255,255,0.05)',
-                width: 'fit-content'
+                width: '100%', maxWidth: 'fit-content', flexWrap: 'wrap'
             }}>
                 <button
                     className={`btn`}

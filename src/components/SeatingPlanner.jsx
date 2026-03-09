@@ -175,7 +175,7 @@ const SeatingPlanner = () => {
                                 </div>
                             </div>
 
-                            <div className="card-body" style={{ background: 'var(--background)', overflowX: 'auto', padding: '3rem 2rem' }}>
+                            <div className="card-body" style={{ background: 'var(--background)', overflowX: 'auto', padding: 'clamp(1rem, 5vw, 3rem) clamp(0.5rem, 3vw, 2rem)' }}>
                                 <div style={{
                                     display: 'inline-grid',
                                     gap: '1.5rem',

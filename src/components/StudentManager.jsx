@@ -220,7 +220,9 @@ const StudentManager = () => {
                                         background: 'var(--background)',
                                         border: '1px solid var(--border)',
                                         borderRadius: 'var(--radius-md)',
-                                        transition: 'all 0.2s ease'
+                                        transition: 'all 0.2s ease',
+                                        flexWrap: 'wrap',
+                                        gap: '0.75rem'
                                     }}
                                         className="student-row"
                                     >

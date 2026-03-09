@@ -137,6 +137,8 @@ const RoomManager = () => {
                                     border: '1px solid var(--border)',
                                     borderRadius: 'var(--radius-md)',
                                     transition: 'all 0.2s ease',
+                                    flexWrap: 'wrap',
+                                    gap: '1rem',
                                     position: 'relative',
                                     overflow: 'hidden'
                                 }}

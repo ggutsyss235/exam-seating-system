@@ -14,11 +14,11 @@ const ClassTeacherDashboard = ({ activeTab, setActiveTab }) => {
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <header className="animate-fade-in" style={{ marginBottom: '2rem', position: 'relative' }}>
                 <div style={{ position: 'absolute', top: -40, left: -40, width: '200px', height: '200px', background: 'radial-gradient(circle, rgba(14, 165, 233, 0.15), transparent 70%)', filter: 'blur(40px)', zIndex: 0, pointerEvents: 'none' }}></div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem', position: 'relative', zIndex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem', position: 'relative', zIndex: 1, flexWrap: 'wrap' }}>
                     <div style={{ padding: '0.75rem', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(14, 165, 233, 0.3)', borderRadius: '12px', boxShadow: '0 0 20px rgba(14, 165, 233, 0.2), inset 0 0 10px rgba(14, 165, 233, 0.1)' }}>
                         <GraduationCap size={28} color="#0ea5e9" />
                     </div>
-                    <h2 style={{ fontSize: '2.5rem', background: 'linear-gradient(135deg, #fff, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1, letterSpacing: '-0.5px' }}>
+                    <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', background: 'linear-gradient(135deg, #fff, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.1, letterSpacing: '-0.5px' }}>
                         Class Operations
                     </h2>
                 </div>
@@ -31,7 +31,7 @@ const ClassTeacherDashboard = ({ activeTab, setActiveTab }) => {
                 display: 'flex', gap: '0.75rem', marginBottom: '2rem',
                 background: 'rgba(0, 0, 0, 0.2)', padding: '0.5rem', borderRadius: '16px',
                 border: '1px solid rgba(255,255,255,0.05)',
-                width: 'fit-content'
+                width: '100%', maxWidth: 'fit-content', flexWrap: 'wrap'
             }}>
                 <button
                     className={`btn`}
@@ -115,47 +115,49 @@ const ClassTeacherDashboard = ({ activeTab, setActiveTab }) => {
                                 <p style={{ color: 'var(--text-muted)' }}>The Exam Board has not generated a layout yet.</p>
                             </div>
                         ) : (
-                            <div className="seating-plan-grid" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-                                {seatingPlan.map((roomPlan, index) => (
-                                    <div key={index} style={{ background: 'var(--surface-hover)', padding: '1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
-                                        <h4 style={{ marginBottom: '1rem', color: 'var(--text-main)', display: 'flex', justifyContent: 'space-between' }}>
-                                            <span>Room: {roomPlan.roomNumber}</span>
-                                            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>
-                                                {roomPlan.grid.length} Rows &times; {roomPlan.grid[0]?.length || 0} Cols
-                                            </span>
-                                        </h4>
+                            <div className="table-responsive">
+                                <div className="seating-plan-grid" style={{ display: 'flex', flexDirection: 'column', gap: '2rem', minWidth: 'max-content' }}>
+                                    {seatingPlan.map((roomPlan, index) => (
+                                        <div key={index} style={{ background: 'var(--surface-hover)', padding: '1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+                                            <h4 style={{ marginBottom: '1rem', color: 'var(--text-main)', display: 'flex', justifyContent: 'space-between' }}>
+                                                <span>Room: {roomPlan.roomNumber}</span>
+                                                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>
+                                                    {roomPlan.grid.length} Rows &times; {roomPlan.grid[0]?.length || 0} Cols
+                                                </span>
+                                            </h4>
 
-                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                            {roomPlan.grid.map((row, rIdx) => (
-                                                <div key={rIdx} style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
-                                                    {row.map((student, cIdx) => (
-                                                        <div key={`${rIdx}-${cIdx}`}
-                                                            style={{
-                                                                width: '80px', height: '60px',
-                                                                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                                                                background: student ? 'var(--surface)' : 'rgba(255,255,255,0.02)',
-                                                                border: student ? '1px solid var(--border)' : '1px dashed var(--border)',
-                                                                borderRadius: 'var(--radius-sm)',
-                                                                fontSize: '0.75rem',
-                                                                opacity: student ? 1 : 0.5,
-                                                                boxShadow: student ? 'var(--shadow-sm)' : 'none'
-                                                            }}
-                                                        >
-                                                            {student ? (
-                                                                <>
-                                                                    <span style={{ fontWeight: '600', color: 'var(--primary)', marginBottom: '4px' }}>{student.rollNumber}</span>
-                                                                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textAlign: 'center', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%', padding: '0 4px' }}>{student.subject}</span>
-                                                                </>
-                                                            ) : (
-                                                                <span style={{ color: 'var(--text-muted)', fontSize: '0.7rem' }}>Empty</span>
-                                                            )}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ))}
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                                {roomPlan.grid.map((row, rIdx) => (
+                                                    <div key={rIdx} style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
+                                                        {row.map((student, cIdx) => (
+                                                            <div key={`${rIdx}-${cIdx}`}
+                                                                style={{
+                                                                    width: '80px', height: '60px',
+                                                                    display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                                                                    background: student ? 'var(--surface)' : 'rgba(255,255,255,0.02)',
+                                                                    border: student ? '1px solid var(--border)' : '1px dashed var(--border)',
+                                                                    borderRadius: 'var(--radius-sm)',
+                                                                    fontSize: '0.75rem',
+                                                                    opacity: student ? 1 : 0.5,
+                                                                    boxShadow: student ? 'var(--shadow-sm)' : 'none'
+                                                                }}
+                                                            >
+                                                                {student ? (
+                                                                    <>
+                                                                        <span style={{ fontWeight: '600', color: 'var(--primary)', marginBottom: '4px' }}>{student.rollNumber}</span>
+                                                                        <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textAlign: 'center', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%', padding: '0 4px' }}>{student.subject}</span>
+                                                                    </>
+                                                                ) : (
+                                                                    <span style={{ color: 'var(--text-muted)', fontSize: '0.7rem' }}>Empty</span>
+                                                                )}
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
                         )}
                     </div>
