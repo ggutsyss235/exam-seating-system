@@ -77,7 +77,6 @@ const WelcomeSplash = () => {
                 overflow: 'hidden',
                 backgroundColor: '#05050a',
                 fontFamily: "'Outfit', 'Inter', sans-serif",
-                cursor: 'none', // hide default cursor
             }}
         >
             {/* Custom spotlight cursor */}
