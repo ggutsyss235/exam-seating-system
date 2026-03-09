@@ -171,16 +171,16 @@ const AuthCard = ({ isLogin }) => {
                         <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'center' }}>
                             <AnimatedLogo scale={1.2} showText={false} layout="row" />
                         </div>
-                        <h2 style={{ fontSize: '2.2rem', letterSpacing: '-1px', background: 'linear-gradient(135deg, var(--text-main), var(--text-muted))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: '0.2rem' }}>
+                        <h2 style={{ fontSize: '2.2rem', letterSpacing: '-2px', fontWeight: '900', background: 'linear-gradient(135deg, #ffffff, #a5b4fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: '0.2rem', textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
                             {isLogin ? 'Welcome Back' : 'Create Account'}
                         </h2>
-                        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+                        <p style={{ color: 'var(--text-main)', fontSize: '1rem', fontWeight: '500', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                             {isLogin ? 'Enter your credentials to access the console.' : 'Initialize your personal profile and specify your institutional role.'}
                         </p>
                     </div>
 
                     {error && (
-                        <div className="animate-fade-in" style={{ padding: '0.8rem', backgroundColor: 'var(--danger-light)', color: 'var(--danger)', borderRadius: 'var(--radius-md)', fontSize: '0.9rem', marginBottom: '1.5rem', textAlign: 'center' }}>
+                        <div className="animate-fade-in" style={{ padding: '0.8rem', backgroundColor: 'rgba(244, 63, 94, 0.2)', color: '#fb7185', borderRadius: 'var(--radius-md)', fontSize: '0.9rem', marginBottom: '1.5rem', textAlign: 'center', border: '1px solid rgba(244, 63, 94, 0.3)', fontWeight: '600' }}>
                             {error}
                         </div>
                     )}
@@ -191,7 +191,7 @@ const AuthCard = ({ isLogin }) => {
                         <div className="animate-fade-in">
                             {!isLogin && (
                                 <div className="form-group" style={{ marginBottom: '1.25rem' }}>
-                                    <label className="form-label" style={{ fontSize: '0.75rem' }}>Full Name</label>
+                                    <label className="form-label" style={{ fontSize: '0.8rem', color: '#ffffff', fontWeight: '700' }}>Full Name</label>
                                     <div style={{ position: 'relative' }}>
                                         <User size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                                         <input
@@ -208,25 +208,25 @@ const AuthCard = ({ isLogin }) => {
                             )}
 
                             <div className="form-group" style={{ marginBottom: '1.25rem' }}>
-                                <label className="form-label" style={{ fontSize: '0.75rem' }}>Email Address</label>
+                                <label className="form-label" style={{ fontSize: '0.8rem', color: '#ffffff', fontWeight: '700' }}>Email Address</label>
                                 <div style={{ position: 'relative' }}>
-                                    <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                                    <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
                                     <input
                                         type="email"
                                         className="form-input"
                                         placeholder="name@domain.com"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        style={{ paddingLeft: '2.5rem' }}
+                                        style={{ paddingLeft: '2.5rem', color: '#ffffff' }}
                                         required
                                     />
                                 </div>
                             </div>
 
                             <div className="form-group" style={{ marginBottom: 0 }}>
-                                <label className="form-label" style={{ fontSize: '0.75rem', display: 'flex', justifyContent: 'space-between' }}>
+                                <label className="form-label" style={{ fontSize: '0.8rem', display: 'flex', justifyContent: 'space-between', color: '#ffffff', fontWeight: '700' }}>
                                     Password
-                                    {isLogin && <a href="#" style={{ textTransform: 'none', color: 'var(--primary)', letterSpacing: '0' }}>Forgot?</a>}
+                                    {isLogin && <a href="#" style={{ textTransform: 'none', color: 'var(--primary)', letterSpacing: '0', fontWeight: '800' }}>Forgot?</a>}
                                 </label>
                                 <div style={{ position: 'relative' }}>
                                     <Lock size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />

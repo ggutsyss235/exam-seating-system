@@ -20,10 +20,10 @@
   /* Deep Zinc */
   --surface-hover: #27272a;
 
-  --text-main: #f4f4f5;
-  /* Zinc 100 - Softer than pure white for premium readability */
-  --text-muted: #d4d4d8;
-  /* Zinc 300 - Brightened for superior contrast on dark backgrounds */
+  --text-main: #ffffff;
+  /* Pure White for maximum visibility */
+  --text-muted: #e2e8f0;
+  /* Brighter slate for superior sub-text contrast */
   --border: rgba(255, 255, 255, 0.12);
 
   --radius-sm: 10px;
@@ -71,6 +71,7 @@ body {
   font-family: 'Inter', 'Outfit', system-ui, -apple-system, sans-serif;
   background-color: var(--background);
   color: var(--text-main);
+  font-weight: 500;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
@@ -115,10 +116,11 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 800;
-  line-height: 1.2;
+  font-weight: 900;
+  line-height: 1.1;
   color: var(--text-main);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 h1 {
@@ -367,9 +369,10 @@ a:hover {
 .form-select:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.3), 0 0 0 4px var(--primary-light), 0 0 20px rgba(139, 92, 246, 0.3);
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.3), 0 0 0 4px var(--primary-light), 0 0 30px rgba(139, 92, 246, 0.5);
   background-color: var(--surface);
   transform: translateY(-2px);
+  color: #ffffff;
 }
 
 /* Animations */
