@@ -15,12 +15,12 @@ const ExamBoardDashboard = ({ activeTab, setActiveTab }) => {
                     <div style={{ padding: '0.75rem', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(168, 85, 247, 0.3)', borderRadius: '12px', boxShadow: '0 0 20px rgba(168, 85, 247, 0.2), inset 0 0 10px rgba(168, 85, 247, 0.1)' }}>
                         <ShieldCheck size={28} color="#a855f7" />
                     </div>
-                    <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', background: 'linear-gradient(135deg, #fff, var(--text-muted))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.1, letterSpacing: '-0.5px', textShadow: 'var(--text-shadow-glow)' }}>
-                        Exam Infrastructure Control
+                    <h2 className="dash-title" style={{ fontSize: 'clamp(1.5rem, 5vw, 2.8rem)', lineHeight: 1 }}>
+                        Infrastructure Control
                     </h2>
                 </div>
-                <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '650px', position: 'relative', zIndex: 1, lineHeight: 1.6, textShadow: 'var(--text-shadow-glow)' }}>
-                    Full administrative environment. Manage the student registry, configure examination halls, and execute cryptographic AI seating algorithms.
+                <p className="dash-body" style={{ fontSize: '1.05rem', maxWidth: '650px', position: 'relative', zIndex: 1, lineHeight: 1.6 }}>
+                    Full administrative governance. Manage the student registry, configure physical examination halls, and execute cryptographic AI seating algorithms across the terminal.
                 </p>
             </header>
 

@@ -163,13 +163,15 @@ const AIAgentPanel = () => {
                 {/* Chat Interface */}
                 <div className="card glass-panel animate-fade-in stagger-1 glow-border" style={{ display: 'flex', flexDirection: 'column', height: '600px', gridColumn: seatingPlan ? '1 / -1' : 'span 1' }}>
                     <div className="card-header" style={{ background: 'var(--surface)', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.5rem 2rem', borderTopLeftRadius: 'var(--radius-lg)', borderTopRightRadius: 'var(--radius-lg)' }}>
-                        <div style={{ background: 'linear-gradient(135deg, var(--primary), var(--secondary))', padding: '8px', borderRadius: '50%', boxShadow: '0 0 15px rgba(124, 58, 237, 0.5)' }}>
+                        <div style={{ background: 'linear-gradient(135deg, var(--primary), var(--secondary))', padding: '10px', borderRadius: '50%', boxShadow: '0 0 20px rgba(124, 58, 237, 0.4)' }}>
                             <Bot size={28} color="white" />
                         </div>
-                        <h3 style={{ margin: 0, fontSize: '1.4rem', letterSpacing: '-0.5px' }}>
-                            <span style={{ background: 'linear-gradient(to right, var(--text-main), var(--text-muted))', backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Seating Master AI</span>
-                            <span style={{ fontSize: '0.8rem', color: 'var(--primary)', marginLeft: '10px', fontWeight: '800' }}>{step > 0 && `STEP ${step} OF 7`}</span>
-                        </h3>
+                        <div>
+                            <h3 className="dash-subtitle" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                Seating Master AI
+                                <span className="dash-label" style={{ fontSize: '0.65rem', opacity: 0.8 }}>{step > 0 ? `STEP ${step} OF 7` : 'READY'}</span>
+                            </h3>
+                        </div>
                     </div>
 
                     <div className="card-body" style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1.5rem' }}>
@@ -189,16 +191,16 @@ const AIAgentPanel = () => {
                                 }}>
                                     {msg.role === 'ai' ? <Sparkles size={18} /> : <User size={18} />}
                                 </div>
-                                <div style={{
-                                    background: msg.role === 'ai' ? 'var(--surface)' : 'linear-gradient(135deg, var(--primary), var(--secondary))',
-                                    color: msg.role === 'ai' ? 'var(--text-main)' : '#fff',
-                                    padding: '1rem 1.25rem',
+                                <div className={msg.role === 'ai' ? 'ai-message-text' : ''} style={{
+                                    background: msg.role === 'ai' ? 'rgba(30, 30, 50, 0.4)' : 'linear-gradient(135deg, var(--primary), var(--secondary))',
+                                    color: msg.role === 'ai' ? '#f1f5f9' : '#fff',
+                                    padding: '1rem 1.4rem',
                                     borderRadius: 'var(--radius-lg)',
                                     border: msg.role === 'ai' ? '1px solid var(--border)' : 'none',
-                                    maxWidth: '80%',
-                                    lineHeight: '1.5',
-                                    fontSize: '0.95rem',
-                                    boxShadow: msg.role === 'user' ? '0 4px 15px rgba(99, 102, 241, 0.4)' : 'none'
+                                    maxWidth: '85%',
+                                    whiteSpace: 'pre-wrap',
+                                    boxShadow: msg.role === 'user' ? '0 8px 30px rgba(99, 102, 241, 0.3)' : 'none',
+                                    WebkitTextFillColor: 'currentcolor'
                                 }}>
                                     {msg.text}
                                 </div>
@@ -210,9 +212,9 @@ const AIAgentPanel = () => {
                                 <div style={{ background: 'linear-gradient(135deg, #7c3aed, #0ea5e9)', color: 'white', padding: '0.6rem', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 20px rgba(124, 58, 237, 0.6)' }}>
                                     <Sparkles size={18} className="pulse-icon" />
                                 </div>
-                                <div style={{ background: 'rgba(124, 58, 237, 0.2)', padding: '1.25rem 2rem', borderRadius: 'var(--radius-lg)', border: '1px solid rgba(124, 58, 237, 0.4)', display: 'flex', gap: '0.75rem', alignItems: 'center', color: '#fff', fontWeight: '800', boxShadow: '0 0 25px rgba(124, 58, 237, 0.3)', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-                                    Formulating optimized spatial matrix...
-                                    <div className="loading-dots"><span>.</span><span>.</span><span>.</span></div>
+                                <div style={{ background: 'rgba(124, 58, 237, 0.1)', padding: '1.25rem 2rem', borderRadius: 'var(--radius-lg)', border: '1px solid rgba(124, 58, 237, 0.3)', display: 'flex', gap: '0.75rem', alignItems: 'center', color: '#fff', boxShadow: '0 0 25px rgba(124, 58, 237, 0.2)' }}>
+                                    <span className="dash-subtitle" style={{ fontSize: '1rem' }}>Formulating optimized spatial matrix...</span>
+                                    <div className="loading-dots"><span style={{ color: 'var(--primary)' }}>.</span><span style={{ color: 'var(--primary)' }}>.</span><span style={{ color: 'var(--primary)' }}>.</span></div>
                                 </div>
                             </div>
                         )}
@@ -243,9 +245,9 @@ const AIAgentPanel = () => {
             {seatingPlan && (
                 <div className="animate-fade-in stagger-3" style={{ display: 'flex', flexDirection: 'column', gap: '3rem', marginTop: '1rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '1rem', borderBottom: '1px solid var(--border)' }}>
-                        <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', margin: 0 }}>
+                        <h3 className="dash-subtitle" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', margin: 0 }}>
                             <CheckCircle2 size={24} color="var(--secondary)" />
-                            Generated Seating Matrix for Room {params.roomNumber}
+                            Matrix Generation: Room {params.roomNumber}
                         </h3>
                         <div style={{ display: 'flex', gap: '1rem' }}>
                             <button className="btn btn-outline" onClick={() => setSeatingPlan(null)} style={{ gap: '0.5rem', color: 'var(--danger)', borderColor: 'rgba(239, 68, 68, 0.3)' }}>
@@ -317,10 +319,10 @@ const AIAgentPanel = () => {
                                                                 <React.Fragment key={sIdx}>
                                                                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
                                                                         <div style={{ textAlign: 'center' }}>
-                                                                            <div style={{ fontWeight: '900', fontSize: '1.4rem', color: '#0f172a', letterSpacing: '-0.02em', lineHeight: '1.1', textShadow: '0 1px 2px rgba(255,255,255,0.8)' }}>
+                                                                            <div style={{ fontWeight: '950', fontSize: '1.6rem', color: '#0f172a', letterSpacing: '-0.04em', lineHeight: '1', filter: 'drop-shadow(0 1px 0 #fff)' }}>
                                                                                 {s.rollNumber}
                                                                             </div>
-                                                                            <div style={{ fontSize: '0.8rem', color: '#334155', fontWeight: '700', marginTop: '0.2rem', letterSpacing: '0.02em' }}>
+                                                                            <div style={{ fontSize: '0.7rem', color: '#475569', fontWeight: '800', marginTop: '0.3rem', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
                                                                                 {s.className}
                                                                             </div>
                                                                         </div>

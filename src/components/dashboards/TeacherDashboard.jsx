@@ -13,12 +13,12 @@ const TeacherDashboard = ({ activeTab, setActiveTab }) => {
                     <div style={{ padding: '0.75rem', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(168, 85, 247, 0.3)', borderRadius: '12px', boxShadow: '0 0 20px rgba(168, 85, 247, 0.2), inset 0 0 10px rgba(168, 85, 247, 0.1)' }}>
                         <Briefcase size={28} color="#a855f7" />
                     </div>
-                    <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', background: 'linear-gradient(135deg, #fff, var(--text-muted))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.1, letterSpacing: '-0.5px', textShadow: 'var(--text-shadow-glow)' }}>
+                    <h2 className="dash-title" style={{ fontSize: 'clamp(1.5rem, 5vw, 2.8rem)', lineHeight: 1 }}>
                         Subject Operations
                     </h2>
                 </div>
-                <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '650px', position: 'relative', zIndex: 1, lineHeight: 1.6, textShadow: 'var(--text-shadow-glow)' }}>
-                    Welcome to the <span style={{ color: '#fff', fontWeight: 600 }}>{user.subject}</span> ({user.level}) staff portal.
+                <p className="dash-body" style={{ fontSize: '1.05rem', maxWidth: '650px', position: 'relative', zIndex: 1, lineHeight: 1.6 }}>
+                    Welcome back, <span style={{ color: '#fff', fontWeight: 600 }}>{user.name}</span>. Access the <span className="badge badge-violet" style={{ verticalAlign: 'middle', marginTop: '-3px' }}>{user.subject} - {user.level}</span> subject portal and review invigilation seating matrices.
                 </p>
             </header>
 
@@ -98,8 +98,11 @@ const TeacherDashboard = ({ activeTab, setActiveTab }) => {
                 {activeTab === 'seatplan' && (
                     <div className="card glass-panel padding-lg">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                            <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><CalendarDays size={20} className="text-secondary" /> Universal Examination Layout</h3>
-                            <div className="badge" style={{ backgroundColor: 'var(--primary-light)', color: 'var(--primary)' }}>Read Only Access</div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                                <CalendarDays size={20} className="text-secondary" />
+                                <h3 className="dash-subtitle">Examination Layout</h3>
+                            </div>
+                            <span className="badge badge-cyan">Universal Access</span>
                         </div>
 
                         {!seatingPlan ? (

@@ -18,12 +18,12 @@ const ClassTeacherDashboard = ({ activeTab, setActiveTab }) => {
                     <div style={{ padding: '0.75rem', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(14, 165, 233, 0.3)', borderRadius: '12px', boxShadow: '0 0 20px rgba(14, 165, 233, 0.2), inset 0 0 10px rgba(14, 165, 233, 0.1)' }}>
                         <GraduationCap size={28} color="#0ea5e9" />
                     </div>
-                    <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', background: 'linear-gradient(135deg, #fff, var(--text-muted))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.1, letterSpacing: '-0.5px', textShadow: 'var(--text-shadow-glow)' }}>
+                    <h2 className="dash-title" style={{ fontSize: 'clamp(1.5rem, 5vw, 2.8rem)', lineHeight: 1 }}>
                         Class Operations
                     </h2>
                 </div>
-                <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '650px', position: 'relative', zIndex: 1, lineHeight: 1.6, textShadow: 'var(--text-shadow-glow)' }}>
-                    Welcome back, <span style={{ color: '#fff', fontWeight: 600 }}>{user.name}</span>. Access your securely assigned roster (Class <span style={{ color: '#fff', fontWeight: 600 }}>{user.assignClass}-{user.assignSection}</span>) and review the generated cryptographic seating plans.
+                <p className="dash-body" style={{ fontSize: '1.05rem', maxWidth: '650px', position: 'relative', zIndex: 1, lineHeight: 1.6 }}>
+                    Welcome back, <span style={{ color: '#fff', fontWeight: 600 }}>{user.name}</span>. Secure access to Class <span className="badge badge-violet" style={{ verticalAlign: 'middle', marginTop: '-3px' }}>{user.assignClass}-{user.assignSection}</span> roster and cryptographic seating layouts.
                 </p>
             </header>
 
@@ -68,8 +68,11 @@ const ClassTeacherDashboard = ({ activeTab, setActiveTab }) => {
                 {activeTab === 'overview' && (
                     <div className="card glass-panel padding-lg">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                            <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Users size={20} className="text-primary" /> Student Directory</h3>
-                            <div className="badge" style={{ backgroundColor: 'var(--primary-light)', color: 'var(--primary)' }}>Read Only Access</div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                                <Users size={20} className="text-primary" />
+                                <h3 className="dash-subtitle">Student Directory</h3>
+                            </div>
+                            <span className="badge badge-violet">Read Only</span>
                         </div>
 
                         {students.length === 0 ? (
@@ -78,7 +81,7 @@ const ClassTeacherDashboard = ({ activeTab, setActiveTab }) => {
                             </div>
                         ) : (
                             <div style={{ overflowX: 'auto' }}>
-                                <table className="data-table">
+                                <table className="dash-table">
                                     <thead>
                                         <tr>
                                             <th>Roll Number</th>
@@ -106,8 +109,11 @@ const ClassTeacherDashboard = ({ activeTab, setActiveTab }) => {
                 {activeTab === 'seatplan' && (
                     <div className="card glass-panel padding-lg">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                            <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><CalendarDays size={20} className="text-secondary" /> Active Examination Layout</h3>
-                            <div className="badge" style={{ backgroundColor: 'var(--primary-light)', color: 'var(--primary)' }}>Read Only Access</div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                                <CalendarDays size={20} className="text-secondary" />
+                                <h3 className="dash-subtitle">Examination Layout</h3>
+                            </div>
+                            <span className="badge badge-cyan">Active Sequence</span>
                         </div>
 
                         {!seatingPlan ? (

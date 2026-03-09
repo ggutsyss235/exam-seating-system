@@ -91,17 +91,22 @@ const SeatingPlanner = () => {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '2rem' }}>
 
                         <div style={{ flex: 1, minWidth: '300px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                                <LayoutGrid size={24} color="var(--primary)" />
-                                <h3 style={{ margin: 0 }}>Allocation Engine</h3>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginBottom: '1.2rem' }}>
+                                <div style={{ background: 'rgba(99, 102, 241, 0.1)', padding: '10px', borderRadius: '12px', border: '1px solid rgba(99, 102, 241, 0.2)' }}>
+                                    <LayoutGrid size={24} color="var(--primary)" />
+                                </div>
+                                <div>
+                                    <p className="dash-label" style={{ marginBottom: '0.2rem' }}>Core Engine</p>
+                                    <h3 className="dash-subtitle" style={{ margin: 0 }}>Allocation Engine</h3>
+                                </div>
                             </div>
 
                             {/* Capacity Visualizer */}
                             <div style={{ marginBottom: '1.5rem' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.9rem' }}>
-                                    <span style={{ color: 'var(--text-muted)' }}>Network Capacity</span>
-                                    <span style={{ fontWeight: '600', color: capacityRatio > 90 ? 'var(--danger)' : 'var(--secondary)' }}>
-                                        {students.length} / {rooms.reduce((a, r) => a + r.capacity, 0)} Nodes
+                                    <span className="dash-label" style={{ fontSize: '0.7rem' }}>Network Capacity</span>
+                                    <span style={{ fontWeight: '800', color: capacityRatio > 90 ? 'var(--danger)' : '#f1f5f9', fontSize: '0.95rem', letterSpacing: '-0.02em' }}>
+                                        {students.length} / {rooms.reduce((a, r) => a + r.capacity, 0)} <span className="dash-label" style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>Nodes</span>
                                     </span>
                                 </div>
                                 <div style={{ height: '8px', background: 'var(--background)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
@@ -163,13 +168,13 @@ const SeatingPlanner = () => {
                         <div key={idx} className="card print-break-inside matrix-container" style={{ animationDelay: `${idx * 0.2}s` }}>
                             <div className="card-header" style={{ background: 'var(--surface)', borderBottom: '1px dashed var(--border)' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                    <div style={{ background: 'var(--primary-light)', color: 'var(--primary)', fontWeight: '800', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>
+                                    <div style={{ background: 'var(--primary-light)', color: 'var(--primary)', fontWeight: '950', width: '42px', height: '42px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', boxShadow: '0 4px 12px rgba(99, 102, 241, 0.2)' }}>
                                         {idx + 1}
                                     </div>
                                     <div>
-                                        <h3 style={{ fontSize: '1.4rem', letterSpacing: '-0.5px', marginBottom: '0.2rem' }}>Location: {plan.roomDetails.roomNumber}</h3>
-                                        <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                                            Grid Array: {plan.roomDetails.rows} × {plan.roomDetails.columns}
+                                        <h3 className="dash-subtitle" style={{ fontSize: '1.3rem', marginBottom: '0.2rem' }}>Location: {plan.roomDetails.roomNumber}</h3>
+                                        <div className="dash-label" style={{ fontSize: '0.65rem', opacity: 0.7 }}>
+                                            Grid Array: {plan.roomDetails.rows} Cols × {plan.roomDetails.columns} Rows
                                         </div>
                                     </div>
                                 </div>
@@ -223,8 +228,11 @@ const SeatingPlanner = () => {
                                                                 borderRadius: '50%', background: 'var(--secondary)',
                                                                 boxShadow: '0 0 15px var(--secondary)'
                                                             }}></div>
-                                                            <div style={{ fontWeight: '900', fontSize: '1.3rem', color: '#0f172a', letterSpacing: '-0.5px', textShadow: '0 1px 2px rgba(255,255,255,0.8)' }}>{seat.rollNumber}</div>
-                                                            <div style={{ fontSize: '0.85rem', color: 'white', fontWeight: '800', marginTop: '0.5rem', background: 'linear-gradient(135deg, var(--primary), #a855f7)', padding: '0.2rem 0.75rem', borderRadius: '999px', boxShadow: '0 4px 12px rgba(124, 58, 237, 0.4)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                                            <div style={{ fontWeight: '950', fontSize: '1.5rem', color: '#0f172a', letterSpacing: '-0.04em', lineHeight: '1', filter: 'drop-shadow(0 1px 0 #fff)' }}>{seat.rollNumber}</div>
+                                                            <div style={{ fontSize: '0.7rem', color: '#475569', fontWeight: '800', marginTop: '0.4rem', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+                                                                {seat.className}
+                                                            </div>
+                                                            <div style={{ fontSize: '0.65rem', color: 'white', fontWeight: '800', marginTop: '0.6rem', background: 'linear-gradient(135deg, var(--primary), #a855f7)', padding: '0.25rem 0.65rem', borderRadius: '999px', boxShadow: '0 4px 10px rgba(124, 58, 237, 0.3)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                                                                 {seat.subject}
                                                             </div>
                                                         </>
