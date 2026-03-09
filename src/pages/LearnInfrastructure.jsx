@@ -372,7 +372,7 @@ const LearnInfrastructure = () => {
 
             {/* Outro CTA */}
             <section style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '0 2rem', position: 'relative', zIndex: 10, borderTop: '1px solid rgba(255,255,255,0.05)', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                <div style={{ textAlign: 'center', transform: scrollProgress > 0.9 ? 'translateZ(100px) scale(1.1)' : 'translateZ(-400px) scale(0.5) rotateX(45deg)', opacity: scrollProgress > 0.9 ? 1 : 0, transition: 'all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}>
+                <div style={{ textAlign: 'center', transform: scrollProgress > 0.7 || mounted ? 'translateZ(0px) scale(1)' : 'translateZ(-200px) scale(0.8) rotateX(20deg)', opacity: scrollProgress > 0.7 || mounted ? 1 : 0, transition: 'all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}>
                     <h2 style={{ fontSize: '3.5rem', fontWeight: '800', marginBottom: '2rem' }}>Ready to secure your exams?</h2>
                     <button
                         onClick={() => navigate('/login')}
