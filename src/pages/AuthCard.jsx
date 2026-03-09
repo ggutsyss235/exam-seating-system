@@ -174,7 +174,7 @@ const AuthCard = ({ isLogin }) => {
                         <h2 style={{ fontSize: '2.2rem', letterSpacing: '-2px', fontWeight: '900', background: 'linear-gradient(135deg, #ffffff, #a5b4fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: '0.2rem', textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
                             {isLogin ? 'Welcome Back' : 'Create Account'}
                         </h2>
-                        <p style={{ color: 'var(--text-main)', fontSize: '1rem', fontWeight: '500', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                        <p style={{ color: 'var(--text-main)', fontSize: '1rem', fontWeight: '600', textShadow: 'var(--text-shadow-glow)' }}>
                             {isLogin ? 'Enter your credentials to access the console.' : 'Initialize your personal profile and specify your institutional role.'}
                         </p>
                     </div>
@@ -210,7 +210,7 @@ const AuthCard = ({ isLogin }) => {
                             <div className="form-group" style={{ marginBottom: '1.25rem' }}>
                                 <label className="form-label" style={{ fontSize: '0.8rem', color: '#ffffff', fontWeight: '700' }}>Email Address</label>
                                 <div style={{ position: 'relative' }}>
-                                    <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                                    <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                                     <input
                                         type="email"
                                         className="form-input"

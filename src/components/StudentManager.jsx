@@ -227,9 +227,9 @@ const StudentManager = () => {
                                         className="student-row"
                                     >
                                         <div>
-                                            <div style={{ fontWeight: '700', color: 'var(--text-main)' }}>{student.name} <span style={{ opacity: 0.5, fontWeight: '400', marginLeft: '0.5rem' }}>#{student.rollNumber}</span></div>
-                                            <div style={{ fontSize: '0.85rem', color: 'var(--primary)', fontWeight: '600', marginTop: '0.2rem' }}>
-                                                {student.subject} <span style={{ color: 'var(--text-muted)', fontWeight: '400' }}>• {student.department}</span>
+                                            <div style={{ fontWeight: '800', color: 'var(--text-main)', textShadow: 'var(--text-shadow-glow)' }}>{student.name} <span style={{ color: 'var(--text-muted)', fontWeight: '400', marginLeft: '0.5rem' }}>#{student.rollNumber}</span></div>
+                                            <div style={{ fontSize: '0.85rem', color: 'var(--secondary)', fontWeight: '700', marginTop: '0.25rem', textShadow: 'var(--text-shadow-glow)' }}>
+                                                {student.subject} <span style={{ color: 'var(--text-dim)', fontWeight: '500' }}>• {student.department}</span>
                                             </div>
                                         </div>
                                         <button onClick={() => removeStudent(student.id)} className="btn btn-ghost" style={{ padding: '0.6rem', color: 'var(--danger)' }}>

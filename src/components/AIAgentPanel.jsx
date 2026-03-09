@@ -182,7 +182,7 @@ const AIAgentPanel = () => {
                             }}>
                                 <div style={{
                                     background: msg.role === 'ai' ? 'var(--primary-light)' : 'var(--surface-hover)',
-                                    color: msg.role === 'ai' ? 'var(--primary)' : 'var(--text-muted)',
+                                    color: msg.role === 'ai' ? 'var(--primary)' : 'var(--text-main)',
                                     padding: '0.6rem',
                                     borderRadius: '50%',
                                     display: 'flex', alignItems: 'center', justifyContent: 'center'
@@ -210,7 +210,7 @@ const AIAgentPanel = () => {
                                 <div style={{ background: 'linear-gradient(135deg, #7c3aed, #0ea5e9)', color: 'white', padding: '0.6rem', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 20px rgba(124, 58, 237, 0.6)' }}>
                                     <Sparkles size={18} className="pulse-icon" />
                                 </div>
-                                <div style={{ background: 'rgba(124, 58, 237, 0.1)', padding: '1rem 1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid rgba(124, 58, 237, 0.3)', display: 'flex', gap: '0.75rem', alignItems: 'center', color: '#fff', fontWeight: '600' }}>
+                                <div style={{ background: 'rgba(124, 58, 237, 0.2)', padding: '1.25rem 2rem', borderRadius: 'var(--radius-lg)', border: '1px solid rgba(124, 58, 237, 0.4)', display: 'flex', gap: '0.75rem', alignItems: 'center', color: '#fff', fontWeight: '800', boxShadow: '0 0 25px rgba(124, 58, 237, 0.3)', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                                     Formulating optimized spatial matrix...
                                     <div className="loading-dots"><span>.</span><span>.</span><span>.</span></div>
                                 </div>

@@ -18,11 +18,11 @@ const ClassTeacherDashboard = ({ activeTab, setActiveTab }) => {
                     <div style={{ padding: '0.75rem', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(14, 165, 233, 0.3)', borderRadius: '12px', boxShadow: '0 0 20px rgba(14, 165, 233, 0.2), inset 0 0 10px rgba(14, 165, 233, 0.1)' }}>
                         <GraduationCap size={28} color="#0ea5e9" />
                     </div>
-                    <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', background: 'linear-gradient(135deg, #fff, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.1, letterSpacing: '-0.5px' }}>
+                    <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', background: 'linear-gradient(135deg, #fff, var(--text-muted))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.1, letterSpacing: '-0.5px', textShadow: 'var(--text-shadow-glow)' }}>
                         Class Operations
                     </h2>
                 </div>
-                <p style={{ color: '#94a3b8', fontSize: '1.05rem', maxWidth: '650px', position: 'relative', zIndex: 1, lineHeight: 1.6 }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '650px', position: 'relative', zIndex: 1, lineHeight: 1.6, textShadow: 'var(--text-shadow-glow)' }}>
                     Welcome back, <span style={{ color: '#fff', fontWeight: 600 }}>{user.name}</span>. Access your securely assigned roster (Class <span style={{ color: '#fff', fontWeight: 600 }}>{user.assignClass}-{user.assignSection}</span>) and review the generated cryptographic seating plans.
                 </p>
             </header>
@@ -39,7 +39,7 @@ const ClassTeacherDashboard = ({ activeTab, setActiveTab }) => {
                     style={{
                         padding: '0.6rem 1.2rem', fontSize: '0.95rem', gap: '0.5rem', borderRadius: '12px',
                         background: activeTab === 'overview' ? 'rgba(15, 23, 42, 0.8)' : 'transparent',
-                        color: activeTab === 'overview' ? '#fff' : '#64748b',
+                        color: activeTab === 'overview' ? '#fff' : 'var(--text-dim)',
                         border: `1px solid ${activeTab === 'overview' ? 'rgba(255,255,255,0.1)' : 'transparent'}`,
                         boxShadow: activeTab === 'overview' ? '0 4px 12px rgba(0,0,0,0.5)' : 'none',
                         transition: 'all 0.3s ease'

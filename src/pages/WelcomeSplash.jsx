@@ -133,7 +133,7 @@ const WelcomeSplash = () => {
                     <p style={{
                         fontSize: 'clamp(1.1rem, 2vw, 1.35rem)', color: 'var(--text-main)',
                         maxWidth: '600px', margin: '0 auto 3.5rem', lineHeight: '1.6', fontWeight: '600',
-                        textShadow: '0 4px 12px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,0.5)'
+                        textShadow: 'var(--text-shadow-glow)'
                     }}>
                         The intelligent infrastructure for examination management.
                         Cryptographically secure matrices, algorithmic anti-cheating, and precise spatial distribution.

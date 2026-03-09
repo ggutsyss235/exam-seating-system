@@ -136,17 +136,17 @@ function App() {
           </nav>
 
           <div className="nav-profile-block" style={{ marginTop: 'auto', paddingTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)', alignItems: 'center' }}>
-            <div style={{ fontSize: '0.75rem', color: '#94a3b8', textAlign: 'center', lineHeight: '1.4', background: 'rgba(0,0,0,0.2)', padding: '0.5rem 1rem', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: '0', alignItems: 'center' }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center', lineHeight: '1.4', background: 'rgba(0,0,0,0.3)', padding: '0.6rem 1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', gap: '0', alignItems: 'center', textShadow: 'var(--text-shadow-glow)' }}>
               <span>Identified as <b>{user?.name?.split(' ')[0]}</b></span>
-              <span style={{ color: 'var(--primary)', fontFamily: 'monospace', letterSpacing: '0.5px' }}>[{user?.role.toUpperCase()}]</span>
+              <span style={{ color: 'var(--primary)', fontFamily: 'monospace', fontWeight: 'bold', letterSpacing: '0.5px' }}>[{user?.role.toUpperCase()}]</span>
             </div>
             <button
               onClick={logout}
               className="btn btn-ghost"
-              style={{ justifyContent: 'center', color: '#ef4444', padding: '0.5rem 1rem', background: 'rgba(239, 68, 68, 0.05)' }}
+              style={{ justifyContent: 'center', color: '#ff4d4d', fontWeight: 'bold', padding: '0.5rem 1rem', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)' }}
             >
               <LogOut size={18} />
-              <span className="hide-mobile">Terminate Session</span>
+              <span className="hide-mobile" style={{ textShadow: '0 0 10px rgba(0,0,0,0.5)' }}>Terminate Session</span>
             </button>
           </div>
         </aside>

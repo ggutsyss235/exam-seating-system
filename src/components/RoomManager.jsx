@@ -146,10 +146,10 @@ const RoomManager = () => {
                                 >
                                     <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '4px', background: 'var(--secondary)' }}></div>
                                     <div style={{ marginLeft: '0.5rem' }}>
-                                        <div style={{ fontWeight: '800', fontSize: '1.2rem', color: 'var(--text-main)', letterSpacing: '-0.5px' }}>{room.roomNumber}</div>
-                                        <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '0.2rem', display: 'flex', gap: '1rem' }}>
-                                            <span>Capacity: <strong style={{ color: 'var(--secondary)' }}>{room.capacity}</strong></span>
-                                            <span>Grid: {room.rows} × {room.columns}</span>
+                                        <div style={{ fontWeight: '800', fontSize: '1.3rem', color: 'var(--text-main)', letterSpacing: '-0.5px', textShadow: 'var(--text-shadow-glow)' }}>{room.roomNumber}</div>
+                                        <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '0.3rem', display: 'flex', gap: '1.5rem', fontWeight: '500' }}>
+                                            <span>Capacity: <strong style={{ color: 'var(--secondary)', fontWeight: '800' }}>{room.capacity}</strong></span>
+                                            <span style={{ color: 'var(--text-dim)' }}>Grid: {room.rows} × {room.columns}</span>
                                         </div>
                                     </div>
                                     <button onClick={() => removeRoom(room.id)} className="btn btn-ghost" style={{ padding: '0.6rem', color: 'var(--danger)' }}>

@@ -58,13 +58,13 @@ const LearnInfrastructure = () => {
                     <h1 style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: '800', lineHeight: '1.1', marginBottom: '1.5rem', background: 'linear-gradient(135deg, #ffffff 0%, #a855f7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-1px' }}>
                         How SeatPro<span style={{ color: '#0ea5e9', WebkitTextFillColor: '#0ea5e9' }}>X</span> Thinks.
                     </h1>
-                    <p style={{ fontSize: '1.25rem', color: '#94a3b8', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto 3rem' }}>
+                    <p style={{ fontSize: '1.25rem', color: 'var(--text-main)', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto 3.5rem', fontWeight: '500', textShadow: 'var(--text-shadow-glow)' }}>
                         Discover the deterministic AI engine that physically guarantees exam integrity through algorithmic spatial isolation.
                     </p>
 
                     {/* Scroll Indicator */}
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', color: '#64748b', fontSize: '0.9rem', animation: 'bounce 2s infinite', marginTop: '4rem' }}>
-                        <div style={{ width: '1px', height: '60px', background: 'linear-gradient(to bottom, rgba(124, 58, 237, 0.5), transparent)' }}></div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', color: 'var(--text-dim)', fontSize: '0.9rem', animation: 'bounce 2s infinite', marginTop: '4rem', fontWeight: '700' }}>
+                        <div style={{ width: '1px', height: '60px', background: 'linear-gradient(to bottom, var(--primary), transparent)' }}></div>
                         Scroll to explore
                     </div>
                 </div>
@@ -93,7 +93,7 @@ const LearnInfrastructure = () => {
                             Node 1: Student Manager
                         </div>
                         <h2 style={{ fontSize: '3rem', fontWeight: '700', marginBottom: '1.5rem', lineHeight: '1.2' }}>Mass scale data ingestion.</h2>
-                        <p style={{ fontSize: '1.15rem', color: '#94a3b8', lineHeight: '1.7', marginBottom: '2rem' }}>
+                        <p style={{ fontSize: '1.15rem', color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '2rem', fontWeight: '500' }}>
                             Before AI can generate seating, it needs data. The Student Manager handles massive CSV uploads instantly, verifying and organizing thousands of student profiles, classes, and subjects into an encrypted database node.
                         </p>
                     </div>
@@ -111,7 +111,7 @@ const LearnInfrastructure = () => {
                         </div>
 
                         {/* Headers */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr 1fr', gap: '1rem', color: '#64748b', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '1rem' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr 1fr', gap: '1rem', color: 'var(--text-dim)', fontSize: '0.8rem', fontWeight: '800', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '0.5px' }}>
                             <span>Roll No</span><span>Name</span><span>Class</span><span>Subject</span>
                         </div>
 
@@ -169,7 +169,7 @@ const LearnInfrastructure = () => {
                             Node 2: Room Architect
                         </div>
                         <h2 style={{ fontSize: '3rem', fontWeight: '700', marginBottom: '1.5rem', lineHeight: '1.2' }}>Spatial coordinate mapping.</h2>
-                        <p style={{ fontSize: '1.15rem', color: '#94a3b8', lineHeight: '1.7', marginBottom: '2rem' }}>
+                        <p style={{ fontSize: '1.15rem', color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '2rem', fontWeight: '500' }}>
                             The system doesn't just look at total capacity. Administrators use the Room Manager to define exact physical dimensions—rows, columns, and seats. This builds a digital isometric grid that the AI uses to calculate distance vectors.
                         </p>
                     </div>
@@ -188,7 +188,7 @@ const LearnInfrastructure = () => {
                             The Legacy Problem
                         </div>
                         <h2 style={{ fontSize: '3rem', fontWeight: '700', marginBottom: '1.5rem', lineHeight: '1.2' }}>Manual seating is inherently flawed.</h2>
-                        <p style={{ fontSize: '1.15rem', color: '#94a3b8', lineHeight: '1.7', marginBottom: '2rem' }}>
+                        <p style={{ fontSize: '1.15rem', color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '2rem', fontWeight: '500' }}>
                             Human administrators trying to map hundreds of students across varying subjects to physical grids inevitably create proximity vulnerabilities. Students with identical question papers inevitably sit directly behind or diagonally adjacent to each other.
                         </p>
                         <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -255,7 +255,7 @@ const LearnInfrastructure = () => {
                             The Deterministic Solution
                         </div>
                         <h2 style={{ fontSize: '3rem', fontWeight: '700', marginBottom: '1.5rem', lineHeight: '1.2' }}>Spatial Cryptography via Gemini AI.</h2>
-                        <p style={{ fontSize: '1.15rem', color: '#94a3b8', lineHeight: '1.7', marginBottom: '2rem' }}>
+                        <p style={{ fontSize: '1.15rem', color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '2rem', fontWeight: '500' }}>
                             SeatPro X utilizes the Google Gemini architecture to process explicit dimensional parameters. We force the LLM to obey radial exclusion zones—meaning no student will ever sit adjacent, diagonal, or parallel to an identical question paper.
                         </p>
                         <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -279,7 +279,7 @@ const LearnInfrastructure = () => {
                             Node 3: The Execution Engine
                         </div>
                         <h2 style={{ fontSize: '3rem', fontWeight: '700', marginBottom: '1.5rem', lineHeight: '1.2' }}>Conversational generation.</h2>
-                        <p style={{ fontSize: '1.15rem', color: '#94a3b8', lineHeight: '1.7', marginBottom: '3rem' }}>
+                        <p style={{ fontSize: '1.15rem', color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '3rem', fontWeight: '500' }}>
                             Data and space merge at the AI Agent node. The interface abstracts away the complex math into a simple chat. You provide the parameters; the AI negotiates the spatial isolation logic instantly in the background.
                         </p>
 
