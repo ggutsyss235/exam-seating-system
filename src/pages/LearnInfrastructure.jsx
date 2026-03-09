@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Shield, BrainCircuit, Boxes, ArrowLeft, Terminal, CheckCircle2, MessageSquare, Sparkles } from 'lucide-react';
+import { Shield, BrainCircuit, Boxes, ArrowLeft, Terminal, CheckCircle2, MessageSquare, Sparkles, Database, LayoutGrid } from 'lucide-react';
 import AnimatedLogo from '../components/AnimatedLogo';
 
 const LearnInfrastructure = () => {
@@ -82,6 +82,101 @@ const LearnInfrastructure = () => {
                 </div>
             </section>
 
+            {/* Component Showcase 1: Student Database */}
+            <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', padding: '6rem 4rem', position: 'relative', zIndex: 10 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', width: '100%', maxWidth: '1400px', margin: '0 auto', alignItems: 'center' }}>
+
+                    {/* Left: Text */}
+                    <div style={{ transform: scrollProgress > 0.1 ? 'translateX(0) scale(1)' : 'translateX(-200px) scale(0.5) rotateY(30deg)', opacity: scrollProgress > 0.1 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', color: '#3b82f6', marginBottom: '1.5rem', fontWeight: '600' }}>
+                            <div style={{ width: '40px', height: '1px', background: '#3b82f6' }}></div>
+                            Node 1: Student Manager
+                        </div>
+                        <h2 style={{ fontSize: '3rem', fontWeight: '700', marginBottom: '1.5rem', lineHeight: '1.2' }}>Mass scale data ingestion.</h2>
+                        <p style={{ fontSize: '1.15rem', color: '#94a3b8', lineHeight: '1.7', marginBottom: '2rem' }}>
+                            Before AI can generate seating, it needs data. The Student Manager handles massive CSV uploads instantly, verifying and organizing thousands of student profiles, classes, and subjects into an encrypted database node.
+                        </p>
+                    </div>
+
+                    {/* Right: Simulated Student Table */}
+                    <div style={{
+                        transform: `perspective(1200px) rotateY(${scrollProgress > 0.1 ? -25 : -60}deg) translateZ(${scrollProgress > 0.1 ? 100 : -600}px)`,
+                        transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)',
+                        background: 'rgba(15,23,42,0.6)', border: '1px solid rgba(59, 130, 246, 0.3)', borderRadius: '24px', padding: '1.5rem',
+                        boxShadow: '-20px 20px 60px rgba(0,0,0,0.5), inset 0 2px 20px rgba(59, 130, 246, 0.1)',
+                        position: 'relative', overflow: 'hidden', height: '400px'
+                    }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1rem', marginBottom: '1rem' }}>
+                            <Database color="#3b82f6" /> <h3 style={{ margin: 0, color: '#fff' }}>Student Registry</h3>
+                        </div>
+
+                        {/* Headers */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr 1fr', gap: '1rem', color: '#64748b', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '1rem' }}>
+                            <span>Roll No</span><span>Name</span><span>Class</span><span>Subject</span>
+                        </div>
+
+                        {/* Scrolling Data Rows */}
+                        <div className="scroll-y-anim" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                            {[
+                                ['25001', 'Alex Mercer', '12-A', 'Physics'], ['25002', 'Sarah Connor', '12-A', 'Math'],
+                                ['25003', 'John Doe', '12-B', 'Math'], ['25004', 'Jane Smith', '11-C', 'Biology'],
+                                ['25005', 'Michael Bay', '12-A', 'Physics'], ['25006', 'Tony Stark', '12-B', 'Math'],
+                                ['25007', 'Bruce Wayne', '11-C', 'Biology'], ['25008', 'Clark Kent', '12-A', 'Physics']
+                            ].map((row, i) => (
+                                <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr 1fr', gap: '1rem', background: 'rgba(255,255,255,0.02)', padding: '0.75rem 0.5rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', alignItems: 'center' }}>
+                                    <span style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{row[0]}</span>
+                                    <span style={{ color: '#e2e8f0', fontSize: '0.95rem' }}>{row[1]}</span>
+                                    <span style={{ color: '#0ea5e9', fontSize: '0.85rem', background: 'rgba(14, 165, 233, 0.1)', padding: '0.2rem 0.5rem', borderRadius: '4px', textAlign: 'center' }}>{row[2]}</span>
+                                    <span style={{ color: '#a855f7', fontSize: '0.85rem' }}>{row[3]}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Component Showcase 2: Room Architect */}
+            <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', padding: '6rem 4rem', position: 'relative', zIndex: 10 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', width: '100%', maxWidth: '1400px', margin: '0 auto', alignItems: 'center' }}>
+
+                    {/* Left: 3D Room Grid Builder */}
+                    <div style={{
+                        transform: `perspective(1200px) rotateY(${scrollProgress > 0.25 ? 25 : 60}deg) translateZ(${scrollProgress > 0.25 ? 100 : -600}px) rotateX(${scrollProgress > 0.25 ? 15 : 45}deg)`,
+                        transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)',
+                        background: 'rgba(15,23,42,0.6)', border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '24px', padding: '2rem',
+                        boxShadow: '20px 20px 60px rgba(0,0,0,0.5), inset 0 2px 20px rgba(16, 185, 129, 0.1)',
+                    }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1rem', marginBottom: '2rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}><LayoutGrid color="#10b981" /> <h3 style={{ margin: 0, color: '#fff' }}>Room Architect (Room 101)</h3></div>
+                            <span style={{ background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', padding: '0.3rem 0.6rem', borderRadius: '4px', fontSize: '0.8rem' }}>Capacity: 24</span>
+                        </div>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+                            {[...Array(24)].map((_, i) => (
+                                <div key={i} className="build-anim" style={{
+                                    height: '40px', borderRadius: '4px', border: '1px solid rgba(16, 185, 129, 0.4)',
+                                    background: 'rgba(16, 185, 129, 0.1)',
+                                    animationDelay: `${scrollProgress > 0.25 ? i * 0.05 : 0}s`
+                                }}></div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Right: Text */}
+                    <div style={{ transform: scrollProgress > 0.25 ? 'translateX(0) scale(1)' : 'translateX(200px) scale(0.5) rotateY(-30deg)', opacity: scrollProgress > 0.25 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', color: '#10b981', marginBottom: '1.5rem', fontWeight: '600' }}>
+                            <div style={{ width: '40px', height: '1px', background: '#10b981' }}></div>
+                            Node 2: Room Architect
+                        </div>
+                        <h2 style={{ fontSize: '3rem', fontWeight: '700', marginBottom: '1.5rem', lineHeight: '1.2' }}>Spatial coordinate mapping.</h2>
+                        <p style={{ fontSize: '1.15rem', color: '#94a3b8', lineHeight: '1.7', marginBottom: '2rem' }}>
+                            The system doesn't just look at total capacity. Administrators use the Room Manager to define exact physical dimensions—rows, columns, and seats. This builds a digital isometric grid that the AI uses to calculate distance vectors.
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
             {/* Split Screen Explanation 1: The Problem */}
             <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', padding: '6rem 4rem', position: 'relative', zIndex: 10 }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', width: '100%', maxWidth: '1400px', margin: '0 auto', alignItems: 'center' }}>
@@ -133,7 +228,7 @@ const LearnInfrastructure = () => {
 
                     {/* Left: Interactive Good Grid Demo */}
                     <div style={{
-                        transform: `perspective(1200px) rotateY(${scrollProgress > 0.4 ? 35 : 70}deg) translateZ(${scrollProgress > 0.4 ? 150 : -600}px) rotateX(${scrollProgress > 0.4 ? -5 : -30}deg)`,
+                        transform: `perspective(1200px) rotateY(${scrollProgress > 0.6 ? 35 : 70}deg) translateZ(${scrollProgress > 0.6 ? 150 : -600}px) rotateX(${scrollProgress > 0.6 ? -5 : -30}deg)`,
                         transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)',
                         background: 'rgba(15,23,42,0.4)', border: '1px solid rgba(168, 85, 247, 0.3)', borderRadius: '24px', padding: '2rem',
                         boxShadow: '20px 20px 60px rgba(124, 58, 237, 0.1)'
@@ -145,7 +240,7 @@ const LearnInfrastructure = () => {
                                     background: subj.includes('Math') ? 'rgba(168, 85, 247, 0.15)' : 'rgba(14, 165, 233, 0.15)',
                                     border: subj.includes('Math') ? '1px solid rgba(168, 85, 247, 0.4)' : '1px solid rgba(14, 165, 233, 0.4)',
                                     display: 'flex', justifyContent: 'center', alignItems: 'center',
-                                    animationDelay: `${i * 0.05}s`
+                                    animationDelay: `${scrollProgress > 0.6 ? i * 0.05 : 0}s`
                                 }}>
                                     <span style={{ color: subj.includes('Math') ? '#d8b4fe' : '#bae6fd', fontSize: '0.75rem', fontWeight: '600', textAlign: 'center' }}>{subj}</span>
                                 </div>
@@ -154,7 +249,7 @@ const LearnInfrastructure = () => {
                     </div>
 
                     {/* Right: Text */}
-                    <div style={{ transform: scrollProgress > 0.4 ? 'translateX(0) scale(1)' : 'translateX(200px) scale(0.5) rotateY(-30deg)', opacity: scrollProgress > 0.4 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+                    <div style={{ transform: scrollProgress > 0.6 ? 'translateX(0) scale(1)' : 'translateX(200px) scale(0.5) rotateY(-30deg)', opacity: scrollProgress > 0.6 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)' }}>
                         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', color: '#a855f7', marginBottom: '1.5rem', fontWeight: '600' }}>
                             <div style={{ width: '40px', height: '1px', background: '#a855f7' }}></div>
                             The Deterministic Solution
@@ -178,14 +273,14 @@ const LearnInfrastructure = () => {
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', width: '100%', maxWidth: '1400px', margin: '0 auto', alignItems: 'center' }}>
 
                     {/* Left: Chat AI Interface Mockup */}
-                    <div style={{ transform: scrollProgress > 0.6 ? 'translateX(0) scale(1)' : 'translateX(-200px) scale(0.5) rotateY(30deg)', opacity: scrollProgress > 0.6 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)', position: 'relative' }}>
+                    <div style={{ transform: scrollProgress > 0.8 ? 'translateX(0) scale(1)' : 'translateX(-200px) scale(0.5) rotateY(30deg)', opacity: scrollProgress > 0.8 ? 1 : 0, transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)', position: 'relative' }}>
                         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', color: '#0ea5e9', marginBottom: '1.5rem', fontWeight: '600' }}>
                             <div style={{ width: '40px', height: '1px', background: '#0ea5e9' }}></div>
-                            The Agent Experience
+                            Node 3: The Execution Engine
                         </div>
                         <h2 style={{ fontSize: '3rem', fontWeight: '700', marginBottom: '1.5rem', lineHeight: '1.2' }}>Conversational generation.</h2>
                         <p style={{ fontSize: '1.15rem', color: '#94a3b8', lineHeight: '1.7', marginBottom: '3rem' }}>
-                            Administrators simply talk to the Seating Master AI. The interface abstracts away complex math. You provide the room dimensions and subjects; the AI negotiates the spatial isolation logic instantly in the background.
+                            Data and space merge at the AI Agent node. The interface abstracts away the complex math into a simple chat. You provide the parameters; the AI negotiates the spatial isolation logic instantly in the background.
                         </p>
 
                         {/* Simulated Chat Interface */}
@@ -193,7 +288,7 @@ const LearnInfrastructure = () => {
                             background: 'rgba(15,23,42,0.6)', border: '1px solid rgba(14, 165, 233, 0.4)', borderRadius: '24px', padding: '1.5rem',
                             boxShadow: '0 20px 40px rgba(0,0,0,0.5), inset 0 2px 20px rgba(14, 165, 233, 0.1)',
                             display: 'flex', flexDirection: 'column', gap: '1rem',
-                            transform: `translateZ(${scrollProgress > 0.6 ? 80 : 0}px)`, transition: 'all 1s ease-out'
+                            transform: `translateZ(${scrollProgress > 0.8 ? 80 : 0}px)`, transition: 'all 1s ease-out'
                         }}>
                             {/* Chat Header */}
                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1rem' }}>
@@ -227,7 +322,7 @@ const LearnInfrastructure = () => {
 
                     {/* Right: Live Interface Generative Simulation */}
                     <div style={{
-                        transform: `perspective(1200px) rotateY(${scrollProgress > 0.6 ? -30 : -70}deg) translateZ(${scrollProgress > 0.6 ? 100 : -600}px) rotateX(${scrollProgress > 0.6 ? 10 : 30}deg)`,
+                        transform: `perspective(1200px) rotateY(${scrollProgress > 0.8 ? -30 : -70}deg) translateZ(${scrollProgress > 0.8 ? 100 : -600}px) rotateX(${scrollProgress > 0.8 ? 10 : 30}deg)`,
                         transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)',
                         background: 'rgba(15,23,42,0.4)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '24px', padding: '2rem',
                         boxShadow: '-20px 20px 60px rgba(0,0,0,0.5)'
@@ -248,7 +343,7 @@ const LearnInfrastructure = () => {
                                         background: colorBg,
                                         border: `1px solid ${colorBorder}`,
                                         display: 'flex', justifyContent: 'center', alignItems: 'center',
-                                        animationDelay: `${scrollProgress > 0.6 ? 2 + (i * 0.1) : 0}s`
+                                        animationDelay: `${scrollProgress > 0.8 ? 2 + (i * 0.1) : 0}s`
                                     }}>
                                         <span style={{ color: colorPrimary, fontSize: '0.7rem', fontWeight: 'bold' }}>{subj}</span>
                                     </div>
@@ -265,7 +360,7 @@ const LearnInfrastructure = () => {
 
             {/* Outro CTA */}
             <section style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '0 2rem', position: 'relative', zIndex: 10, borderTop: '1px solid rgba(255,255,255,0.05)', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                <div style={{ textAlign: 'center', transform: scrollProgress > 0.7 ? 'translateZ(100px) scale(1.1)' : 'translateZ(-400px) scale(0.5) rotateX(45deg)', opacity: scrollProgress > 0.7 ? 1 : 0, transition: 'all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}>
+                <div style={{ textAlign: 'center', transform: scrollProgress > 0.9 ? 'translateZ(100px) scale(1.1)' : 'translateZ(-400px) scale(0.5) rotateX(45deg)', opacity: scrollProgress > 0.9 ? 1 : 0, transition: 'all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}>
                     <h2 style={{ fontSize: '3.5rem', fontWeight: '800', marginBottom: '2rem' }}>Ready to secure your exams?</h2>
                     <button
                         onClick={() => navigate('/login')}
@@ -336,6 +431,26 @@ const LearnInfrastructure = () => {
                 }
                 .ui-scanline {
                     animation: scanline 3s linear infinite;
+                }
+
+                @keyframes scroll-y {
+                    0% { transform: translateY(0); }
+                    100% { transform: translateY(-50%); }
+                }
+                .scroll-y-anim {
+                    animation: scroll-y 10s linear infinite alternate;
+                }
+                .scroll-y-anim:hover {
+                    animation-play-state: paused;
+                }
+
+                @keyframes build-up {
+                    0% { opacity: 0; transform: scale(0.5) translateY(20px); border-color: transparent; }
+                    50% { opacity: 1; transform: scale(1.1) translateY(-5px); border-color: rgba(16, 185, 129, 0.8); }
+                    100% { opacity: 1; transform: scale(1) translateY(0); border-color: rgba(16, 185, 129, 0.4); }
+                }
+                .build-anim {
+                    animation: build-up 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
                 }
             `}</style>
         </div>
