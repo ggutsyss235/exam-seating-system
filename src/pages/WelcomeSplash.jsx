@@ -155,11 +155,12 @@ const WelcomeSplash = () => {
                             Access Console <ArrowRight size={20} />
                         </button>
                         <button
+                            onClick={() => navigate('/learn')}
                             style={{
                                 display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
                                 padding: '1.2rem 2.5rem', fontSize: '1.1rem', fontWeight: '600',
                                 backgroundColor: 'rgba(255, 255, 255, 0.02)', color: '#fff', borderRadius: '999px',
-                                border: '1px solid rgba(255, 255, 255, 0.1)', cursor: 'not-allowed', transition: 'all 0.2s ease',
+                                border: '1px solid rgba(255, 255, 255, 0.1)', cursor: 'pointer', transition: 'all 0.2s ease',
                                 backdropFilter: 'blur(5px)'
                             }}
                             onMouseOver={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)'; e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)' }}

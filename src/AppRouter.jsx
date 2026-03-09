@@ -4,6 +4,7 @@ import { useAppContext } from './context/AppContext.jsx';
 import App from './App.jsx';
 import AuthCard from './pages/AuthCard.jsx';
 import WelcomeSplash from './pages/WelcomeSplash.jsx';
+import LearnInfrastructure from './pages/LearnInfrastructure.jsx';
 
 // Protected Route Wrapper
 const ProtectedRoute = ({ children }) => {
@@ -24,6 +25,7 @@ function AppRouter() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<AuthRoute><WelcomeSplash /></AuthRoute>} />
+                <Route path="/learn" element={<AuthRoute><LearnInfrastructure /></AuthRoute>} />
                 <Route path="/login" element={<AuthRoute><AuthCard isLogin={true} /></AuthRoute>} />
                 <Route path="/signup" element={<AuthRoute><AuthCard isLogin={false} /></AuthRoute>} />
                 <Route path="/app/*" element={<ProtectedRoute><App /></ProtectedRoute>} />
