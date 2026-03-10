@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useCallback, Suspense } from 'react
 import { useNavigate } from 'react-router-dom';
 import { Network, Shield, Cpu, ArrowRight } from 'lucide-react';
 import HeroCanvas3D from '../components/HeroCanvas3D';
+import MagneticButton3D from '../components/ui/MagneticButton3D';
 
 // Shared mouse ref — read by HeroCanvas3D via prop each frame
 export const sharedMouse = { x: 0, y: 0 };
@@ -35,19 +36,19 @@ const WelcomeSplash = () => {
     // Animation loop — runs independently of React
     useEffect(() => {
         const tick = () => {
-            // Lerp smooth toward raw
-            smooth.current.x += (raw.current.x - smooth.current.x) * 0.07;
-            smooth.current.y += (raw.current.y - smooth.current.y) * 0.07;
+            // Lerp smooth toward raw with a slower, gentler ease to strictly prevent wobbling/shaking
+            smooth.current.x += (raw.current.x - smooth.current.x) * 0.04;
+            smooth.current.y += (raw.current.y - smooth.current.y) * 0.04;
 
             const sx = smooth.current.x;
             const sy = smooth.current.y;
 
-            // Card 3D tilt
+            // Card 3D tilt - drastically reduced to prevent mouse cursor fighting
             if (cardRef.current) {
                 cardRef.current.style.transform = `
                     perspective(1000px)
-                    rotateX(${-sy * 10}deg)
-                    rotateY(${sx * 10}deg)
+                    rotateX(${-sy * 2}deg)
+                    rotateY(${sx * 2}deg)
                 `;
             }
 
@@ -223,38 +224,33 @@ const WelcomeSplash = () => {
                         <span className="kw-cyan" style={{ fontWeight: '600' }}>algorithmic anti-cheating</span>, and precise spatial distribution.
                     </p>
 
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '3rem', flexWrap: 'wrap' }}>
-                        <button
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '3rem', flexWrap: 'wrap', perspective: '1000px' }}>
+                        {/* We MUST NOT place these buttons inside an element that is already rotated,
+                            or the mouse tracking hits will shift away. We override their Z translation. */}
+                        <MagneticButton3D
                             onClick={() => navigate('/login')}
-                            style={{
-                                display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
-                                padding: '1rem 2.2rem', fontSize: '1rem', fontWeight: '700',
-                                backgroundColor: '#fff', color: '#000',
-                                borderRadius: '999px', border: 'none', cursor: 'pointer',
-                                transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                                boxShadow: '0 8px 25px rgba(255,255,255,0.2)',
-                            }}
-                            onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-5px) scale(1.05)'; e.currentTarget.style.boxShadow = '0 18px 40px rgba(255,255,255,0.3), 0 0 25px rgba(255,255,255,0.35)'; }}
-                            onMouseOut={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 8px 25px rgba(255,255,255,0.2)'; }}
+                            glowColor="rgba(56, 189, 248, 0.6)" // Cyan Neon
+                            baseColor="#ffffff"
+                            textColor="#000000"
+                            intensity={12}
                         >
                             Access Console <ArrowRight size={18} />
-                        </button>
-                        <button
+                        </MagneticButton3D>
+
+                        <MagneticButton3D
                             onClick={() => navigate('/learn')}
+                            glowColor="rgba(255, 255, 255, 0.4)" // White Glow
+                            baseColor="rgba(255,255,255,0.04)"
+                            textColor="#ffffff"
+                            intensity={8}
                             style={{
-                                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-                                padding: '1rem 2.2rem', fontSize: '1rem', fontWeight: '600',
-                                backgroundColor: 'rgba(255,255,255,0.04)', color: '#fff',
-                                borderRadius: '999px',
-                                border: '1px solid rgba(255,255,255,0.12)', cursor: 'pointer',
+                                border: '1px solid rgba(255,255,255,0.12)',
                                 backdropFilter: 'blur(8px)',
-                                transition: 'all 0.25s ease',
+                                fontWeight: '600'
                             }}
-                            onMouseOver={e => { e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; }}
-                            onMouseOut={e => { e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; }}
                         >
                             Learn Infrastructure
-                        </button>
+                        </MagneticButton3D>
                     </div>
 
                     <div style={{

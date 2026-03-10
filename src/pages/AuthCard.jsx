@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Zap, Eye, EyeOff, User, Mail, Lock, ShieldCheck, Briefcase, GraduationCap, ArrowLeft, ArrowRight, Building } from 'lucide-react';
 import AnimatedLogo from '../components/AnimatedLogo';
+import MagneticButton3D from '../components/ui/MagneticButton3D';
 
 import { useAppContext } from '../context/AppContext';
 
@@ -105,7 +106,7 @@ const AuthCard = ({ isLogin }) => {
                 padding: '2rem 0',
                 overflow: 'hidden',
                 position: 'relative',
-                backgroundColor: '#050505',
+                backgroundColor: '#000000',
                 perspective: '1200px'
             }}
         >
@@ -146,10 +147,8 @@ const AuthCard = ({ isLogin }) => {
                     padding: window.innerWidth <= 480 ? '2rem 1.5rem' : '3.5rem 3rem',
                     transition: isHovering && window.innerWidth > 768 ? 'transform 0.15s ease-out, max-width 0.6s cubic-bezier(0.16, 1, 0.3, 1)' : 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
                     zIndex: 1,
-                    backdropFilter: 'blur(30px)',
-                    WebkitBackdropFilter: 'blur(30px)',
-                    border: '1px solid rgba(255,255,255,0.12)',
-                    backgroundColor: 'rgba(15, 23, 42, 0.75)',
+                    border: '1px solid #333333',
+                    backgroundColor: '#111111',
                     borderRadius: '32px',
                     transformStyle: window.innerWidth > 768 ? 'preserve-3d' : 'flat',
                     transform: window.innerWidth > 768 ? `
@@ -360,9 +359,17 @@ const AuthCard = ({ isLogin }) => {
                         )}
 
 
-                        <button type="submit" className="btn btn-primary" disabled={isLoading} style={{ marginTop: '0.5rem', padding: '1rem', fontSize: '1rem' }}>
+                        <MagneticButton3D 
+                            type="submit" 
+                            disabled={isLoading} 
+                            glowColor={isLogin ? 'rgba(0, 255, 157, 0.5)' : 'rgba(0, 229, 255, 0.5)'}
+                            baseColor={isLogin ? '#00ff9d' : '#00e5ff'}
+                            textColor="#000000"
+                            intensity={12}
+                            style={{ marginTop: '0.5rem', width: '100%' }}
+                        >
                             {isLoading ? 'Processing...' : (isLogin ? 'Authenticate' : 'Complete Registration')}
-                        </button>
+                        </MagneticButton3D>
                     </form>
 
                     {/* Footer Switch */}
@@ -420,10 +427,10 @@ const RoleSelector = ({ icon, title, isActive, onClick }) => (
         style={{
             padding: '1.5rem 0.5rem',
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem',
-            border: `1.5px solid ${isActive ? 'var(--primary)' : 'rgba(255,255,255,0.08)'}`,
+            border: `1.5px solid ${isActive ? 'var(--primary)' : '#444444'}`,
             borderRadius: 'var(--radius-md)',
-            background: isActive ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.05))' : 'rgba(0,0,0,0.3)',
-            color: isActive ? '#fff' : 'var(--text-muted)',
+            background: isActive ? 'rgba(0, 255, 157, 0.15)' : '#222222',
+            color: isActive ? '#ffffff' : '#e5e7eb',
             cursor: 'pointer',
             transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
             textAlign: 'center',
