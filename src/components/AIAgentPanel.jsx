@@ -262,11 +262,23 @@ const AIAgentPanel = () => {
                             <MagneticButton3D 
                                 onClick={handleSend} 
                                 disabled={isGenerating || !input.trim() || step === 9}
-                                glowColor="rgba(0, 229, 255, 0.6)" // Cyan Action
-                                intensity={10}
-                                style={{ padding: '0 1.8rem' }}
+                                glowColor="rgba(0, 255, 157, 0.8)" 
+                                intensity={20}
+                                style={{ 
+                                    padding: '0 2rem',
+                                    background: 'linear-gradient(90deg, rgba(0,255,157,0.1), rgba(0,229,255,0.2))',
+                                    border: '1px solid rgba(0, 255, 157, 0.5)',
+                                    color: '#00ff9d',
+                                    fontWeight: '800',
+                                    letterSpacing: '2px',
+                                    textTransform: 'uppercase',
+                                    boxShadow: 'inset 0 0 15px rgba(0, 255, 157, 0.2), 0 0 20px rgba(0, 255, 157, 0.15)',
+                                    backdropFilter: 'blur(10px)',
+                                    borderRadius: '12px',
+                                    transition: 'all 0.3s ease'
+                                }}
                             >
-                                <Send size={18} /> Send
+                                <Send size={18} style={{ filter: 'drop-shadow(0 0 5px #00ff9d)' }} /> TRANSMIT
                             </MagneticButton3D>
                         </div>
                     </form>
