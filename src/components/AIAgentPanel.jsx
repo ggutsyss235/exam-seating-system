@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { Bot, User, Sparkles, Send, Box, CheckCircle2, Download, Trash2 } from 'lucide-react';
 import axios from 'axios';
+import MatrixCore3D from './ui/MatrixCore3D';
+import MagneticButton3D from './ui/MagneticButton3D';
 
 const AIAgentPanel = () => {
     const { seatingPlan, setSeatingPlan, user } = useAppContext();
@@ -161,8 +163,21 @@ const AIAgentPanel = () => {
 
             <div className="grid-2">
                 {/* Chat Interface */}
-                <div className="card glass-panel animate-fade-in stagger-1 glow-border" style={{ display: 'flex', flexDirection: 'column', height: '600px', gridColumn: seatingPlan ? '1 / -1' : 'span 1' }}>
-                    <div className="card-header" style={{ background: 'var(--surface)', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.5rem 2rem', borderTopLeftRadius: 'var(--radius-lg)', borderTopRightRadius: 'var(--radius-lg)' }}>
+                <div className="card animate-fade-in stagger-1 glow-border" style={{ 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    height: '600px', 
+                    gridColumn: seatingPlan ? '1 / -1' : 'span 1',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    background: 'rgba(10, 10, 10, 0.85)', // Dark frosted glass
+                    border: '1px solid rgba(0, 255, 157, 0.2)'
+                }}>
+                    {/* The immersive 3D Matrix Background reacts to chat step & generating state */}
+                    <MatrixCore3D step={step} isGenerating={isGenerating} />
+                    
+                    {/* Z-Index ensures the UI floats above the deep space matrix */}
+                    <div className="card-header" style={{ position: 'relative', zIndex: 10, background: 'rgba(20,20,20,0.9)', borderBottom: '1px solid rgba(0, 255, 157, 0.1)', display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.5rem 2rem', borderTopLeftRadius: 'var(--radius-lg)', borderTopRightRadius: 'var(--radius-lg)' }}>
                         <div style={{ background: 'linear-gradient(135deg, var(--primary), var(--secondary))', padding: '10px', borderRadius: '50%', boxShadow: '0 0 20px rgba(124, 58, 237, 0.4)' }}>
                             <Bot size={28} color="white" />
                         </div>
@@ -174,13 +189,15 @@ const AIAgentPanel = () => {
                         </div>
                     </div>
 
-                    <div className="card-body" style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1.5rem' }}>
+                    <div className="card-body" style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1.5rem', position: 'relative', zIndex: 10 }}>
                         {messages.map((msg, idx) => (
                             <div key={idx} style={{
                                 display: 'flex',
                                 gap: '1rem',
                                 alignItems: 'flex-start',
-                                flexDirection: msg.role === 'user' ? 'row-reverse' : 'row'
+                                flexDirection: msg.role === 'user' ? 'row-reverse' : 'row',
+                                animation: 'chat-bubble-pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                                transformOrigin: msg.role === 'user' ? 'bottom right' : 'bottom left'
                             }}>
                                 <div style={{
                                     background: msg.role === 'ai' ? 'var(--primary-light)' : 'var(--surface-hover)',
@@ -221,26 +238,49 @@ const AIAgentPanel = () => {
                         <div ref={chatEndRef} />
                     </div>
 
-                    <div style={{ padding: '1rem', background: 'var(--background)', borderTop: '1px solid var(--border)' }}>
-                        <form onSubmit={handleSend} style={{ display: 'flex', gap: '0.5rem' }}>
+                    <form onSubmit={handleSend} style={{ position: 'relative', zIndex: 10, padding: '1.5rem', borderTop: '1px solid rgba(0, 255, 157, 0.1)', background: 'rgba(5, 5, 5, 0.95)' }}>
+                        <div style={{ display: 'flex', gap: '1rem' }}>
                             <input
                                 type="text"
-                                className="form-input"
-                                placeholder="Type your response here..."
+                                className="input-field"
                                 value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                disabled={isGenerating}
-                                style={{ flex: 1, color: '#a5b4fc' }}
-                                autoFocus
+                                onChange={e => setInput(e.target.value)}
+                                placeholder={isGenerating ? "AI is computing..." : "Enter parameters here..."}
+                                disabled={isGenerating || step === 9}
+                                style={{ flex: 1, background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}
                             />
-                            <button type="submit" className="btn btn-primary" disabled={isGenerating || !input.trim()} style={{ width: '48px', height: '48px', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%' }}>
-                                <Send size={20} style={{ marginLeft: '4px' }} />
-                            </button>
-                        </form>
-                    </div>
+                            <MagneticButton3D 
+                                onClick={handleSend} 
+                                disabled={isGenerating || !input.trim() || step === 9}
+                                glowColor="rgba(0, 229, 255, 0.6)" // Cyan Action
+                                intensity={10}
+                                style={{ padding: '0 1.8rem' }}
+                            >
+                                <Send size={18} /> Send
+                            </MagneticButton3D>
+                        </div>
+                    </form>
                 </div>
             </div>
 
+            {/* Data Preview */}
+            <div className="card glass-panel animate-fade-in stagger-2" style={{ padding: '1.5rem' }}>
+                <h4 style={{ margin: '0 0 1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Box size={18} className="text-secondary" /> Current Configuration Memory
+                </h4>
+                <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', fontSize: '0.85rem' }}>
+                    <div><strong>Room:</strong> <span style={{ color: 'var(--text-muted)' }}>{params.roomNumber || 'Waiting...'}</span></div>
+                    <div><strong>Grid:</strong> <span style={{ color: 'var(--text-muted)' }}>{params.verticalRows ? `${params.verticalRows} Rows x ${params.seatsPerRow} Seats` : 'Waiting...'}</span></div>
+                    <div><strong>P/Seat:</strong> <span style={{ color: 'var(--text-muted)' }}>{params.studentsPerSeat || 'Waiting...'}</span></div>
+                    <div><strong>Classes:</strong> <span style={{ color: 'var(--text-muted)' }}>{params.classes || 'Waiting...'}</span></div>
+                </div>
+                {params.customConstraints && (
+                    <div style={{ marginTop: '1rem', padding: '0.5rem', background: 'rgba(255,0,85,0.1)', border: '1px solid rgba(255,0,85,0.3)', borderRadius: '4px', fontSize: '0.85rem' }}>
+                        <strong>Active Overrides:</strong> {params.customConstraints}
+                    </div>
+                )}
+            </div>
+            
             {/* Render Matrices if Available */}
             {seatingPlan && (
                 <div className="animate-fade-in stagger-3" style={{ display: 'flex', flexDirection: 'column', gap: '3rem', marginTop: '1rem' }}>
@@ -370,6 +410,11 @@ const AIAgentPanel = () => {
 
                 .seat-node.assigned:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3) !important; z-index: 10; border-color: #818cf8 !important; }
                 
+                @keyframes chat-bubble-pop {
+                    0% { opacity: 0; transform: translateY(15px) scale(0.95); }
+                    100% { opacity: 1; transform: translateY(0) scale(1); }
+                }
+
                 @media print {
                     .app-container aside { display: none !important; }
                     .app-container .main-content { padding: 0 !important; max-width: 100% !important; background: white !important; }
