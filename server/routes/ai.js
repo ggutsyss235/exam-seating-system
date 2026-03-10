@@ -182,8 +182,18 @@ router.post('/generate', async (req, res) => {
         res.json({ seatingPlan: planJson });
 
     } catch (error) {
-        console.error("AI Generation Error:", error);
-        res.status(500).json({ error: "The AI calculation engine encountered a fatal error.", details: error.message });
+        console.error("Critical AI Generation Runtime Error:");
+        console.error("Message:", error.message);
+        console.error("Stack:", error.stack);
+        if (error.response) {
+            console.error("Response Header:", error.response.headers);
+            console.error("Response Data:", error.response.data);
+        }
+        res.status(500).json({ 
+            error: "The AI calculation engine encountered a fatal error.", 
+            details: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     }
 });
 
