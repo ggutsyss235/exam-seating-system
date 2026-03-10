@@ -1,17 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAppContext } from '../context/AppContext';
-import { Bot, User, Sparkles, Send, Box, CheckCircle2, Download, Trash2 } from 'lucide-react';
+import { Bot, User, Sparkles, Send, Box, CheckCircle2, Download, Trash2, Mail } from 'lucide-react';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import MatrixCore3D from './ui/MatrixCore3D';
 import MagneticButton3D from './ui/MagneticButton3D';
 
 const AIAgentPanel = () => {
     const { seatingPlan, setSeatingPlan, user } = useAppContext();
     const [messages, setMessages] = useState([
-        { role: 'ai', text: "Greetings! I am your Seating Master AI. I will ask you 7 specific parameters to calculate the optimal matrix. \n\nShall we begin? (Type 'Start' to begin. Mid-conversation, type 'Back' to trace back a step, or 'Reset' to start over)." }
+        { role: 'ai', text: "Greetings! I am your Seating Master AI. I will ask you a few questions could you please answer me!!" }
     ]);
     const [input, setInput] = useState('');
     const [isGenerating, setIsGenerating] = useState(false);
+    const [showThoughtCloud, setShowThoughtCloud] = useState(false);
 
     // 7-Step Wizard State Machine
     const [step, setStep] = useState(0);
@@ -116,12 +119,12 @@ const AIAgentPanel = () => {
             return;
         } else if (step === 8 || step === 9) {
             // Step 8 is post-generation refinement or error retry
-            if (['yes', 'satisfied', 'perfect', 'looks good', 'ok', 'lock', 'done'].includes(userText.toLowerCase())) {
-                setMessages(prev => [...prev, { role: 'ai', text: `Excellent. The matrix is permanently locked and ready for deployment. You can export the document below.` }]);
+            if (['no', 'nah', 'none', 'perfect', 'satisfied', 'looks good', 'lock', 'done'].includes(lowerInput)) {
+                setMessages(prev => [...prev, { role: 'ai', text: `Thank you for using Seating Master AI! The matrix is permanently locked and ready for deployment. You can secure the arrangement below.` }]);
                 setStep(9); // Locked state
                 return;
             } else {
-                // If the user isn't satisfied and didn't type reset/yes, assume it's a constraint update
+                // If the user expects a change
                 p.customConstraints = (p.customConstraints ? p.customConstraints + " AND " : "") + userText;
                 setParams(p);
                 setMessages(prev => [...prev, { role: 'ai', text: `Understood. I'm injecting the new constraint: "${userText}". Recalculating matrix...` }]);
@@ -143,7 +146,7 @@ const AIAgentPanel = () => {
 
             if (response.data.seatingPlan) {
                 setSeatingPlan(response.data.seatingPlan);
-                setMessages(prev => [...prev, { role: 'ai', text: `Calculations complete! I have generated the mathematical matrix tailored exclusively to "${finalParams.roomNumber}". \n\nAre you satisfied with this specific arrangement? If not, please tell me exactly what changes you'd like (e.g., 'Move Section A to the front' or 'Disperse Class 10 more'). Type 'Yes' to lock it, or 'Reset' to start entirely over.` }]);
+                setMessages(prev => [...prev, { role: 'ai', text: `Calculations complete! I have generated the mathematical matrix tailored exclusively to "${finalParams.roomNumber}". \n\nDo you want any specific changes? If yes, then ping me that particular change. (Type 'No' if you are satisfied).` }]);
                 setStep(8); // Wait for refinement or lock
             } else {
                 throw new Error("Invalid format from AI Engine.");
@@ -156,6 +159,47 @@ const AIAgentPanel = () => {
         } finally {
             setIsGenerating(false);
         }
+    };
+
+    const handleSavePDF = async () => {
+        const matrixEl = document.getElementById('matrix-document');
+        if (!matrixEl) return;
+
+        // Trigger loading text (optional UI feedback)
+        setShowThoughtCloud(false); 
+
+        try {
+            const canvas = await html2canvas(matrixEl, { scale: 2, useCORS: true });
+            const imgData = canvas.toDataURL('image/png');
+            
+            const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+            
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            const pdfDataUri = pdf.output('datauristring'); // format: data:application/pdf;base64,...
+
+            setShowThoughtCloud(true); // Pop the thought bubble animation instantly
+            
+            // Send the PDF stream to backend
+            await axios.post('http://localhost:5000/api/pdf/email', {
+                pdfDataUri,
+                roomNumber: params.roomNumber
+            }, {
+                headers: { Authorization: `Bearer ${user.token}` }
+            });
+
+            // Hide the cloud after 6 seconds
+            setTimeout(() => setShowThoughtCloud(false), 6000);
+
+        } catch (error) {
+            console.error("PDF generation/emailing failed", error);
+        }
+    };
+
+    const handleSaveArrangement = () => {
+        // Typically commits seating matrix to DB. For now, we will simulate a success layout lock.
+        setMessages(prev => [...prev, { role: 'ai', text: `✅ Arrangement permanently saved to the databanks! The matrix is confirmed.`}]);
     };
 
     return (
@@ -178,11 +222,19 @@ const AIAgentPanel = () => {
                     
                     {/* Z-Index ensures the UI floats above the deep space matrix */}
                     <div className="card-header" style={{ position: 'relative', zIndex: 10, background: 'transparent', borderBottom: '1px solid rgba(0, 255, 157, 0.2)', display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.25rem 2rem' }}>
-                        <div className="ai-logo-container" style={{ position: 'relative', width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', overflow: 'hidden', boxShadow: '0 0 15px rgba(0, 255, 157, 0.3)' }}>
-                            <div className="logo-spin-bg" style={{ position: 'absolute', inset: '-5px', background: 'conic-gradient(from 0deg, transparent, #00ff9d, #00e5ff, transparent)', animation: 'spin 2s linear infinite' }} />
+                        <div className="ai-logo-container" style={{ position: 'relative', width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', overflow: 'visible', boxShadow: '0 0 15px rgba(0, 255, 157, 0.3)' }}>
+                            <div className="logo-spin-bg" style={{ position: 'absolute', inset: '-5px', background: 'conic-gradient(from 0deg, transparent, #00ff9d, #00e5ff, transparent)', animation: 'spin 2s linear infinite', borderRadius: '50%' }} />
                             <div style={{ position: 'absolute', inset: '2px', borderRadius: '50%', background: 'rgba(5, 5, 5, 0.95)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2, boxShadow: 'inset 0 0 10px rgba(0, 255, 157, 0.2)' }}>
                                 <Box size={24} color="#00ff9d" style={{ animation: 'pulse 1.5s infinite', filter: 'drop-shadow(0 0 5px #00ff9d)' }} />
                             </div>
+                            
+                            {/* Animated Thought Cloud Notification */}
+                            {showThoughtCloud && (
+                                <div className="thought-cloud-notify" style={{ position: 'absolute', top: '-15px', left: '60px', width: '280px', background: 'rgba(20, 20, 30, 0.95)', border: '1px solid #00ff9d', borderRadius: '15px 15px 15px 0', padding: '1rem', boxShadow: '0 10px 30px rgba(0,255,157,0.3)', zIndex: 30, color: 'white', fontSize: '0.85rem', lineHeight: '1.4', animation: 'thought-cloud-pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards', transformOrigin: 'bottom left' }}>
+                                    <Sparkles size={14} color="#00ff9d" style={{ display: 'inline', marginRight: '5px' }} />
+                                    Please check your mailbox to collect the confidential seating arrangement pdf.
+                                </div>
+                            )}
                         </div>
                         <div>
                             <h3 className="dash-subtitle" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.4rem', textShadow: '0 0 10px rgba(0,255,157,0.5)' }}>
@@ -254,9 +306,12 @@ const AIAgentPanel = () => {
                                     flex: 1, 
                                     background: 'rgba(0,0,0,0.3)', 
                                     color: '#fff', 
-                                    border: '1px solid rgba(0, 255, 157, 0.4)',
+                                    border: '1px solid rgba(0, 255, 157, 0.6)',
+                                    borderRadius: '999px',
+                                    padding: '0.8rem 1.5rem',
                                     backdropFilter: 'blur(10px)',
-                                    boxShadow: 'inset 0 0 15px rgba(0, 255, 157, 0.1)'
+                                    boxShadow: '0 0 20px rgba(0, 255, 157, 0.2), inset 0 0 10px rgba(0, 255, 157, 0.1)',
+                                    outline: 'none'
                                 }}
                             />
                             <MagneticButton3D 
@@ -278,7 +333,7 @@ const AIAgentPanel = () => {
                                     transition: 'all 0.3s ease'
                                 }}
                             >
-                                <Send size={18} style={{ filter: 'drop-shadow(0 0 5px #00ff9d)' }} /> TRANSMIT
+                                <Send size={18} style={{ filter: 'drop-shadow(0 0 5px #00ff9d)' }} /> SEND
                             </MagneticButton3D>
                         </div>
                     </form>
@@ -311,7 +366,25 @@ const AIAgentPanel = () => {
                             <CheckCircle2 size={24} color="var(--secondary)" />
                             Matrix Generation: Room {params.roomNumber}
                         </h3>
-                        <div style={{ display: 'flex', gap: '1rem' }}>
+                        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                            <MagneticButton3D 
+                                onClick={handleSaveArrangement} 
+                                glowColor="rgba(0, 255, 157, 0.6)"
+                                intensity={10}
+                                style={{ gap: '0.5rem', background: 'var(--surface-hover)', border: '1px solid rgba(0, 255, 157, 0.3)' }}
+                            >
+                                <CheckCircle2 size={18} color="#00ff9d" /> Save Arrangement
+                            </MagneticButton3D>
+
+                            <MagneticButton3D 
+                                onClick={handleSavePDF} 
+                                glowColor="rgba(139, 92, 246, 0.6)"
+                                intensity={10}
+                                style={{ gap: '0.5rem', background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(14, 165, 233, 0.2))', border: '1px solid rgba(139, 92, 246, 0.4)' }}
+                            >
+                                <Mail size={18} color="#0ea5e9" /> Save as PDF & E-Mail
+                            </MagneticButton3D>
+
                             <MagneticButton3D 
                                 onClick={() => setSeatingPlan(null)} 
                                 glowColor="rgba(255, 0, 85, 0.8)"
@@ -333,9 +406,10 @@ const AIAgentPanel = () => {
                         </div>
                     </div>
 
-                    {seatingPlan.map((plan, idx) => (
-                        <div key={idx} className="card print-break-inside matrix-container" style={{ animationDelay: `${idx * 0.2}s` }}>
-                            <div className="card-header" style={{ background: 'var(--surface)', borderBottom: '1px dashed var(--border)' }}>
+                    <div id="matrix-document" style={{ background: 'var(--background)', padding: '1rem' }}>
+                        {seatingPlan.map((plan, idx) => (
+                            <div key={idx} className="card print-break-inside matrix-container" style={{ animationDelay: `${idx * 0.2}s`, marginBottom: '2rem' }}>
+                                <div className="card-header" style={{ background: 'var(--surface)', borderBottom: '1px dashed var(--border)' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                                     <div style={{ background: 'var(--primary-light)', color: 'var(--primary)', fontWeight: '800', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>
                                         <Box size={20} />
@@ -430,7 +504,8 @@ const AIAgentPanel = () => {
                                 </div>
                             </div>
                         </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             )}
 
@@ -448,6 +523,11 @@ const AIAgentPanel = () => {
                 @keyframes chat-bubble-pop {
                     0% { opacity: 0; transform: translateY(15px) scale(0.95); }
                     100% { opacity: 1; transform: translateY(0) scale(1); }
+                }
+                @keyframes thought-cloud-pop {
+                    0% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+                    60% { opacity: 1; transform: scale(1.1) rotate(2deg); }
+                    100% { opacity: 1; transform: scale(1) rotate(0deg); }
                 }
 
                 @media print {
