@@ -177,14 +177,17 @@ const AIAgentPanel = () => {
                     <MatrixCore3D step={step} isGenerating={isGenerating} />
                     
                     {/* Z-Index ensures the UI floats above the deep space matrix */}
-                    <div className="card-header" style={{ position: 'relative', zIndex: 10, background: 'rgba(20,20,20,0.9)', borderBottom: '1px solid rgba(0, 255, 157, 0.1)', display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.5rem 2rem', borderTopLeftRadius: 'var(--radius-lg)', borderTopRightRadius: 'var(--radius-lg)' }}>
-                        <div style={{ background: 'linear-gradient(135deg, var(--primary), var(--secondary))', padding: '10px', borderRadius: '50%', boxShadow: '0 0 20px rgba(124, 58, 237, 0.4)' }}>
-                            <Bot size={28} color="white" />
+                    <div className="card-header" style={{ position: 'relative', zIndex: 10, background: 'transparent', borderBottom: '1px solid rgba(0, 255, 157, 0.2)', display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.25rem 2rem' }}>
+                        <div className="ai-logo-container" style={{ position: 'relative', width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', overflow: 'hidden', boxShadow: '0 0 15px rgba(0, 255, 157, 0.3)' }}>
+                            <div className="logo-spin-bg" style={{ position: 'absolute', inset: '-5px', background: 'conic-gradient(from 0deg, transparent, #00ff9d, #00e5ff, transparent)', animation: 'spin 2s linear infinite' }} />
+                            <div style={{ position: 'absolute', inset: '2px', borderRadius: '50%', background: 'rgba(5, 5, 5, 0.95)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2, boxShadow: 'inset 0 0 10px rgba(0, 255, 157, 0.2)' }}>
+                                <Box size={24} color="#00ff9d" style={{ animation: 'pulse 1.5s infinite', filter: 'drop-shadow(0 0 5px #00ff9d)' }} />
+                            </div>
                         </div>
                         <div>
-                            <h3 className="dash-subtitle" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <h3 className="dash-subtitle" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.4rem', textShadow: '0 0 10px rgba(0,255,157,0.5)' }}>
                                 Seating Master AI
-                                <span className="dash-label" style={{ fontSize: '0.65rem', opacity: 0.8 }}>{step > 0 ? `STEP ${step} OF 7` : 'READY'}</span>
+                                <span style={{ fontSize: '0.7rem', color: '#00ff9d', padding: '0.2rem 0.6rem', border: '1px solid #00ff9d', borderRadius: '12px', letterSpacing: '1px', textShadow: 'none', background: 'rgba(0, 255, 157, 0.1)' }}>ONLINE</span>
                             </h3>
                         </div>
                     </div>
@@ -238,7 +241,7 @@ const AIAgentPanel = () => {
                         <div ref={chatEndRef} />
                     </div>
 
-                    <form onSubmit={handleSend} style={{ position: 'relative', zIndex: 10, padding: '1.5rem', borderTop: '1px solid rgba(0, 255, 157, 0.1)', background: 'rgba(5, 5, 5, 0.95)' }}>
+                    <form onSubmit={handleSend} style={{ position: 'relative', zIndex: 10, padding: '1.5rem', borderTop: '1px solid rgba(0, 255, 157, 0.2)', background: 'transparent' }}>
                         <div style={{ display: 'flex', gap: '1rem' }}>
                             <input
                                 type="text"
@@ -247,7 +250,14 @@ const AIAgentPanel = () => {
                                 onChange={e => setInput(e.target.value)}
                                 placeholder={isGenerating ? "AI is computing..." : "Enter parameters here..."}
                                 disabled={isGenerating || step === 9}
-                                style={{ flex: 1, background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}
+                                style={{ 
+                                    flex: 1, 
+                                    background: 'rgba(0,0,0,0.3)', 
+                                    color: '#fff', 
+                                    border: '1px solid rgba(0, 255, 157, 0.4)',
+                                    backdropFilter: 'blur(10px)',
+                                    boxShadow: 'inset 0 0 15px rgba(0, 255, 157, 0.1)'
+                                }}
                             />
                             <MagneticButton3D 
                                 onClick={handleSend} 
@@ -290,9 +300,21 @@ const AIAgentPanel = () => {
                             Matrix Generation: Room {params.roomNumber}
                         </h3>
                         <div style={{ display: 'flex', gap: '1rem' }}>
-                            <button className="btn btn-outline" onClick={() => setSeatingPlan(null)} style={{ gap: '0.5rem', color: 'var(--danger)', borderColor: 'rgba(239, 68, 68, 0.3)' }}>
+                            <MagneticButton3D 
+                                onClick={() => setSeatingPlan(null)} 
+                                glowColor="rgba(255, 0, 85, 0.8)"
+                                intensity={15}
+                                style={{ 
+                                    gap: '0.5rem', 
+                                    background: 'rgba(255, 0, 85, 0.15)', 
+                                    color: '#ff0055', 
+                                    border: '1px solid rgba(255, 0, 85, 0.5)',
+                                    boxShadow: 'inset 0 0 20px rgba(255, 0, 85, 0.2), 0 5px 15px rgba(255, 0, 85, 0.3)',
+                                    backdropFilter: 'blur(10px)'
+                                }}
+                            >
                                 <Trash2 size={18} /> Clear Layout
-                            </button>
+                            </MagneticButton3D>
                             <button className="btn btn-outline" onClick={() => window.print()} style={{ gap: '0.5rem' }}>
                                 <Download size={18} /> Export Document (PDF)
                             </button>
@@ -401,6 +423,7 @@ const AIAgentPanel = () => {
             )}
 
             <style>{`
+                @keyframes spin { 100% { transform: rotate(360deg); } }
                 .pulse-icon { animation: pulse 1.5s infinite; }
                 @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.7; } 100% { transform: scale(1); opacity: 1; } }
                 .loading-dots span { animation: blink 1.4s infinite both; font-size: 1.2rem; line-height: 1; }
