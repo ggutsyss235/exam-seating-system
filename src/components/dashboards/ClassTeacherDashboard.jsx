@@ -34,28 +34,20 @@ const ClassTeacherDashboard = ({ activeTab, setActiveTab }) => {
                 width: '100%', maxWidth: 'fit-content', flexWrap: 'wrap'
             }}>
                 <button
-                    className={`btn`}
+                    className={`btn ${activeTab === 'overview' ? 'btn-liquid-primary' : 'btn-ghost'}`}
                     onClick={() => setActiveTab('overview')}
                     style={{
                         padding: '0.6rem 1.2rem', fontSize: '0.95rem', gap: '0.5rem', borderRadius: '12px',
-                        background: activeTab === 'overview' ? 'rgba(15, 23, 42, 0.8)' : 'transparent',
-                        color: activeTab === 'overview' ? '#fff' : 'var(--text-dim)',
-                        border: `1px solid ${activeTab === 'overview' ? 'rgba(255,255,255,0.1)' : 'transparent'}`,
-                        boxShadow: activeTab === 'overview' ? '0 4px 12px rgba(0,0,0,0.5)' : 'none',
                         transition: 'all 0.3s ease'
                     }}
                 >
                     <BookOpen size={18} /> Class Roster
                 </button>
                 <button
-                    className={`btn`}
+                    className={`btn ${activeTab === 'seatplan' ? 'btn-liquid-secondary' : 'btn-ghost'}`}
                     onClick={() => setActiveTab('seatplan')}
                     style={{
                         padding: '0.6rem 1.2rem', fontSize: '0.95rem', gap: '0.5rem', borderRadius: '12px',
-                        background: activeTab === 'seatplan' ? 'rgba(15, 23, 42, 0.8)' : 'transparent',
-                        color: activeTab === 'seatplan' ? '#fff' : '#64748b',
-                        border: `1px solid ${activeTab === 'seatplan' ? 'rgba(255,255,255,0.1)' : 'transparent'}`,
-                        boxShadow: activeTab === 'seatplan' ? '0 4px 12px rgba(0,0,0,0.5)' : 'none',
                         transition: 'all 0.3s ease'
                     }}
                 >

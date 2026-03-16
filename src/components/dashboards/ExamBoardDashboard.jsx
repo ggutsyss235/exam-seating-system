@@ -32,56 +32,40 @@ const ExamBoardDashboard = ({ activeTab, setActiveTab }) => {
                 width: '100%', maxWidth: 'fit-content', flexWrap: 'wrap'
             }}>
                 <button
-                    className={`btn`}
+                    className={`btn ${activeTab === 'students' ? 'btn-liquid-secondary' : 'btn-ghost'}`}
                     onClick={() => setActiveTab('students')}
                     style={{
                         padding: '0.6rem 1.2rem', fontSize: '0.95rem', gap: '0.5rem', borderRadius: '12px',
-                        background: activeTab === 'students' ? 'rgba(15, 23, 42, 0.8)' : 'transparent',
-                        color: activeTab === 'students' ? '#fff' : 'var(--text-dim)',
-                        border: `1px solid ${activeTab === 'students' ? 'rgba(255,255,255,0.1)' : 'transparent'}`,
-                        boxShadow: activeTab === 'students' ? '0 4px 12px rgba(0,0,0,0.5)' : 'none',
                         transition: 'all 0.3s ease'
                     }}
                 >
                     <Users size={18} /> Registry
                 </button>
                 <button
-                    className={`btn`}
+                    className={`btn ${activeTab === 'rooms' ? 'btn-liquid-secondary' : 'btn-ghost'}`}
                     onClick={() => setActiveTab('rooms')}
                     style={{
                         padding: '0.6rem 1.2rem', fontSize: '0.95rem', gap: '0.5rem', borderRadius: '12px',
-                        background: activeTab === 'rooms' ? 'rgba(15, 23, 42, 0.8)' : 'transparent',
-                        color: activeTab === 'rooms' ? '#fff' : '#64748b',
-                        border: `1px solid ${activeTab === 'rooms' ? 'rgba(255,255,255,0.1)' : 'transparent'}`,
-                        boxShadow: activeTab === 'rooms' ? '0 4px 12px rgba(0,0,0,0.5)' : 'none',
                         transition: 'all 0.3s ease'
                     }}
                 >
                     <Building size={18} /> Physical Halls
                 </button>
                 <button
-                    className={`btn`}
+                    className={`btn ${activeTab === 'planner' ? 'btn-liquid-primary' : 'btn-ghost'}`}
                     onClick={() => setActiveTab('planner')}
                     style={{
                         padding: '0.6rem 1.2rem', fontSize: '0.95rem', gap: '0.5rem', borderRadius: '12px',
-                        background: activeTab === 'planner' ? 'rgba(15, 23, 42, 0.8)' : 'transparent',
-                        color: activeTab === 'planner' ? '#fff' : '#64748b',
-                        border: `1px solid ${activeTab === 'planner' ? 'rgba(255,255,255,0.1)' : 'transparent'}`,
-                        boxShadow: activeTab === 'planner' ? '0 4px 12px rgba(0,0,0,0.5)' : 'none',
                         transition: 'all 0.3s ease'
                     }}
                 >
                     <CalendarDays size={18} /> Static Planner
                 </button>
                 <button
-                    className={`btn ${activeTab === 'ai-agent' ? 'glow-pulse' : ''}`}
+                    className={`btn ${activeTab === 'ai-agent' ? 'btn-liquid' : 'btn-ghost'}`}
                     onClick={() => setActiveTab('ai-agent')}
                     style={{
                         padding: '0.6rem 1.5rem', fontSize: '0.95rem', gap: '0.5rem', borderRadius: '12px',
-                        background: activeTab === 'ai-agent' ? 'linear-gradient(135deg, #7c3aed, #4f46e5)' : 'rgba(124, 58, 237, 0.1)',
-                        color: activeTab === 'ai-agent' ? '#fff' : '#a855f7',
-                        border: `1px solid ${activeTab === 'ai-agent' ? 'rgba(255,255,255,0.2)' : 'rgba(124, 58, 237, 0.3)'}`,
-                        boxShadow: activeTab === 'ai-agent' ? '0 10px 25px rgba(124, 58, 237, 0.4), inset 0 2px 4px rgba(255,255,255,0.2)' : 'none',
                         fontWeight: activeTab === 'ai-agent' ? '600' : '500',
                         transition: 'all 0.3s ease'
                     }}

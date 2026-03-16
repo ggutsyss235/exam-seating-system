@@ -363,7 +363,7 @@ const AuthCard = ({ isLogin }) => {
                             type="submit" 
                             disabled={isLoading} 
                             glowColor={isLogin ? 'rgba(0, 255, 157, 0.5)' : 'rgba(0, 229, 255, 0.5)'}
-                            baseColor={isLogin ? '#00ff9d' : '#00e5ff'}
+                            className={isLogin ? 'btn-liquid-primary' : 'btn-liquid-secondary'}
                             textColor="#000000"
                             intensity={12}
                             style={{ marginTop: '0.5rem', width: '100%' }}

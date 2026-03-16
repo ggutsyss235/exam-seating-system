@@ -371,31 +371,29 @@ const AIAgentPanel = () => {
                                 onClick={handleSaveArrangement} 
                                 glowColor="rgba(0, 255, 157, 0.6)"
                                 intensity={10}
-                                style={{ gap: '0.5rem', background: 'var(--surface-hover)', border: '1px solid rgba(0, 255, 157, 0.3)' }}
+                                className="btn-liquid-primary"
+                                style={{ gap: '0.5rem' }}
                             >
-                                <CheckCircle2 size={18} color="#00ff9d" /> Save Arrangement
+                                <CheckCircle2 size={18} color="#000" /> Save Arrangement
                             </MagneticButton3D>
 
                             <MagneticButton3D 
                                 onClick={handleSavePDF} 
-                                glowColor="rgba(139, 92, 246, 0.6)"
+                                glowColor="rgba(0, 229, 255, 0.6)"
                                 intensity={10}
-                                style={{ gap: '0.5rem', background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(14, 165, 233, 0.2))', border: '1px solid rgba(139, 92, 246, 0.4)' }}
+                                className="btn-liquid-secondary"
+                                style={{ gap: '0.5rem' }}
                             >
-                                <Mail size={18} color="#0ea5e9" /> Save as PDF & E-Mail
+                                <Mail size={18} color="#000" /> Save as PDF & E-Mail
                             </MagneticButton3D>
 
                             <MagneticButton3D 
                                 onClick={() => setSeatingPlan(null)} 
                                 glowColor="rgba(255, 0, 85, 0.8)"
                                 intensity={15}
+                                className="btn-liquid-accent"
                                 style={{ 
                                     gap: '0.5rem', 
-                                    background: 'rgba(255, 0, 85, 0.15)', 
-                                    color: '#ff0055', 
-                                    border: '1px solid rgba(255, 0, 85, 0.5)',
-                                    boxShadow: 'inset 0 0 20px rgba(255, 0, 85, 0.2), 0 5px 15px rgba(255, 0, 85, 0.3)',
-                                    backdropFilter: 'blur(10px)'
                                 }}
                             >
                                 <Trash2 size={18} /> Clear Layout
