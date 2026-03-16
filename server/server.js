@@ -75,7 +75,17 @@ app.use('/api/pdf', pdfRoutes);
 
 // Base health route
 app.get('/api', (req, res) => {
-    res.json({ message: 'Exam Seating System API Serverless is active.', status: 'healthy', timestamp: new Date() });
+    res.json({ 
+        message: 'Exam Seating System API Serverless is active.', 
+        status: 'healthy', 
+        dbConnected: mongoose.connection.readyState >= 1,
+        envVars: {
+            hasMongo: !!process.env.MONGODB_URI,
+            hasJWT: !!process.env.JWT_SECRET,
+            nodeEnv: process.env.NODE_ENV
+        },
+        timestamp: new Date() 
+    });
 });
 
 // Global Error Handler
@@ -83,7 +93,8 @@ app.use((err, req, res, next) => {
     console.error("SERVER ERROR:", err);
     res.status(500).json({ 
         message: 'Internal Server Error: ' + err.message,
-        stack: process.env.NODE_ENV === 'production' ? null : err.stack
+        stack: err.stack, // Temporarily show stack in production for debugging
+        debugNote: 'This stack trace is visible for debugging the Vercel 500 error.'
     });
 });
 
