@@ -2,6 +2,7 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import mongoose from 'mongoose';
+import { sendOTPEmail } from '../utils/email.js';
 
 const router = express.Router();
 
@@ -16,38 +17,27 @@ const generateToken = (id) => {
 // @access  Public
 router.post('/register', async (req, res) => {
     try {
-        console.log("DEBUG [Register Request]:", req.body.email);
-        const { name, email, password, role, subject, level, isClassTeacher, assignClass, assignSection, isExamDept } = req.body;
+        const { name, email, password, role, subject, level, isClassTeacher, assignClass, assignSection } = req.body;
 
         if (!name || !email || !password || !role) {
-            return res.status(400).json({ message: 'Please include all required fields (Name, Email, Password, Role).' });
+            return res.status(400).json({ message: 'Please include all required fields.' });
         }
 
-        // 1. Database Connection Check
-        if (mongoose.connection.readyState !== 1) {
-            console.error("CRITICAL: Database disconnected during signup attempt!");
-            return res.status(503).json({ 
-                message: 'Service Temporarily Unavailable: Database connection is not established.',
-                state: mongoose.connection.readyState 
-            });
-        }
-
-        // 2. Check if user exists
         const userExists = await User.findOne({ email });
         if (userExists) {
             return res.status(400).json({ message: 'A user with that email already exists' });
         }
 
-        // 3. Create user object
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
         const newUserData = {
-            name,
-            email,
-            password,
-            role,
-            isExamDept: role === 'Exam Board Official' ? true : !!isExamDept
+            name, email, password, role,
+            otp, otpExpires,
+            isVerified: false,
+            isExamDept: role === 'Exam Board Official'
         };
 
-        // Role-specific data mapping
         if (role === 'Teacher' || role === 'Class Teacher' || role === 'Exam Board Official') {
             newUserData.level = level || 'none';
         }
@@ -60,48 +50,74 @@ router.post('/register', async (req, res) => {
             newUserData.assignSection = assignSection;
         }
 
-        console.log("DEBUG [Creating User]:", email);
-        
-        // 4. Attempt to save to DB
-        let user;
-        try {
-            user = await User.create(newUserData);
-    } catch (dbErr) {
-            console.error("DEBUG [DB Save Error]:", {
-                message: dbErr.message,
-                name: dbErr.name,
-                errors: dbErr.errors ? Object.keys(dbErr.errors) : 'none'
-            });
-            return res.status(400).json({ 
-                message: 'Database Validation Error: ' + dbErr.message,
-                details: dbErr.errors || null
-            });
+        await User.create(newUserData);
+        await sendOTPEmail(email, otp);
+
+        res.status(201).json({ message: 'OTP sent to email. Please verify to complete registration.' });
+    } catch (error) {
+        console.error("Register Error:", error);
+        res.status(500).json({ message: 'Server Exception: ' + error.message });
+    }
+});
+
+// @route   POST /api/auth/verify-otp
+// @access  Public
+router.post('/verify-otp', async (req, res) => {
+    try {
+        const { email, otp } = req.body;
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
         }
 
-        if (user) {
-            console.log("SUCCESS [User Created]:", email);
-            res.status(201).json({
-                _id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role,
-                isExamDept: user.isExamDept,
-                level: user.level,
-                subject: user.subject,
-                isClassTeacher: user.isClassTeacher,
-                assignClass: user.assignClass,
-                assignSection: user.assignSection,
-                token: generateToken(user._id),
-            });
-        } else {
-            res.status(400).json({ message: 'Unexpected failure during user creation.' });
+        if (user.otp !== otp || user.otpExpires < Date.now()) {
+            return res.status(400).json({ message: 'Invalid or expired OTP' });
         }
-    } catch (error) {
-        console.error("DEBUG [Register Exception]:", error);
-        res.status(500).json({ 
-            message: 'Server Exception: ' + error.message,
-            stack: process.env.NODE_ENV === 'production' ? null : error.stack
+
+        user.otp = null;
+        user.otpExpires = null;
+        user.isVerified = true;
+        await user.save();
+
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            isExamDept: user.isExamDept,
+            level: user.level,
+            subject: user.subject,
+            isClassTeacher: user.isClassTeacher,
+            assignClass: user.assignClass,
+            assignSection: user.assignSection,
+            token: generateToken(user._id),
         });
+    } catch (error) {
+        res.status(500).json({ message: 'Verification failed: ' + error.message });
+    }
+});
+
+// @route   POST /api/auth/resend-otp
+// @access  Public
+router.post('/resend-otp', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        user.otp = otp;
+        user.otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+        await user.save();
+
+        await sendOTPEmail(email, otp);
+        res.json({ message: 'OTP resent successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to resend OTP' });
     }
 });
 
@@ -113,21 +129,18 @@ router.post('/login', async (req, res) => {
         const user = await User.findOne({ email });
 
         if (user && (await user.matchPassword(password))) {
-            res.json({
-                _id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role,
-                token: generateToken(user._id),
-            });
+            const otp = Math.floor(100000 + Math.random() * 900000).toString();
+            user.otp = otp;
+            user.otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+            await user.save();
+
+            await sendOTPEmail(email, otp);
+            res.json({ message: 'OTP sent to email. Please verify to login.' });
         } else {
             res.status(401).json({ message: 'Invalid credentials detected' });
         }
     } catch (error) {
-        console.error("DEBUG [Login Exception]:", {
-            message: error.message,
-            stack: error.stack
-        });
+        console.error("Login Error:", error);
         res.status(500).json({ message: 'Server Exception: ' + error.message });
     }
 });

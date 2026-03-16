@@ -46,6 +46,19 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: function () { return this.role === 'Class Teacher'; }
     },
+    // OTP Authentication
+    otp: {
+        type: String,
+        default: null
+    },
+    otpExpires: {
+        type: Date,
+        default: null
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
     // Flag for general school exam dept
     isExamDept: {
         type: Boolean,

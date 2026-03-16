@@ -8,7 +8,10 @@ import { useAppContext } from '../context/AppContext';
 
 const AuthCard = ({ isLogin }) => {
     const navigate = useNavigate();
-    const { login, register } = useAppContext();
+    const { login, register, verifyOtp, resendOtp } = useAppContext();
+    const [isOtpSent, setIsOtpSent] = useState(false);
+    const [otp, setOtp] = useState('');
+    const [resendCooldown, setResendCooldown] = useState(0);
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -52,6 +55,11 @@ const AuthCard = ({ isLogin }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (isOtpSent) {
+            handleVerifyOtp();
+            return;
+        }
+
         if (!isLogin) {
             if (!name || !email || !password) {
                 setError('Please fill in all basic details.');
@@ -86,13 +94,53 @@ const AuthCard = ({ isLogin }) => {
                     name, email, password, role, subject, level, assignClass, assignSection, isClassTeacher: role === 'Class Teacher'
                 });
             }
-            navigate('/app');
+            setIsOtpSent(true);
+            setResendCooldown(60);
         } catch (err) {
             setError(err.response?.data?.message || err.message || 'Authentication failed');
         } finally {
             setIsLoading(false);
         }
     };
+
+    const handleVerifyOtp = async () => {
+        if (!otp || otp.length < 6) {
+            setError('Please enter a valid 6-digit OTP code.');
+            return;
+        }
+        setError('');
+        setIsLoading(true);
+        try {
+            await verifyOtp(email, otp);
+            navigate('/app');
+        } catch (err) {
+            setError(err.response?.data?.message || err.message || 'Verification failed');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleResendOtp = async () => {
+        if (resendCooldown > 0) return;
+        setError('');
+        try {
+            await resendOtp(email);
+            setResendCooldown(60);
+            // Flash a success state or just update error to some info
+            setError('OTP resent to your mailbox.');
+            setTimeout(() => setError(''), 3000);
+        } catch (err) {
+            setError('Failed to resend OTP. Please try again.');
+        }
+    };
+
+    React.useEffect(() => {
+        let timer;
+        if (resendCooldown > 0) {
+            timer = setInterval(() => setResendCooldown(c => c - 1), 1000);
+        }
+        return () => clearInterval(timer);
+    }, [resendCooldown]);
 
     return (
         <div
@@ -172,10 +220,10 @@ const AuthCard = ({ isLogin }) => {
                             <AnimatedLogo scale={1.2} showText={false} layout="row" />
                         </div>
                         <h2 style={{ fontSize: '2.2rem', letterSpacing: '-2px', fontWeight: '900', background: 'linear-gradient(135deg, #ffffff, #a5b4fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: '0.2rem', textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
-                            {isLogin ? 'Welcome Back' : 'Create Account'}
+                            {isOtpSent ? 'Verify Identity' : (isLogin ? 'Welcome Back' : 'Create Account')}
                         </h2>
                         <p style={{ color: 'var(--text-main)', fontSize: '1rem', fontWeight: '600', textShadow: 'var(--text-shadow-glow)' }}>
-                            {isLogin ? 'Enter your credentials to access the console.' : 'Initialize your personal profile and specify your institutional role.'}
+                            {isOtpSent ? `We've dispatched a 6-digit key to your mailbox.` : (isLogin ? 'Enter your credentials to access the console.' : 'Initialize your personal profile and specify your institutional role.')}
                         </p>
                     </div>
 
@@ -188,174 +236,229 @@ const AuthCard = ({ isLogin }) => {
                     {/* Form */}
                     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
 
-                        <div className="animate-fade-in">
-                            {!isLogin && (
-                                <div className="form-group" style={{ marginBottom: '1.25rem' }}>
-                                    <label className="form-label" style={{ fontSize: '0.8rem', color: '#ffffff', fontWeight: '700' }}>Full Name</label>
-                                    <div style={{ position: 'relative' }}>
-                                        <User size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                                        <input
-                                            type="text"
-                                            className="form-input"
-                                            placeholder="Jane Doe"
-                                            value={name}
-                                            onChange={(e) => setName(e.target.value)}
-                                            style={{ paddingLeft: '2.5rem' }}
-                                            required={!isLogin}
-                                        />
-                                    </div>
-                                </div>
-                            )}
-
-                            <div className="form-group" style={{ marginBottom: '1.25rem' }}>
-                                <label className="form-label" style={{ fontSize: '0.8rem', color: '#ffffff', fontWeight: '700' }}>Email Address</label>
-                                <div style={{ position: 'relative' }}>
-                                    <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                        {isOtpSent ? (
+                            <div className="animate-fade-in" style={{ textAlign: 'center' }}>
+                                <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                                    <label className="form-label" style={{ fontSize: '0.8rem', color: '#ffffff', fontWeight: '700', marginBottom: '1rem' }}>Enter Verification Code</label>
                                     <input
-                                        type="email"
+                                        type="text"
                                         className="form-input"
-                                        placeholder="name@domain.com"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        style={{ paddingLeft: '2.5rem', color: '#ffffff' }}
-                                        required
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="form-group" style={{ marginBottom: 0 }}>
-                                <label className="form-label" style={{ fontSize: '0.8rem', display: 'flex', justifyContent: 'space-between', color: '#ffffff', fontWeight: '800', textShadow: 'none' }}>
-                                    Security Cipher Key
-                                    {isLogin && <a href="#" style={{ textTransform: 'none', color: 'var(--primary)', letterSpacing: '0', fontWeight: '800' }}>Forgot?</a>}
-                                </label>
-                                <div style={{ position: 'relative' }}>
-                                    <Lock size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--primary)', opacity: 0.8 }} />
-                                    <input
-                                        type={showPassword ? "text" : "password"}
-                                        className="form-input"
-                                        placeholder="••••••••"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        style={{
-                                            paddingLeft: '2.5rem',
-                                            paddingRight: '2.5rem',
-                                            color: '#ffffff',
-                                            fontWeight: '600',
-                                            backgroundColor: 'rgba(0,0,0,0.4)',
-                                            textShadow: 'none'
+                                        placeholder="0 0 0 0 0 0"
+                                        value={otp}
+                                        onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                                        style={{ 
+                                            textAlign: 'center', 
+                                            fontSize: '2rem', 
+                                            letterSpacing: '0.8rem', 
+                                            fontWeight: '900',
+                                            height: '4.5rem',
+                                            background: 'rgba(0, 255, 157, 0.05)',
+                                            border: '2px solid rgba(0, 255, 157, 0.2)',
+                                            borderRadius: '16px',
+                                            color: '#00ff9d'
                                         }}
                                         required
                                     />
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+                                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                                        Didn't receive the cipher?
+                                    </p>
                                     <button
                                         type="button"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+                                        onClick={handleResendOtp}
+                                        disabled={resendCooldown > 0}
+                                        className="btn-ghost"
+                                        style={{ 
+                                            textTransform: 'uppercase', 
+                                            fontSize: '0.75rem', 
+                                            letterSpacing: '1px', 
+                                            fontWeight: '800',
+                                            color: resendCooldown > 0 ? 'var(--text-muted)' : 'var(--primary)',
+                                            padding: '0.5rem 1rem',
+                                            borderRadius: '8px',
+                                            border: '1px solid rgba(0, 255, 157, 0.1)',
+                                            background: 'rgba(0, 255, 157, 0.05)',
+                                            transition: 'all 0.3s ease',
+                                            opacity: resendCooldown > 0 ? 0.5 : 1
+                                        }}
                                     >
-                                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                        {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend OTP'}
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        ) : (
+                            <>
+                                <div className="animate-fade-in">
+                                    {!isLogin && (
+                                        <div className="form-group" style={{ marginBottom: '1.25rem' }}>
+                                            <label className="form-label" style={{ fontSize: '0.8rem', color: '#ffffff', fontWeight: '700' }}>Full Name</label>
+                                            <div style={{ position: 'relative' }}>
+                                                <User size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                                                <input
+                                                    type="text"
+                                                    className="form-input"
+                                                    placeholder="Jane Doe"
+                                                    value={name}
+                                                    onChange={(e) => setName(e.target.value)}
+                                                    style={{ paddingLeft: '2.5rem' }}
+                                                    required={!isLogin}
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
 
-                        {!isLogin && (
-                            <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                                <div style={{ height: '1px', background: 'var(--border)', margin: '0.5rem 0' }}></div>
-                                <div className="form-group" style={{ marginBottom: 0 }}>
-                                    <label className="form-label" style={{ fontSize: '0.85rem' }}>Primary Institutional Role</label>
-                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginTop: '1rem', perspective: '1000px' }}>
-                                        <RoleSelector
-                                            icon={<Briefcase size={22} />} title="Teacher"
-                                            isActive={role === 'Teacher'} onClick={() => setRole('Teacher')}
-                                        />
-                                        <RoleSelector
-                                            icon={<GraduationCap size={22} />} title="Class Teacher"
-                                            isActive={role === 'Class Teacher'} onClick={() => setRole('Class Teacher')}
-                                        />
-                                        <RoleSelector
-                                            icon={<ShieldCheck size={22} />} title="Exam Board"
-                                            isActive={role === 'Exam Board Official'} onClick={() => setRole('Exam Board Official')}
-                                        />
-                                    </div>
-                                </div>
-
-                                {(role === 'Teacher' || role === 'Class Teacher') && (
-                                    <div className="grid-2 animate-fade-in" style={{ gap: '1rem', background: 'var(--surface-hover)', padding: '1.25rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)' }}>
-                                        <div className="form-group" style={{ marginBottom: 0 }}>
-                                            <label className="form-label">Subject Domain</label>
+                                    <div className="form-group" style={{ marginBottom: '1.25rem' }}>
+                                        <label className="form-label" style={{ fontSize: '0.8rem', color: '#ffffff', fontWeight: '700' }}>Email Address</label>
+                                        <div style={{ position: 'relative' }}>
+                                            <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                                             <input
-                                                type="text"
+                                                type="email"
                                                 className="form-input"
-                                                placeholder="e.g. Mathematics"
-                                                value={subject}
-                                                onChange={(e) => setSubject(e.target.value)}
+                                                placeholder="name@domain.com"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                style={{ paddingLeft: '2.5rem', color: '#ffffff' }}
                                                 required
                                             />
                                         </div>
-                                        <div className="form-group" style={{ marginBottom: 0 }}>
-                                            <label className="form-label">Teaching Level</label>
-                                            <select
+                                    </div>
+
+                                    <div className="form-group" style={{ marginBottom: 0 }}>
+                                        <label className="form-label" style={{ fontSize: '0.8rem', display: 'flex', justifyContent: 'space-between', color: '#ffffff', fontWeight: '800', textShadow: 'none' }}>
+                                            Security Cipher Key
+                                            {isLogin && <a href="#" style={{ textTransform: 'none', color: 'var(--primary)', letterSpacing: '0', fontWeight: '800' }}>Forgot?</a>}
+                                        </label>
+                                        <div style={{ position: 'relative' }}>
+                                            <Lock size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--primary)', opacity: 0.8 }} />
+                                            <input
+                                                type={showPassword ? "text" : "password"}
                                                 className="form-input"
-                                                value={level}
-                                                onChange={(e) => setLevel(e.target.value)}
+                                                placeholder="••••••••"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                style={{
+                                                    paddingLeft: '2.5rem',
+                                                    paddingRight: '2.5rem',
+                                                    color: '#ffffff',
+                                                    fontWeight: '600',
+                                                    backgroundColor: 'rgba(0,0,0,0.4)',
+                                                    textShadow: 'none'
+                                                }}
                                                 required
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowPassword(!showPassword)}
+                                                style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
                                             >
-                                                <option value="none" disabled>Select standard...</option>
-                                                <option value="PGT">PGT (Post Graduate Teacher)</option>
-                                                <option value="TGT">TGT (Trained Graduate Teacher)</option>
-                                                <option value="PRT">PRT (Primary Teacher)</option>
-                                            </select>
+                                                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {!isLogin && (
+                                    <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                                        <div style={{ height: '1px', background: 'var(--border)', margin: '0.5rem 0' }}></div>
+                                        <div className="form-group" style={{ marginBottom: 0 }}>
+                                            <label className="form-label" style={{ fontSize: '0.85rem' }}>Primary Institutional Role</label>
+                                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginTop: '1rem', perspective: '1000px' }}>
+                                                <RoleSelector
+                                                    icon={<Briefcase size={22} />} title="Teacher"
+                                                    isActive={role === 'Teacher'} onClick={() => setRole('Teacher')}
+                                                />
+                                                <RoleSelector
+                                                    icon={<GraduationCap size={22} />} title="Class Teacher"
+                                                    isActive={role === 'Class Teacher'} onClick={() => setRole('Class Teacher')}
+                                                />
+                                                <RoleSelector
+                                                    icon={<ShieldCheck size={22} />} title="Exam Board"
+                                                    isActive={role === 'Exam Board Official'} onClick={() => setRole('Exam Board Official')}
+                                                />
+                                            </div>
                                         </div>
 
-                                        {role === 'Class Teacher' && (
-                                            <>
-                                                <div className="form-group animate-fade-in" style={{ marginBottom: 0, gridColumn: '1' }}>
-                                                    <label className="form-label">Responsible Class</label>
+                                        {(role === 'Teacher' || role === 'Class Teacher') && (
+                                            <div className="grid-2 animate-fade-in" style={{ gap: '1rem', background: 'var(--surface-hover)', padding: '1.25rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)' }}>
+                                                <div className="form-group" style={{ marginBottom: 0 }}>
+                                                    <label className="form-label">Subject Domain</label>
                                                     <input
                                                         type="text"
                                                         className="form-input"
-                                                        placeholder="e.g. 10"
-                                                        value={assignClass}
-                                                        onChange={(e) => setAssignClass(e.target.value)}
+                                                        placeholder="e.g. Mathematics"
+                                                        value={subject}
+                                                        onChange={(e) => setSubject(e.target.value)}
                                                         required
                                                     />
                                                 </div>
-                                                <div className="form-group animate-fade-in" style={{ marginBottom: 0, gridColumn: '2' }}>
-                                                    <label className="form-label">Section</label>
-                                                    <input
-                                                        type="text"
+                                                <div className="form-group" style={{ marginBottom: 0 }}>
+                                                    <label className="form-label">Teaching Level</label>
+                                                    <select
                                                         className="form-input"
-                                                        placeholder="e.g. A"
-                                                        value={assignSection}
-                                                        onChange={(e) => setAssignSection(e.target.value)}
+                                                        value={level}
+                                                        onChange={(e) => setLevel(e.target.value)}
                                                         required
-                                                    />
+                                                    >
+                                                        <option value="none" disabled>Select standard...</option>
+                                                        <option value="PGT">PGT (Post Graduate Teacher)</option>
+                                                        <option value="TGT">TGT (Trained Graduate Teacher)</option>
+                                                        <option value="PRT">PRT (Primary Teacher)</option>
+                                                    </select>
                                                 </div>
-                                            </>
+
+                                                {role === 'Class Teacher' && (
+                                                    <>
+                                                        <div className="form-group animate-fade-in" style={{ marginBottom: 0, gridColumn: '1' }}>
+                                                            <label className="form-label">Responsible Class</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-input"
+                                                                placeholder="e.g. 10"
+                                                                value={assignClass}
+                                                                onChange={(e) => setAssignClass(e.target.value)}
+                                                                required
+                                                            />
+                                                        </div>
+                                                        <div className="form-group animate-fade-in" style={{ marginBottom: 0, gridColumn: '2' }}>
+                                                            <label className="form-label">Section</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-input"
+                                                                placeholder="e.g. A"
+                                                                value={assignSection}
+                                                                onChange={(e) => setAssignSection(e.target.value)}
+                                                                required
+                                                            />
+                                                        </div>
+                                                    </>
+                                                )}
+                                            </div>
                                         )}
+
+                                        {role === 'Exam Board Official' && (
+                                            <div className="animate-fade-in" style={{ background: 'var(--surface-hover)', padding: '1.25rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)' }}>
+                                                <div className="form-group" style={{ marginBottom: 0 }}>
+                                                    <label className="form-label">Staff Designation</label>
+                                                    <select
+                                                        className="form-input"
+                                                        value={level}
+                                                        onChange={(e) => setLevel(e.target.value)}
+                                                        required
+                                                    >
+                                                        <option value="none" disabled>Select designation...</option>
+                                                        <option value="PGT">Teacher (PGT)</option>
+                                                        <option value="TGT">Teacher (TGT)</option>
+                                                        <option value="PRT">Teacher (PRT)</option>
+                                                        <option value="Support Staff">Supporting Staff</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        )}
+
                                     </div>
                                 )}
-
-                                {role === 'Exam Board Official' && (
-                                    <div className="animate-fade-in" style={{ background: 'var(--surface-hover)', padding: '1.25rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)' }}>
-                                        <div className="form-group" style={{ marginBottom: 0 }}>
-                                            <label className="form-label">Staff Designation</label>
-                                            <select
-                                                className="form-input"
-                                                value={level}
-                                                onChange={(e) => setLevel(e.target.value)}
-                                                required
-                                            >
-                                                <option value="none" disabled>Select designation...</option>
-                                                <option value="PGT">Teacher (PGT)</option>
-                                                <option value="TGT">Teacher (TGT)</option>
-                                                <option value="PRT">Teacher (PRT)</option>
-                                                <option value="Support Staff">Supporting Staff</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                )}
-
-                            </div>
+                            </>
                         )}
 
 
@@ -366,22 +469,35 @@ const AuthCard = ({ isLogin }) => {
                             className={isLogin ? 'btn-liquid-primary' : 'btn-liquid-secondary'}
                             textColor="#000000"
                             intensity={12}
-                            style={{ marginTop: '0.5rem', width: '100%' }}
+                            style={{ marginTop: '0.5rem', width: '100%', height: '3.5rem' }}
                         >
-                            {isLoading ? 'Processing...' : (isLogin ? 'Authenticate' : 'Complete Registration')}
+                            {isLoading ? 'Processing...' : (isOtpSent ? 'Verify & Access Console' : (isLogin ? 'Authenticate' : 'Complete Registration'))}
                         </MagneticButton3D>
                     </form>
 
                     {/* Footer Switch */}
-                    <div style={{ textAlign: 'center', marginTop: '2rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                        {isLogin ? "Don't have an account? " : "Already initialized? "}
-                        <button
-                            onClick={() => navigate(isLogin ? '/signup' : '/login')}
-                            style={{ background: 'none', border: 'none', color: 'var(--secondary)', cursor: 'pointer', fontWeight: '600', fontSize: '0.9rem', padding: 0 }}
-                        >
-                            {isLogin ? 'Sign Up' : 'Sign In'}
-                        </button>
-                    </div>
+                    {!isOtpSent && (
+                        <div style={{ textAlign: 'center', marginTop: '2rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                            {isLogin ? "Don't have an account? " : "Already initialized? "}
+                            <button
+                                onClick={() => navigate(isLogin ? '/signup' : '/login')}
+                                style={{ background: 'none', border: 'none', color: 'var(--secondary)', cursor: 'pointer', fontWeight: '600', fontSize: '0.9rem', padding: 0 }}
+                            >
+                                {isLogin ? 'Sign Up' : 'Sign In'}
+                            </button>
+                        </div>
+                    )}
+                    {isOtpSent && (
+                        <div style={{ textAlign: 'center', marginTop: '2rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                            Wrong information provided? 
+                            <button
+                                onClick={() => setIsOtpSent(false)}
+                                style={{ background: 'none', border: 'none', color: 'var(--accent)', cursor: 'pointer', fontWeight: '600', fontSize: '0.9rem', marginLeft: '0.5rem', padding: 0 }}
+                            >
+                                Go Back
+                            </button>
+                        </div>
+                    )}
                 </div>
                 <style>{`
                 @keyframes float-slow {
