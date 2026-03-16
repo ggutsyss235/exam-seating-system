@@ -55,7 +55,11 @@ if (process.env.NODE_ENV !== 'production' || process.env.VERCEL !== '1') {
 }
 
 // Middleware to ensure DB connection for serverless invocations
+// Exempting /api and /api/ping from strict DB connection check to allow diagnostics
 app.use(async (req, res, next) => {
+    if (req.url === '/api' || req.url === '/api/ping') {
+        return next();
+    }
     try {
         await connectDB();
         next();
@@ -78,14 +82,18 @@ app.get('/api', (req, res) => {
     res.json({ 
         message: 'Exam Seating System API Serverless is active.', 
         status: 'healthy', 
-        dbConnected: mongoose.connection.readyState >= 1,
-        envVars: {
-            hasMongo: !!process.env.MONGODB_URI,
-            hasJWT: !!process.env.JWT_SECRET,
+        dbState: mongoose.connection.readyState,
+        env: {
+            mongoSet: !!process.env.MONGODB_URI,
             nodeEnv: process.env.NODE_ENV
         },
         timestamp: new Date() 
     });
+});
+
+// Simple ping route to verify server basic health
+app.get('/api/ping', (req, res) => {
+    res.json({ pong: true, uptime: process.uptime() });
 });
 
 // Global Error Handler
