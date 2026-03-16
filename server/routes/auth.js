@@ -28,13 +28,9 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ message: 'A user with that email already exists' });
         }
 
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
-
         const newUserData = {
             name, email, password, role,
-            otp, otpExpires,
-            isVerified: false,
+            isVerified: true, // Auto-verify as we are terminating OTP
             isExamDept: role === 'Exam Board Official'
         };
 
@@ -50,37 +46,9 @@ router.post('/register', async (req, res) => {
             newUserData.assignSection = assignSection;
         }
 
-        await User.create(newUserData);
-        await sendOTPEmail(email, otp);
+        const user = await User.create(newUserData);
 
-        res.status(201).json({ message: 'OTP sent to email. Please verify to complete registration.' });
-    } catch (error) {
-        console.error("Register Error:", error);
-        res.status(500).json({ message: 'Server Exception: ' + error.message });
-    }
-});
-
-// @route   POST /api/auth/verify-otp
-// @access  Public
-router.post('/verify-otp', async (req, res) => {
-    try {
-        const { email, otp } = req.body;
-        const user = await User.findOne({ email });
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        if (user.otp !== otp || user.otpExpires < Date.now()) {
-            return res.status(400).json({ message: 'Invalid or expired OTP' });
-        }
-
-        user.otp = null;
-        user.otpExpires = null;
-        user.isVerified = true;
-        await user.save();
-
-        res.json({
+        res.status(201).json({
             _id: user._id,
             name: user.name,
             email: user.email,
@@ -94,30 +62,8 @@ router.post('/verify-otp', async (req, res) => {
             token: generateToken(user._id),
         });
     } catch (error) {
-        res.status(500).json({ message: 'Verification failed: ' + error.message });
-    }
-});
-
-// @route   POST /api/auth/resend-otp
-// @access  Public
-router.post('/resend-otp', async (req, res) => {
-    try {
-        const { email } = req.body;
-        const user = await User.findOne({ email });
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        user.otp = otp;
-        user.otpExpires = new Date(Date.now() + 10 * 60 * 1000);
-        await user.save();
-
-        await sendOTPEmail(email, otp);
-        res.json({ message: 'OTP resent successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to resend OTP' });
+        console.error("Register Error:", error);
+        res.status(500).json({ message: 'Server Exception: ' + error.message });
     }
 });
 
@@ -129,13 +75,19 @@ router.post('/login', async (req, res) => {
         const user = await User.findOne({ email });
 
         if (user && (await user.matchPassword(password))) {
-            const otp = Math.floor(100000 + Math.random() * 900000).toString();
-            user.otp = otp;
-            user.otpExpires = new Date(Date.now() + 10 * 60 * 1000);
-            await user.save();
-
-            await sendOTPEmail(email, otp);
-            res.json({ message: 'OTP sent to email. Please verify to login.' });
+            res.json({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                isExamDept: user.isExamDept,
+                level: user.level,
+                subject: user.subject,
+                isClassTeacher: user.isClassTeacher,
+                assignClass: user.assignClass,
+                assignSection: user.assignSection,
+                token: generateToken(user._id),
+            });
         } else {
             res.status(401).json({ message: 'Invalid credentials detected' });
         }

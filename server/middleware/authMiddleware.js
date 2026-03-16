@@ -15,10 +15,6 @@ export const protect = async (req, res, next) => {
             // Get user from token
             req.user = await User.findById(decoded.id).select('-password');
 
-            if (req.user && !req.user.isVerified) {
-                return res.status(401).json({ message: 'Account not verified. Please complete OTP verification.' });
-            }
-
             next();
         } catch (error) {
             res.status(401).json({ message: 'Not authorized, token failed' });

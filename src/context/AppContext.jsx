@@ -84,22 +84,13 @@ export const AppProvider = ({ children }) => {
 
     const login = async (email, password) => {
         const { data } = await api.post('/auth/login', { email, password });
+        setUser(data);
         return data;
     };
 
     const register = async (userData) => {
         const { data } = await api.post('/auth/register', userData);
-        return data;
-    };
-
-    const verifyOtp = async (email, otp) => {
-        const { data } = await api.post('/auth/verify-otp', { email, otp });
         setUser(data);
-        return data;
-    };
-
-    const resendOtp = async (email) => {
-        const { data } = await api.post('/auth/resend-otp', { email });
         return data;
     };
 
@@ -158,7 +149,7 @@ export const AppProvider = ({ children }) => {
 
     return (
         <AppContext.Provider value={{
-            user, login, register, logout, verifyOtp, resendOtp,
+            user, login, register, logout,
             students, addStudent, removeStudent,
             rooms, addRoom, removeRoom,
             seatingPlan, setSeatingPlan,
