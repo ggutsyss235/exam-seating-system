@@ -28,6 +28,7 @@ function AppRouter() {
                 <Route path="/learn" element={<AuthRoute><LearnInfrastructure /></AuthRoute>} />
                 <Route path="/login" element={<AuthRoute><AuthCard isLogin={true} /></AuthRoute>} />
                 <Route path="/signup" element={<AuthRoute><AuthCard isLogin={false} /></AuthRoute>} />
+                <Route path="/verify-otp" element={<AuthRoute><AuthCard isVerifyOnly={true} /></AuthRoute>} />
                 <Route path="/app/*" element={<ProtectedRoute><App /></ProtectedRoute>} />
             </Routes>
         </BrowserRouter>

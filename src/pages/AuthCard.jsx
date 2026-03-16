@@ -6,10 +6,10 @@ import MagneticButton3D from '../components/ui/MagneticButton3D';
 
 import { useAppContext } from '../context/AppContext';
 
-const AuthCard = ({ isLogin }) => {
+const AuthCard = ({ isLogin, isVerifyOnly }) => {
     const navigate = useNavigate();
     const { login, register, verifyOtp, resendOtp } = useAppContext();
-    const [isOtpSent, setIsOtpSent] = useState(false);
+    const [isOtpSent, setIsOtpSent] = useState(isVerifyOnly || false);
     const [otp, setOtp] = useState('');
     const [resendCooldown, setResendCooldown] = useState(0);
     const [showPassword, setShowPassword] = useState(false);
