@@ -29,3 +29,12 @@ dist-ssr
 .env.development
 .env.production
 server/.env
+
+# Showcase Media
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.mp4
+*.md
+!README.md
