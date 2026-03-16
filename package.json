@@ -13,7 +13,6 @@
     "@google/genai": "^1.44.0",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
-    "ai-career-coach": "file:../ai-career-coach-master/ai-career-coach-master",
     "axios": "^1.13.6",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
